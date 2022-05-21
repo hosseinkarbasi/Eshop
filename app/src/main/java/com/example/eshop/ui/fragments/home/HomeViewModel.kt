@@ -1,4 +1,4 @@
-package com.example.eshop.ui.fragments
+package com.example.eshop.ui.fragments.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
