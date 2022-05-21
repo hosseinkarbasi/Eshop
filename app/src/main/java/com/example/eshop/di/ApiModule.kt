@@ -59,7 +59,7 @@ object ApiModule {
     fun provideRetrofit(client: OkHttpClient): WooCommerceApi {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(provideClient())
+            .client(client)
             .addConverterFactory(jsonConvertorFactory())
             .build()
             .create(WooCommerceApi::class.java)
