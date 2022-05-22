@@ -17,7 +17,12 @@ class ProductRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) {
 
-    suspend fun getProducts(): Flow<Result<List<Product>>> =
-        requestFlow(dispatcher) { remoteDataSource.getProducts() }
+    suspend fun getNewestProducts(): Flow<Result<List<Product>>> =
+        requestFlow(dispatcher) { remoteDataSource.getNewestProducts() }
 
+    suspend fun getMostViewedProducts(): Flow<Result<List<Product>>> =
+        requestFlow(dispatcher) { remoteDataSource.getMostViewedProducts() }
+
+    suspend fun getMostSalesProducts(): Flow<Result<List<Product>>> =
+        requestFlow(dispatcher) { remoteDataSource.getMostSalesProducts() }
 }

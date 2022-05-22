@@ -7,6 +7,8 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) {
 
-    suspend fun getProducts(): Response<List<Product>> = service.getProducts()
+    suspend fun getNewestProducts(): Response<List<Product>> = service.getProducts("date")
+    suspend fun getMostViewedProducts(): Response<List<Product>> = service.getProducts("popularity")
+    suspend fun getMostSalesProducts(): Response<List<Product>> = service.getProducts("rating")
 
 }

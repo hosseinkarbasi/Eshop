@@ -18,7 +18,7 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.CustomViewHolder>(Dif
             productTitle.text = item.name
             productPrice.text = item.price
             Glide.with(root)
-                .load(item.images[0])
+                .load(item.images[0].src)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(productImage)
         }
