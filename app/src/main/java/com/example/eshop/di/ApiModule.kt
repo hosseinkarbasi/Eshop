@@ -1,6 +1,8 @@
 package com.example.eshop.di
 
 import com.example.eshop.data.remote.Constants.BASE_URL
+import com.example.eshop.data.remote.Constants.CONSUMER_KEY
+import com.example.eshop.data.remote.Constants.CONSUMER_SECRET
 import com.example.eshop.data.remote.network.WooCommerceApi
 import dagger.Module
 import dagger.Provides
@@ -38,8 +40,8 @@ object ApiModule {
         return Interceptor {
             val request = it.request()
             val url = request.url().newBuilder()
-                .addQueryParameter("consumer_key", "ck_af5bd667c7668dbb2594c21b3924987d9c041dfc")
-                .addQueryParameter("consumer_secret", "cs_01e1758f7ffead8fcd74f16c6202d2be60f26b91")
+                .addQueryParameter("consumer_key", CONSUMER_KEY)
+                .addQueryParameter("consumer_secret", CONSUMER_SECRET)
                 .build()
             val new = request.newBuilder()
                 .url(url)
