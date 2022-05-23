@@ -1,6 +1,7 @@
 package com.example.eshop.data.repository
 
 import com.example.eshop.data.remote.RemoteDataSource
+import com.example.eshop.data.remote.model.Category
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.di.IoDispatcher
 import com.example.eshop.util.Result
@@ -25,4 +26,7 @@ class ProductRepository @Inject constructor(
 
     suspend fun getMostSalesProducts(): Flow<Result<List<Product>>> =
         requestFlow(dispatcher) { remoteDataSource.getMostSalesProducts() }
+
+    suspend fun getCategories(): Flow<Result<List<Category>>> =
+        requestFlow(dispatcher) { remoteDataSource.getCategories() }
 }
