@@ -8,4 +8,8 @@
         android:id="@+id/homeFragment"
         android:name="com.example.eshop.ui.fragments.home.HomeFragment"
         android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.example.eshop.ui.fragments.category.CategoryFragment"
+        android:label="CategoryFragment" />
 </navigation>

@@ -13,4 +13,9 @@ class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) 
     suspend fun getMostSalesProducts(): Response<List<Product>> = service.getProducts("rating")
     suspend fun getCategories(): Response<List<Category>> = service.getCategories(62)
 
+    suspend fun getx(order: String): Response<List<Product>> {
+        return service.getProducts(order)
+    }
+
+    suspend fun getProduct(id: String): Response<Product> = service.getProduct(id)
 }

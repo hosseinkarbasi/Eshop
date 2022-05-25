@@ -6,4 +6,10 @@
         android:icon="@drawable/ic_launcher_background"
         android:title="@string/home"/>
 
+    <item
+        android:id="@+id/categoryFragment"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="@string/category"/>
+
+
 </menu>
