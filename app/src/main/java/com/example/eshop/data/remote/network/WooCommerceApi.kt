@@ -13,9 +13,9 @@ interface WooCommerceApi {
     suspend fun getProducts(@Query("orderby") orderBy: String): Response<List<Product>>
 
     @GET("products/categories")
-    suspend fun getCategories(@Query("parent") parentID: Int): Response<List<Category>>
+    suspend fun getCategories(@Query("parent") parentId: Int): Response<List<Category>>
 
     @GET("products/{id}")
-    suspend fun getProduct(@Path("id") productId: String): Response<Product>
+    suspend fun getProduct(@Path("id") productId: Int): Response<Product>
 
 }

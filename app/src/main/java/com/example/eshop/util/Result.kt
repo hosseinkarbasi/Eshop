@@ -17,7 +17,7 @@ sealed class Result<T>(
     class Error<T>(message: String, data: T? = null) : Result<T>(data, message)
 }
 
-suspend inline fun <T>  requestFlow(
+suspend inline fun <T> requestFlow(
     dispatcher: CoroutineDispatcher,
     crossinline apiCall: suspend () -> Response<T>
 ): Flow<Result<T>> {

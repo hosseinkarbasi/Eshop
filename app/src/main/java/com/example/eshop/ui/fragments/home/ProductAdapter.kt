@@ -12,6 +12,8 @@ import com.example.eshop.databinding.ProductItemBinding
 
 class ProductAdapter : ListAdapter<Product, ProductAdapter.CustomViewHolder>(DiffCallBack()) {
 
+    private var itemClick: ((product: Product) -> Unit)? = null
+
     inner class CustomViewHolder(private var binding: ProductItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Product) = binding.apply {
@@ -21,6 +23,12 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.CustomViewHolder>(Dif
                 .load(item.images[0].src)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(productImage)
+
+            binding.root.setOnClickListener {
+                itemClick?.let {
+                    it(item)
+                }
+            }
         }
     }
 
@@ -33,6 +41,10 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.CustomViewHolder>(Dif
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+
+    fun onItemPosition(clickListener: (Product) -> Unit) {
+        itemClick = clickListener
     }
 
     class DiffCallBack : DiffUtil.ItemCallback<Product>() {

@@ -7,11 +7,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
 import com.example.eshop.databinding.FragmentHomeBinding
 import com.example.eshop.util.Result
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -30,21 +30,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         initRecyclerView()
         getProductsList()
-
-//        combine(
-//            viewModel.getMostViewedProducts,
-//            viewModel.getMostSalesProducts,
-//            viewModel.getNewestProducts
-//        ) {t1,t2,t3 ->
-//            newestProductAdapter.submitList(t1.data)
-//            mostViewedProductAdapter.submitList(t2.data)
-//        }
-
+        goProductDetails()
     }
 
 
     private fun getProductsList() {
-
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
@@ -72,13 +62,29 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun initRecyclerView() {
+    private fun initRecyclerView() = binding.apply {
         newestProductAdapter = ProductAdapter()
         mostViewedProductAdapter = ProductAdapter()
         mostSalesProductAdapter = ProductAdapter()
-        binding.mostViewedRv.adapter = mostViewedProductAdapter
-        binding.newestRv.adapter = newestProductAdapter
-        binding.mostSalesRv.adapter = mostSalesProductAdapter
+        mostViewedRv.adapter = mostViewedProductAdapter
+        newestRv.adapter = newestProductAdapter
+        mostSalesRv.adapter = mostSalesProductAdapter
+
+    }
+
+    private fun goProductDetails() {
+        newestProductAdapter.onItemPosition {
+            val action = HomeFragmentDirections.actionGlobalProductFragment(it.id)
+            findNavController().navigate(action)
+        }
+        mostViewedProductAdapter.onItemPosition {
+            val action = HomeFragmentDirections.actionGlobalProductFragment(it.id)
+            findNavController().navigate(action)
+        }
+        mostSalesProductAdapter.onItemPosition {
+            val action = HomeFragmentDirections.actionGlobalProductFragment(it.id)
+            findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {

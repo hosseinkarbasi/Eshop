@@ -1,5 +1,8 @@
 package com.example.eshop.data.repository
 
+import com.example.eshop.data.remote.Constants.DATE
+import com.example.eshop.data.remote.Constants.POPULARITY
+import com.example.eshop.data.remote.Constants.RATING
 import com.example.eshop.data.remote.RemoteDataSource
 import com.example.eshop.data.remote.model.Category
 import com.example.eshop.data.remote.model.Product
@@ -18,7 +21,7 @@ class ProductRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) {
 
-    fun getItem(
+    fun getProducts(
         result: (
             new: Flow<Result<List<Product>>>,
             most: Flow<Result<List<Product>>>,
@@ -27,13 +30,13 @@ class ProductRepository @Inject constructor(
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             val newest = async {
-                requestFlow(dispatcher) { remoteDataSource.getx("date") }
+                requestFlow(dispatcher) { remoteDataSource.getProducts(DATE) }
             }
             val viewed = async {
-                requestFlow(dispatcher) { remoteDataSource.getx("popularity") }
+                requestFlow(dispatcher) { remoteDataSource.getProducts(POPULARITY) }
             }
             val sales = async {
-                requestFlow(dispatcher) { remoteDataSource.getx("rating") }
+                requestFlow(dispatcher) { remoteDataSource.getProducts(RATING) }
             }
 
             val new = newest.await()
@@ -43,18 +46,8 @@ class ProductRepository @Inject constructor(
         }
     }
 
-
-    suspend fun getProduct(id: String): Flow<Result<Product>> =
+    suspend fun getProduct(id: Int): Flow<Result<Product>> =
         requestFlow(dispatcher) { remoteDataSource.getProduct(id) }
-
-    suspend fun getNewestProducts(): Flow<Result<List<Product>>> =
-        requestFlow(dispatcher) { remoteDataSource.getNewestProducts() }
-
-    suspend fun getMostViewedProducts(): Flow<Result<List<Product>>> =
-        requestFlow(dispatcher) { remoteDataSource.getMostViewedProducts() }
-
-    suspend fun getMostSalesProducts(): Flow<Result<List<Product>>> =
-        requestFlow(dispatcher) { remoteDataSource.getMostSalesProducts() }
 
     suspend fun getCategories(): Flow<Result<List<Category>>> =
         requestFlow(dispatcher) { remoteDataSource.getCategories() }

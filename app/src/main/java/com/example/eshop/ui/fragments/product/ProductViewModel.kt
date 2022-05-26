@@ -20,7 +20,7 @@ class ProductViewModel @Inject constructor(
         MutableStateFlow(Result.Loading())
     val getProduct = _getProduct.asStateFlow()
 
-    fun getProduct(productId: String) {
+    fun getProduct(productId: Int) {
         viewModelScope.launch {
             productRepository.getProduct(productId).collect {
                 _getProduct.emit(it)
