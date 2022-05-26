@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.eshop.data.local.data_store.SettingPreferencesKey.KEY_THEME
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -24,7 +25,7 @@ class SettingDataStore @Inject constructor(
     val preferences = dataStore.data.catch { cause ->
         Log.e("datastore_error", cause.message.toString())
     }.map { preferences ->
-
+        val theme: Theme = Theme.valueOf(preferences[KEY_THEME] ?: Theme.AUTO.name)
     }
 
 }
