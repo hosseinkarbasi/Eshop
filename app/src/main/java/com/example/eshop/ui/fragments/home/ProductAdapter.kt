@@ -16,6 +16,7 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.CustomViewHolder>(Dif
 
     inner class CustomViewHolder(private var binding: ProductItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: Product) = binding.apply {
             productTitle.text = item.name
             productPrice.text = item.price
