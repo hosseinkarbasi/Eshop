@@ -1,4 +1,4 @@
-package com.example.eshop.ui.fragments.category
+package com.example.eshop.ui.fragments.productslist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,20 +7,23 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.example.eshop.data.remote.model.Category
-import com.example.eshop.databinding.ProductItemBinding
+import com.example.eshop.data.remote.model.Product
+import com.example.eshop.databinding.ProductsListItemBinding
 
-class CategoryAdapter : ListAdapter<Category, CategoryAdapter.CustomViewHolder>(DiffCallBack()) {
+class ProductsListAdapter :
+    ListAdapter<Product, ProductsListAdapter.CustomViewHolder>(DiffCallBack()) {
 
-    private var itemClick: ((Category: Category) -> Unit)? = null
+    private var itemClick: ((product: Product) -> Unit)? = null
 
-    inner class CustomViewHolder(private var binding: ProductItemBinding) :
+    inner class CustomViewHolder(private var binding: ProductsListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Category) = binding.apply {
+
+        fun bind(item: Product) = binding.apply {
             productTitle.text = item.name
-            productPrice.text = item.count.toString()
+            productPrice.text = item.price
+            productRating.text = item.average_rating
             Glide.with(root)
-                .load(item.image.src)
+                .load(item.images[0].src)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(productImage)
 
@@ -34,7 +37,7 @@ class CategoryAdapter : ListAdapter<Category, CategoryAdapter.CustomViewHolder>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder =
         CustomViewHolder(
-            ProductItemBinding.inflate(
+            ProductsListItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -43,15 +46,15 @@ class CategoryAdapter : ListAdapter<Category, CategoryAdapter.CustomViewHolder>(
         holder.bind(getItem(position))
     }
 
-    fun onItemPosition(clickListener: (Category) -> Unit) {
+    fun onItemPosition(clickListener: (Product) -> Unit) {
         itemClick = clickListener
     }
 
-    class DiffCallBack : DiffUtil.ItemCallback<Category>() {
-        override fun areItemsTheSame(oldItem: Category, newItem: Category) =
+    class DiffCallBack : DiffUtil.ItemCallback<Product>() {
+        override fun areItemsTheSame(oldItem: Product, newItem: Product) =
             oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Category, newItem: Category) =
+        override fun areContentsTheSame(oldItem: Product, newItem: Product) =
             oldItem == newItem
     }
 }

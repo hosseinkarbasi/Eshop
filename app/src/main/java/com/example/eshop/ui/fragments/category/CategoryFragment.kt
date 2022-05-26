@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
 import com.example.eshop.databinding.FragmentCategoryBinding
 import com.example.eshop.util.Result
@@ -24,7 +25,16 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 
         initRecyclerView()
         getCategoriesList()
+        goProductsByCategory()
 
+    }
+
+    private fun goProductsByCategory() {
+        categoryAdapter.onItemPosition {
+            val action =
+                CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id)
+            findNavController().navigate(action)
+        }
     }
 
     private fun getCategoriesList() {
