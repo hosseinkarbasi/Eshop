@@ -6,4 +6,8 @@
     <string name="most_sales">پرفروش ترین ها</string>
     <string name="home">Home</string>
     <string name="category">category</string>
+    <string name="light">Light</string>
+    <string name="night">Night</string>
+    <string name="save">Save</string>
+    <string name="auto">Auto</string>
 </resources>
