@@ -8,8 +8,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.eshop.R
 import com.example.eshop.databinding.FragmentProductBinding
-import com.example.eshop.util.Result
-import com.example.eshop.util.collectWithRepeatOnLifecycle
+import com.example.eshop.utils.Result
+import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

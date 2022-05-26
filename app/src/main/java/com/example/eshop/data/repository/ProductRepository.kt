@@ -7,8 +7,8 @@ import com.example.eshop.data.remote.RemoteDataSource
 import com.example.eshop.data.remote.model.Category
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.di.IoDispatcher
-import com.example.eshop.util.Result
-import com.example.eshop.util.requestFlow
+import com.example.eshop.utils.Result
+import com.example.eshop.utils.requestFlow
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

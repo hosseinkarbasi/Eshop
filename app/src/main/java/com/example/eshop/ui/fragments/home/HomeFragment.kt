@@ -10,7 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
 import com.example.eshop.databinding.FragmentHomeBinding
-import com.example.eshop.util.Result
+import com.example.eshop.utils.Result
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

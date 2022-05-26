@@ -1,4 +1,4 @@
-package com.example.eshop.util
+package com.example.eshop.utils
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
