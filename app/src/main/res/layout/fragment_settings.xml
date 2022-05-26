@@ -34,13 +34,4 @@
 
     </RadioGroup>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/save_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        app:layout_constraintEnd_toEndOf="@+id/radio_theme"
-        app:layout_constraintStart_toStartOf="@+id/radio_theme"
-        app:layout_constraintTop_toBottomOf="@+id/radio_theme" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

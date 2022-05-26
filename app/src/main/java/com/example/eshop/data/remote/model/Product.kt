@@ -8,6 +8,6 @@ data class Product(
     val regular_price: String,
     val average_rating: String,
     val rating_count: Int,
-    val categories: List<ProductCategory>,
+    val categories: List<Category>,
     val images: List<ProductImage>
     )

@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
 import com.example.eshop.databinding.FragmentHomeBinding
 import com.example.eshop.utils.Result
+import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -35,30 +32,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
     private fun getProductsList() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.getNewestProducts.collect {
-                        when (it) {
-                            is Result.Error -> {}
-                            is Result.Loading -> {}
-                            is Result.Success -> {
-                                newestProductAdapter.submitList(it.data)
-                            }
-                        }
-                    }
-                }
-                launch {
-                    viewModel.getMostSalesProducts.collect {
-                        mostSalesProductAdapter.submitList(it.data)
-                    }
-                }
-                launch {
-                    viewModel.getMostViewedProducts.collect {
-                        mostViewedProductAdapter.submitList(it.data)
-                    }
+        viewModel.getNewestProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            when (it) {
+                is Result.Error -> {}
+                is Result.Loading -> {}
+                is Result.Success -> {
+                    newestProductAdapter.submitList(it.data)
                 }
             }
+        }
+
+        viewModel.getMostSalesProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            mostSalesProductAdapter.submitList(it.data)
+        }
+        viewModel.getMostViewedProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            mostViewedProductAdapter.submitList(it.data)
         }
     }
 

@@ -11,5 +11,10 @@
         android:icon="@drawable/ic_launcher_background"
         android:title="@string/category"/>
 
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="@string/settings"/>
+
 
 </menu>
