@@ -18,4 +18,7 @@ interface WooCommerceApi {
     @GET("products/{id}")
     suspend fun getProduct(@Path("id") productId: Int): Response<Product>
 
+    @GET("products")
+    suspend fun getProductsByCategory(@Query("category") categoryId: Int): Response<List<Product>>
+
 }

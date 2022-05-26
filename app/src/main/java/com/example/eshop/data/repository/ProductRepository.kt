@@ -51,4 +51,7 @@ class ProductRepository @Inject constructor(
 
     suspend fun getCategories(): Flow<Result<List<Category>>> =
         requestFlow(dispatcher) { remoteDataSource.getCategories() }
+
+    suspend fun getProductsByCategory(categoryId:Int): Flow<Result<List<Product>>> =
+        requestFlow(dispatcher) { remoteDataSource.getProductsByCategory(categoryId) }
 }
