@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.eshop.R
-import com.example.eshop.data.local.data_store.Theme
+import com.example.eshop.data.local.datastore.Theme
 import com.example.eshop.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
 

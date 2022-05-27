@@ -1,4 +1,4 @@
-package com.example.eshop.data.local.data_store
+package com.example.eshop.data.local.datastore
 
 class PreferencesInfo(
     val theme: Theme = Theme.LIGHT
