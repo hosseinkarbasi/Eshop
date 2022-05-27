@@ -24,7 +24,12 @@
             android:name="product_id"
             app:argType="integer" />
     </fragment>
-    <action android:id="@+id/action_global_productFragment" app:destination="@id/productFragment" />
+    <action
+        android:id="@+id/action_global_productFragment"
+        app:destination="@id/productFragment"
+        app:enterAnim="@android:anim/fade_in"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in" />
     <fragment
         android:id="@+id/productsListFragment"
         android:name="com.example.eshop.ui.fragments.productslist.ProductsListFragment"
@@ -37,4 +42,12 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.eshop.ui.fragments.settings.SettingsFragment"
         android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.eshop.ui.fragments.profile.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
 </navigation>

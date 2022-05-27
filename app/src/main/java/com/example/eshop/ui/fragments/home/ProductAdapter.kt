@@ -19,7 +19,7 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.CustomViewHolder>(Dif
 
         fun bind(item: Product) = binding.apply {
             productTitle.text = item.name
-            productPrice.text = item.price
+            productPrice.text = " ${item.price} تومان "
             Glide.with(root)
                 .load(item.images[0].src)
                 .transition(DrawableTransitionOptions.withCrossFade())

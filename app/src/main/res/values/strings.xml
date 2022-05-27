@@ -2,7 +2,7 @@
     <string name="app_name">Eshop</string>
     <string name="full_list_products">لیست کامل</string>
     <string name="newest">جدیدترین ها</string>
-    <string name="most_viewed">پر بازدیدترین</string>
+    <string name="most_viewed">پربازدیدترین</string>
     <string name="most_sales">پرفروش ترین ها</string>
     <string name="home">Home</string>
     <string name="category">Category</string>
@@ -12,4 +12,7 @@
     <string name="auto">Auto</string>
     <string name="settings">Settings</string>
     <string name="attribute_product">ویژگی های محصول</string>
+    <string name="myShop">MyShop</string>
+    <string name="title">title</string>
+    <string name="price">price</string>
 </resources>
