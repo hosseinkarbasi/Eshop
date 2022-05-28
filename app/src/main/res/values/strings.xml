@@ -15,4 +15,5 @@
     <string name="myShop">MyShop</string>
     <string name="title">title</string>
     <string name="price">price</string>
+    <string name="basket_btn_text">افزودن به سبد خرید</string>
 </resources>

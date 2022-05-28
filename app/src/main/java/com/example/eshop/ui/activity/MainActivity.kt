@@ -2,6 +2,7 @@ package com.example.eshop.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -30,11 +31,18 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setupNavController() {
+    private fun setupNavController() = binding.apply {
         val navController by lazy {
             val navHostFragment = supportFragmentManager
                 .findFragmentById(R.id.nav_fragment) as NavHostFragment
             navHostFragment.navController
+        }
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.productFragment -> bottomNavigationView.gone()
+                else -> bottomNavigationView.visible()
+            }
         }
         binding.bottomNavigationView.setupWithNavController(navController)
     }
@@ -48,6 +56,14 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(mode)
             }
         }
+    }
+
+    private fun View.visible() {
+        visibility = View.VISIBLE
+    }
+
+    private fun View.gone() {
+        visibility = View.GONE
     }
 
 }

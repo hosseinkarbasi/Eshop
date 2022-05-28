@@ -1,7 +1,9 @@
 package com.example.eshop.ui.fragments.product
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.core.text.HtmlCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,6 +32,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         setUpViewPager()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getProduct() = binding.apply {
         viewModel.getProduct(args.productId)
         viewModel.getProduct.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
@@ -38,7 +41,16 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
                 is Result.Loading -> {}
                 is Result.Success -> {
                     productDetails = it.data
-                    imageViewPagerAdapter.submitList(it.data!!.images)
+                    productRating.text =
+                        "(${it.data?.rating_count.toString()}) ${it.data?.average_rating}"
+                    ratingBar.rating = it.data?.average_rating?.toFloat()!!
+                    productDec.text = it.data.let { it1 ->
+                        HtmlCompat.fromHtml(
+                            it1.description,
+                            HtmlCompat.FROM_HTML_MODE_LEGACY
+                        )
+                    }
+                    imageViewPagerAdapter.submitList(it.data.images)
                 }
             }
         }
