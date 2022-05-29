@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.productFragment -> bottomNavigationView.gone()
+                R.id.productsListFragment -> bottomNavigationView.gone()
                 else -> bottomNavigationView.visible()
             }
         }

@@ -1,5 +1,6 @@
 package com.example.eshop.ui.fragments.productslist
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -18,10 +19,10 @@ class ProductsListAdapter :
     inner class CustomViewHolder(private var binding: ProductsListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(item: Product) = binding.apply {
             productTitle.text = item.name
-            productPrice.text = item.price
-            productRating.text = item.average_rating
+            productPrice.text = " ${item.price} تومان "
             Glide.with(root)
                 .load(item.images[0].src)
                 .transition(DrawableTransitionOptions.withCrossFade())

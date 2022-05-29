@@ -2,10 +2,12 @@ package com.example.eshop.ui.fragments.productslist
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
+import com.example.eshop.data.remote.model.Product
 import com.example.eshop.databinding.FragmentProductsListBinding
 import com.example.eshop.utils.Result
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
@@ -41,10 +43,14 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
         viewModel.getProductsByCategory(categoryId)
         viewModel.getProductsByCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
-                is Result.Error -> {}
-                is Result.Loading -> {}
+                is Result.Error -> {
+                    it.message?.let { it1 -> isError(it1) }
+                }
+                is Result.Loading -> {
+                    isLoading()
+                }
                 is Result.Success -> {
-                    productsAdapter.submitList(it.data)
+                    it.data?.let { it1 -> isSuccess(it1) }
                 }
             }
         }
@@ -53,6 +59,31 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
     private fun initRecyclerView() {
         productsAdapter = ProductsListAdapter()
         binding.productsRv.adapter = productsAdapter
+    }
+
+    private fun isLoading() = binding.apply {
+        loading.visible()
+        loading.playAnimation()
+    }
+
+    private fun isError(errorMessage: String) = binding.apply {
+        loading.visible()
+        loading.playAnimation()
+        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun isSuccess(data: List<Product>) = binding.apply {
+        loading.gone()
+        loading.pauseAnimation()
+        productsAdapter.submitList(data)
+    }
+
+    private fun View.visible() {
+        visibility = View.VISIBLE
+    }
+
+    private fun View.gone() {
+        visibility = View.GONE
     }
 
     override fun onDestroyView() {
