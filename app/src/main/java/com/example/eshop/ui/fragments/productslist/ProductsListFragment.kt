@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.eshop.R
 import com.example.eshop.databinding.FragmentProductsListBinding
 import com.example.eshop.utils.Result
@@ -18,7 +17,6 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
     private var _binding: FragmentProductsListBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<ProductsListViewModel>()
-    private val args by navArgs<ProductsListFragmentArgs>()
     private lateinit var productsAdapter: ProductsListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +37,8 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
     }
 
     private fun getProductsList() {
-        viewModel.getProductsByCategory(args.categoryId)
+        val categoryId = viewModel.categoryId as Int
+        viewModel.getProductsByCategory(categoryId)
         viewModel.getProductsByCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
                 is Result.Error -> {}

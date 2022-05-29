@@ -46,12 +46,38 @@ class ProductRepository @Inject constructor(
         }
     }
 
+     fun getCategories(
+        result: (
+            clothing: Flow<Result<List<Category>>>,
+            digital: Flow<Result<List<Category>>>,
+            superMarket: Flow<Result<List<Category>>>,
+            booksAndArt: Flow<Result<List<Category>>>
+        ) -> Unit
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val clothing = async {
+                requestFlow(dispatcher) { remoteDataSource.getCategories(62) }
+            }
+            val digital = async {
+                requestFlow(dispatcher) { remoteDataSource.getCategories(52) }
+            }
+            val superMarket = async {
+                requestFlow(dispatcher) { remoteDataSource.getCategories(81) }
+            }
+            val booksAndArt = async {
+                requestFlow(dispatcher) { remoteDataSource.getCategories(76) }
+            }
+            val clothingC = clothing.await()
+            val digitalC = digital.await()
+            val superMarketC = superMarket.await()
+            val booksAndArtC = booksAndArt.await()
+            result(clothingC, digitalC, superMarketC, booksAndArtC)
+        }
+    }
+
     suspend fun getProduct(id: Int): Flow<Result<Product>> =
         requestFlow(dispatcher) { remoteDataSource.getProduct(id) }
 
-    suspend fun getCategories(): Flow<Result<List<Category>>> =
-        requestFlow(dispatcher) { remoteDataSource.getCategories() }
-
-    suspend fun getProductsByCategory(categoryId:Int): Flow<Result<List<Product>>> =
+    suspend fun getProductsByCategory(categoryId: Int): Flow<Result<List<Product>>> =
         requestFlow(dispatcher) { remoteDataSource.getProductsByCategory(categoryId) }
 }

@@ -12,12 +12,26 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoryViewModel @Inject constructor(private val repository: ProductRepository) :
+class CategoryViewModel @Inject constructor(
+    private val repository: ProductRepository
+) :
     ViewModel() {
 
     private val _getClothingCategory: MutableStateFlow<Result<List<Category>>> =
         MutableStateFlow(Result.Loading())
     val getClothingCategory = _getClothingCategory.asStateFlow()
+
+    private val _getDigitalCategory: MutableStateFlow<Result<List<Category>>> =
+        MutableStateFlow(Result.Loading())
+    val getDigitalCategory = _getDigitalCategory.asStateFlow()
+
+    private val _getSuperMarketCategory: MutableStateFlow<Result<List<Category>>> =
+        MutableStateFlow(Result.Loading())
+    val getSuperMarketCategory = _getSuperMarketCategory.asStateFlow()
+
+    private val _getBooksAndArtCategory: MutableStateFlow<Result<List<Category>>> =
+        MutableStateFlow(Result.Loading())
+    val getBooksAndArtCategory = _getBooksAndArtCategory.asStateFlow()
 
 
     init {
@@ -25,10 +39,22 @@ class CategoryViewModel @Inject constructor(private val repository: ProductRepos
     }
 
     private fun clothingCategory() {
-        viewModelScope.launch {
-            repository.getCategories().collect {
-                _getClothingCategory.emit(it)
+        repository.getCategories { clothing, digital, superMarket, booksAndArt ->
+            viewModelScope.launch {
+                clothing.collect {
+                    _getClothingCategory.emit(it)
+                }
+                digital.collect {
+                    _getDigitalCategory.emit(it)
+                }
+                superMarket.collect {
+                    _getSuperMarketCategory.emit(it)
+                }
+                booksAndArt.collect {
+                    _getBooksAndArtCategory.emit(it)
+                }
             }
         }
     }
+
 }

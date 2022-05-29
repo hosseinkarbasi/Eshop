@@ -34,8 +34,7 @@
         android:id="@+id/productsListFragment"
         android:name="com.example.eshop.ui.fragments.productslist.ProductsListFragment"
         android:label="ProductsListFragment" >
-        <argument
-            android:name="categoryId"
+        <argument android:name="categoryId"
             app:argType="integer" />
     </fragment>
     <fragment

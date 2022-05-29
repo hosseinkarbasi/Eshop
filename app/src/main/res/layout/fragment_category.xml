@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,107 +12,113 @@
             android:id="@+id/clothing_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="124dp"
+            android:layout_marginTop="60dp"
             android:layout_marginEnd="16dp"
+            android:textSize="24sp"
             android:gravity="end"
-            android:text="پوشاک"
+            android:fontFamily="@font/titr_bold"
+            android:text="@string/clothings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/clothing_list_btn"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="64dp"
-            android:gravity="start"
-            android:text="@string/full_list_products"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mostViewed_rv"
-            tools:ignore="DuplicateSpeakableTextCheck" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/clothing_rv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="116dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layoutDirection="rtl"
             android:orientation="horizontal"
+            android:padding="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/clothing_tv" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/mostViewed_tv"
+            android:id="@+id/digital_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="144dp"
+            android:layout_marginTop="60dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/most_viewed"
+            android:textSize="24sp"
+            android:fontFamily="@font/titr_bold"
+            android:text="@string/digital"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/clothing_rv" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/mostViewed_list_btn"
-            style="@style/Widget.Material3.Button.TextButton"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/digital_rv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="124dp"
-            android:text="@string/full_list_products"
-            android:textSize="12sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/digital_tv" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/superMarket_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="24sp"
+            android:fontFamily="@font/titr_bold"
+            android:text="@string/superMarket"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/digital_rv" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mostViewed_rv"
+            android:id="@+id/superMarket_rv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layoutDirection="rtl"
             android:orientation="horizontal"
+            android:padding="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.533"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mostViewed_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/superMarket_tv" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/mostSales_tv"
+            android:id="@+id/booksAndArt_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="60dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/most_sales"
+            android:fontFamily="@font/titr_bold"
+            android:text="@string/booksAndArt"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mostViewed_rv" />
+            app:layout_constraintTop_toBottomOf="@+id/superMarket_rv" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/mostSales_list_btn"
-            style="@style/Widget.Material3.Button.TextButton"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/booksAndArt_rv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="128dp"
-            android:text="@string/full_list_products"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clothing_rv" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mostSales_rv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layoutDirection="rtl"
             android:orientation="horizontal"
+            android:padding="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.533"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mostSales_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/booksAndArt_tv" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

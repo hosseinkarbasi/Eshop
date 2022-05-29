@@ -17,7 +17,10 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<CategoryViewModel>()
-    private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var clothingAdapter: CategoryAdapter
+    private lateinit var digitalAdapter: CategoryAdapter
+    private lateinit var superMarketAdapter: CategoryAdapter
+    private lateinit var booksAndArtAdapter: CategoryAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,7 +33,25 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
     }
 
     private fun goProductsByCategory() {
-        categoryAdapter.onItemPosition {
+        clothingAdapter.onItemPosition {
+            val action =
+                CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id)
+            findNavController().navigate(action)
+        }
+
+        digitalAdapter.onItemPosition {
+            val action =
+                CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id)
+            findNavController().navigate(action)
+        }
+
+        superMarketAdapter.onItemPosition {
+            val action =
+                CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id)
+            findNavController().navigate(action)
+        }
+
+        booksAndArtAdapter.onItemPosition {
             val action =
                 CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id)
             findNavController().navigate(action)
@@ -43,20 +64,57 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                 is Result.Error -> {}
                 is Result.Loading -> {}
                 is Result.Success -> {
-                    categoryAdapter.submitList(it.data)
+                    clothingAdapter.submitList(it.data)
+                }
+            }
+        }
+        viewModel.getDigitalCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            when (it) {
+                is Result.Error -> {}
+                is Result.Loading -> {}
+                is Result.Success -> {
+                    digitalAdapter.submitList(it.data)
+                }
+            }
+        }
+        viewModel.getSuperMarketCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            when (it) {
+                is Result.Error -> {}
+                is Result.Loading -> {}
+                is Result.Success -> {
+                    superMarketAdapter.submitList(it.data)
+                }
+            }
+        }
+        viewModel.getBooksAndArtCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            when (it) {
+                is Result.Error -> {}
+                is Result.Loading -> {}
+                is Result.Success -> {
+                    booksAndArtAdapter.submitList(it.data)
                 }
             }
         }
     }
 
-    private fun initRecyclerView() {
-        categoryAdapter = CategoryAdapter()
-        binding.clothingRv.adapter = categoryAdapter
+    private fun initRecyclerView() = binding.apply {
+        clothingAdapter = CategoryAdapter()
+        digitalAdapter = CategoryAdapter()
+        superMarketAdapter = CategoryAdapter()
+        booksAndArtAdapter = CategoryAdapter()
+
+        clothingRv.adapter = clothingAdapter
+        digitalRv.adapter = digitalAdapter
+        superMarketRv.adapter = superMarketAdapter
+        booksAndArtRv.adapter = booksAndArtAdapter
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding.clothingRv.adapter = null
+        binding.digitalRv.adapter = null
+        binding.superMarketRv.adapter = null
+        binding.booksAndArtRv.adapter = null
         _binding = null
     }
 }

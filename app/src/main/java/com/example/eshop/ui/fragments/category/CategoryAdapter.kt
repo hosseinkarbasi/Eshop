@@ -1,5 +1,6 @@
 package com.example.eshop.ui.fragments.category
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,17 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.eshop.data.remote.model.Category
-import com.example.eshop.databinding.ProductItemBinding
+import com.example.eshop.databinding.CategoryItemBinding
 
 class CategoryAdapter : ListAdapter<Category, CategoryAdapter.CustomViewHolder>(DiffCallBack()) {
 
     private var itemClick: ((Category: Category) -> Unit)? = null
 
-    inner class CustomViewHolder(private var binding: ProductItemBinding) :
+    inner class CustomViewHolder(private var binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(item: Category) = binding.apply {
             productTitle.text = item.name
-            productPrice.text = item.count.toString()
+            productPrice.text = " ${item.count}  کالا "
             Glide.with(root)
                 .load(item.image.src)
                 .transition(DrawableTransitionOptions.withCrossFade())
@@ -34,7 +36,7 @@ class CategoryAdapter : ListAdapter<Category, CategoryAdapter.CustomViewHolder>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder =
         CustomViewHolder(
-            ProductItemBinding.inflate(
+            CategoryItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
