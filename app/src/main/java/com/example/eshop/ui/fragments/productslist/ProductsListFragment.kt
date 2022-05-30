@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
+import com.example.eshop.data.remote.Constants.DATE
+import com.example.eshop.data.remote.Constants.POPULARITY
+import com.example.eshop.data.remote.Constants.RATING
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.databinding.FragmentProductsListBinding
 import com.example.eshop.utils.Result
@@ -26,8 +29,9 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
         _binding = FragmentProductsListBinding.bind(view)
 
         initRecyclerView()
-        getProductsList()
+        getProductsListFromCategory()
         goProductDetails()
+        getProductsListFromHome()
 
     }
 
@@ -38,7 +42,7 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
         }
     }
 
-    private fun getProductsList() {
+    private fun getProductsListFromCategory() {
         val categoryId = viewModel.categoryId as Int
         viewModel.getProductsByCategory(categoryId)
         viewModel.getProductsByCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
@@ -51,6 +55,59 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
                 }
                 is Result.Success -> {
                     it.data?.let { it1 -> isSuccess(it1) }
+                }
+            }
+        }
+    }
+
+    private fun getProductsListFromHome() {
+        when (viewModel.productsType) {
+            DATE -> {
+                viewModel.getNewest()
+                viewModel.getNewestProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+                    when (it) {
+                        is Result.Error -> {
+                            it.message?.let { it1 -> isError(it1) }
+                        }
+                        is Result.Loading -> {
+                            isLoading()
+                        }
+                        is Result.Success -> {
+                            it.data?.let { it1 -> isSuccess(it1) }
+                        }
+                    }
+                }
+            }
+            RATING -> {
+                viewModel.getMostSales()
+                viewModel.getMostSalesProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+                    when (it) {
+                        is Result.Error -> {
+                            it.message?.let { it1 -> isError(it1) }
+                        }
+                        is Result.Loading -> {
+                            isLoading()
+                        }
+                        is Result.Success -> {
+                            it.data?.let { it1 -> isSuccess(it1) }
+                        }
+                    }
+                }
+            }
+            POPULARITY -> {
+                viewModel.getMostViewed()
+                viewModel.getMostViewedProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+                    when (it) {
+                        is Result.Error -> {
+                            it.message?.let { it1 -> isError(it1) }
+                        }
+                        is Result.Loading -> {
+                            isLoading()
+                        }
+                        is Result.Success -> {
+                            it.data?.let { it1 -> isSuccess(it1) }
+                        }
+                    }
                 }
             }
         }

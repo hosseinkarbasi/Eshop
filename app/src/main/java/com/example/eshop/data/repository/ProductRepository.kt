@@ -21,32 +21,20 @@ class ProductRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) {
 
-    fun getProducts(
-        result: (
-            new: Flow<Result<List<Product>>>,
-            most: Flow<Result<List<Product>>>,
-            best: Flow<Result<List<Product>>>
-        ) -> Unit
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val newest = async {
-                requestFlow(dispatcher) { remoteDataSource.getProducts(DATE) }
-            }
-            val viewed = async {
-                requestFlow(dispatcher) { remoteDataSource.getProducts(POPULARITY) }
-            }
-            val sales = async {
-                requestFlow(dispatcher) { remoteDataSource.getProducts(RATING) }
-            }
 
-            val new = newest.await()
-            val most = viewed.await()
-            val best = sales.await()
-            result(new, most, best)
-        }
+    suspend fun getNewestProducts(perPage: Int): Flow<Result<List<Product>>> {
+        return requestFlow(dispatcher) { remoteDataSource.getProducts(DATE, perPage) }
     }
 
-     fun getCategories(
+    suspend fun getMostViewedProducts(perPage: Int): Flow<Result<List<Product>>> {
+        return requestFlow(dispatcher) { remoteDataSource.getProducts(POPULARITY, perPage) }
+    }
+
+    suspend fun getBestSalesProducts(perPage: Int): Flow<Result<List<Product>>> {
+        return requestFlow(dispatcher) { remoteDataSource.getProducts(RATING, perPage) }
+    }
+
+    fun getCategories(
         result: (
             clothing: Flow<Result<List<Category>>>,
             digital: Flow<Result<List<Category>>>,

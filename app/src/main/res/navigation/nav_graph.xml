@@ -7,7 +7,11 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.eshop.ui.fragments.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_productsListFragment"
+            app:destination="@id/productsListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.example.eshop.ui.fragments.category.CategoryFragment"
@@ -36,6 +40,9 @@
         android:label="ProductsListFragment" >
         <argument android:name="categoryId"
             app:argType="integer" />
+        <argument
+            android:name="productsType"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

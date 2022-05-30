@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
+import com.example.eshop.data.remote.Constants.DATE
+import com.example.eshop.data.remote.Constants.POPULARITY
+import com.example.eshop.data.remote.Constants.RATING
 import com.example.eshop.databinding.FragmentHomeBinding
 import com.example.eshop.utils.Result
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
@@ -28,8 +31,26 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         initRecyclerView()
         getProductsList()
         goProductDetails()
+        seeMoreItems()
     }
 
+
+    private fun seeMoreItems() = binding.apply {
+
+        newestListBtn.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment(-1, DATE)
+            findNavController().navigate(action)
+        }
+        mostSalesListBtn.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment(-1, RATING)
+            findNavController().navigate(action)
+
+        }
+        mostViewedListBtn.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment(-1, POPULARITY)
+            findNavController().navigate(action)
+        }
+    }
 
     private fun getProductsList() {
         viewModel.getNewestProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {

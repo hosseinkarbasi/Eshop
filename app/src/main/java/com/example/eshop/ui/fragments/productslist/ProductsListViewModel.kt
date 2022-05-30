@@ -22,12 +22,55 @@ class ProductsListViewModel @Inject constructor(
         MutableStateFlow(Result.Loading())
     val getProductsByCategory = _getProductsByCategory.asStateFlow()
 
+    private val _getNewestProducts: MutableStateFlow<Result<List<Product>>> =
+        MutableStateFlow(Result.Loading())
+    val getNewestProducts = _getNewestProducts.asStateFlow()
+
+    private val _getMostViewedProducts: MutableStateFlow<Result<List<Product>>> =
+        MutableStateFlow(Result.Loading())
+    val getMostViewedProducts = _getMostViewedProducts.asStateFlow()
+
+    private val _getMostSalesProducts: MutableStateFlow<Result<List<Product>>> =
+        MutableStateFlow(Result.Loading())
+    val getMostSalesProducts = _getMostSalesProducts.asStateFlow()
+
 
     var categoryId = state.get<Int>("categoryId") ?: ""
         set(value) {
             field = value
             state.set("categoryId", value)
         }
+
+    var productsType = state.get<String>("productsType") ?: ""
+        set(value) {
+            field = value
+            state.set("productsType", value)
+        }
+
+
+    fun getNewest() {
+        viewModelScope.launch {
+            productRepository.getNewestProducts(100).collect {
+                _getNewestProducts.emit(it)
+            }
+        }
+    }
+
+    fun getMostViewed() {
+        viewModelScope.launch {
+            productRepository.getMostViewedProducts(100).collect {
+                _getMostViewedProducts.emit(it)
+            }
+        }
+    }
+
+    fun getMostSales() {
+        viewModelScope.launch {
+            productRepository.getBestSalesProducts(100).collect {
+                _getMostSalesProducts.emit(it)
+            }
+        }
+    }
 
     fun getProductsByCategory(categoryId: Int) {
         viewModelScope.launch {
