@@ -17,9 +17,9 @@
     <!--Splash Screen Theme-->
     <style name="Theme.splash_theme" parent="Theme.SplashScreen">
 
-        <item name="windowSplashScreenBackground">@color/teal_200</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_background</item>
-        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/shopping_bag</item>
+        <item name="windowSplashScreenAnimationDuration">30</item>
         <item name="postSplashScreenTheme">@style/Theme.Eshop</item>
 
     </style>

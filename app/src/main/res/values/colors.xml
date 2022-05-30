@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="dark_shadow">#DBDBDB</color>
+    <color name="splash_background">#FF5500</color>
+
 </resources>

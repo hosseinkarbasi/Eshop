@@ -22,4 +22,6 @@
     <string name="specialSale">فروش ویژه</string>
     <string name="superMarket">سوپر مارکت</string>
     <string name="booksAndArt">کتاب و هنر</string>
+    <string name="disconnected">DISCONNECTED</string>
+    <string name="about_dis">Please Check Your Internet Connection</string>
 </resources>

@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.eshop.R
 import com.example.eshop.databinding.ActivityMainBinding
+import com.example.eshop.utils.conntectivitymanager.MyState
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -22,13 +23,32 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        checkNetworkConnection()
         setupNavController()
         getPreferences()
 
+    }
+
+    private fun checkNetworkConnection() {
+        viewModel.state.collectWithRepeatOnLifecycle(this) {
+            when (it) {
+                MyState.Error -> {
+                    binding.navFragment.gone()
+                    binding.bottomNavigationView.gone()
+                    binding.connectivityLayout.visible()
+                }
+                MyState.Fetched -> {
+                    binding.navFragment.visible()
+                    binding.bottomNavigationView.visible()
+                    binding.connectivityLayout.gone()
+                }
+            }
+        }
     }
 
     private fun setupNavController() = binding.apply {
