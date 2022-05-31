@@ -27,7 +27,8 @@ interface WooCommerceApi {
     @GET("products")
     suspend fun searchProducts(
         @Query("search") searchText: String,
-        @Query("per_page") perPage: Int
+        @Query("per_page") perPage: Int,
+        @Query("orderby") orderBy: String
     ): Response<List<Product>>
 
 }

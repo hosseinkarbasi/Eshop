@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_homeFragment_to_productsListFragment"
             app:destination="@id/productsListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryFragment"
@@ -55,5 +58,13 @@
         <action
             android:id="@+id/action_profileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.eshop.ui.fragments.search.SearchFragment"
+        android:label="SearchFragment" >
+        <argument
+            android:name="query"
+            app:argType="string" />
     </fragment>
 </navigation>

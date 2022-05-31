@@ -34,6 +34,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         getProductsList()
         goProductDetails()
         seeMoreItems()
+        searchProducts()
     }
 
 
@@ -104,8 +105,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 val search = query?.lowercase(Locale.getDefault())
                 if (search.isNullOrEmpty()) return false
-                else{
-
+                else {
+                    val action = HomeFragmentDirections.actionHomeFragmentToSearchFragment(query)
+                    findNavController().navigate(action)
                 }
                 return true
             }
