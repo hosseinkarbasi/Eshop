@@ -2,6 +2,7 @@ package com.example.eshop.ui.fragments.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import com.example.eshop.databinding.FragmentHomeBinding
 import com.example.eshop.utils.Result
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -47,7 +49,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         }
         mostViewedListBtn.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment(-1, POPULARITY)
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToProductsListFragment(-1, POPULARITY)
             findNavController().navigate(action)
         }
     }
@@ -96,6 +99,24 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
+    private fun searchProducts() {
+        binding.searchProducts.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                val search = query?.lowercase(Locale.getDefault())
+                if (search.isNullOrEmpty()) return false
+                else{
+
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding.mostViewedRv.adapter = null
@@ -103,4 +124,5 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.newestRv.adapter = null
         _binding = null
     }
+
 }

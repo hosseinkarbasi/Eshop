@@ -10,7 +10,10 @@ import retrofit2.http.Query
 interface WooCommerceApi {
 
     @GET("products")
-    suspend fun getProducts(@Query("orderby") orderBy: String,@Query("per_page") perPage:Int): Response<List<Product>>
+    suspend fun getProducts(
+        @Query("orderby") orderBy: String,
+        @Query("per_page") perPage: Int
+    ): Response<List<Product>>
 
     @GET("products/categories")
     suspend fun getCategories(@Query("parent") parentId: Int): Response<List<Category>>
@@ -20,5 +23,11 @@ interface WooCommerceApi {
 
     @GET("products")
     suspend fun getProductsByCategory(@Query("category") categoryId: Int): Response<List<Product>>
+
+    @GET("products")
+    suspend fun searchProducts(
+        @Query("search") searchText: String,
+        @Query("per_page") perPage: Int
+    ): Response<List<Product>>
 
 }

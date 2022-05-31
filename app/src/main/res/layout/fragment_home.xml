@@ -14,12 +14,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:fontFamily="@font/titr_bold"
             android:layout_marginEnd="16dp"
+            android:fontFamily="@font/titr_bold"
             android:gravity="end"
             android:text="@string/newest"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/search_products" />
 
 
         <com.google.android.material.button.MaterialButton
@@ -74,7 +74,7 @@
             android:text="@string/full_list_products"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/search_products" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mostViewed_rv"
@@ -96,8 +96,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:fontFamily="@font/titr_bold"
             android:layout_marginEnd="16dp"
+            android:fontFamily="@font/titr_bold"
             android:text="@string/most_sales"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mostViewed_rv" />
@@ -130,5 +130,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mostSales_tv" />
+
+        <SearchView
+            android:id="@+id/search_products"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:queryHint="Search In Shop..."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
