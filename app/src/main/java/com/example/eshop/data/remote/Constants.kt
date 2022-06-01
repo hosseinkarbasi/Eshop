@@ -10,8 +10,9 @@ object Constants {
     const val RATING = "rating"
     const val ASC = "asc"
     const val DESC = "desc"
-    const val PRICE_ASC ="priceAsc"
-    const val PRICE_DESC ="priceDesc"
-    const val PRICE ="price"
+    const val PRICE_ASC = "priceAsc"
+    const val PRICE_DESC = "priceDesc"
+    const val PRICE = "price"
+    const val SPECIAL_SALE = 608
 
 }

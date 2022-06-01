@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.example.eshop.R
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.databinding.ProductsListItemBinding
 
@@ -25,6 +26,7 @@ class ProductsListAdapter :
             productPrice.text = " ${item.price} تومان "
             Glide.with(root)
                 .load(item.images[0].src)
+                .placeholder(R.drawable.online_shopping_palceholder)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(productImage)
 

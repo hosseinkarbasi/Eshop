@@ -28,6 +28,10 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(Result.Loading())
     val getMostSalesProducts = _getMostSalesProducts.asStateFlow()
 
+    private val _getSpecialSale: MutableStateFlow<Result<Product>> =
+        MutableStateFlow(Result.Loading())
+    val getSpecialSale = _getSpecialSale.asStateFlow()
+
 
     init {
         getNewestProducts()
@@ -35,6 +39,14 @@ class HomeViewModel @Inject constructor(
         getMostSales()
     }
 
+
+    fun getProduct(productId: Int) {
+        viewModelScope.launch {
+            productRepository.getProduct(productId).collect {
+                _getSpecialSale.emit(it)
+            }
+        }
+    }
 
     private fun getNewestProducts() {
         viewModelScope.launch {

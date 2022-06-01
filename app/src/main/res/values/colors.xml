@@ -11,5 +11,7 @@
     <color name="dark_shadow">#DBDBDB</color>
     <color name="splash_background">#FF5500</color>
     <color name="search_view_background">#F0F0F1</color>
+    
+    <color name="transparent_70">#B3000000</color>
 
 </resources>
