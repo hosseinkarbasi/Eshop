@@ -29,9 +29,9 @@ class SearchViewModel @Inject constructor(
         MutableStateFlow(Result.Loading())
     val getSearchText = _getSearchText.asStateFlow()
 
-    fun searchProducts(searchText: String, orderBy: String) {
+    fun searchProducts(searchText: String, orderBy: String,order: String) {
         viewModelScope.launch {
-            productRepository.searchProducts(searchText, orderBy).collect {
+            productRepository.searchProducts(searchText, orderBy,order).collect {
                 _getSearchText.emit(it)
             }
         }

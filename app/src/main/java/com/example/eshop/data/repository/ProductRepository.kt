@@ -69,6 +69,6 @@ class ProductRepository @Inject constructor(
     suspend fun getProductsByCategory(categoryId: Int): Flow<Result<List<Product>>> =
         requestFlow(dispatcher) { remoteDataSource.getProductsByCategory(categoryId) }
 
-    suspend fun searchProducts(searchText: String,orderBy: String): Flow<Result<List<Product>>> =
-        requestFlow(dispatcher) { remoteDataSource.searchProducts(searchText, 100, orderBy) }
+    suspend fun searchProducts(searchText: String,orderBy: String,order: String): Flow<Result<List<Product>>> =
+        requestFlow(dispatcher) { remoteDataSource.searchProducts(searchText, 100, orderBy,order) }
 }

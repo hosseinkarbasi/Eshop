@@ -8,4 +8,10 @@ object Constants {
     const val DATE = "date"
     const val POPULARITY = "popularity"
     const val RATING = "rating"
+    const val ASC = "asc"
+    const val DESC = "desc"
+    const val PRICE_ASC ="priceAsc"
+    const val PRICE_DESC ="priceDesc"
+    const val PRICE ="price"
+
 }

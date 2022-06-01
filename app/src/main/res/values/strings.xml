@@ -24,4 +24,9 @@
     <string name="booksAndArt">کتاب و هنر</string>
     <string name="disconnected">DISCONNECTED</string>
     <string name="about_dis">Please Check Your Internet Connection</string>
+    <string name="prices_from_high_to_low">قیمت از زیاد به کم</string>
+    <string name="prices_from_low_to_high">قیمت از کم به زیاد</string>
+    <string name="best_selling">Best Selling</string>
+    <string name="submit">اعمال</string>
+    <string name="sort">مرتب سازی</string>
 </resources>

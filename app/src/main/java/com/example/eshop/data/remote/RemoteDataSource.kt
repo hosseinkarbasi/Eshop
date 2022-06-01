@@ -20,6 +20,6 @@ class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) 
     suspend fun getProductsByCategory(categoryId: Int): Response<List<Product>> =
         service.getProductsByCategory(categoryId)
 
-    suspend fun searchProducts(searchText: String, perPage: Int,orderBy:String): Response<List<Product>> =
-        service.searchProducts(searchText, perPage,orderBy)
+    suspend fun searchProducts(searchText: String, perPage: Int,orderBy:String,order: String): Response<List<Product>> =
+        service.searchProducts(searchText, perPage,orderBy,order)
 }

@@ -7,7 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
+import com.example.eshop.data.remote.Constants.ASC
 import com.example.eshop.data.remote.Constants.DATE
+import com.example.eshop.data.remote.Constants.DESC
+import com.example.eshop.data.remote.Constants.PRICE
+import com.example.eshop.data.remote.Constants.RATING
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.databinding.FragmentSearchBinding
 import com.example.eshop.ui.fragments.productslist.ProductsListAdapter
@@ -31,6 +35,31 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         initRecyclerView()
         resultSearch()
         goProductDetails()
+        orderingSearchResult()
+    }
+
+    private fun orderingSearchResult() = binding.apply {
+        val searchQuery = viewModel.searchText
+        sort.setOnClickListener {
+            val dialog = OrderingDialog { orderingText ->
+                when (orderingText) {
+                    SortingText.PRICE_ASC -> {
+                        viewModel.searchProducts(searchQuery, PRICE, ASC)
+                    }
+                    SortingText.PRICE_DESC -> {
+                        viewModel.searchProducts(searchQuery, PRICE, DESC)
+                    }
+                    SortingText.DATE -> {
+                        viewModel.searchProducts(searchQuery, DATE, DESC)
+                    }
+                    SortingText.RATING -> {
+                        viewModel.searchProducts(searchQuery, RATING, DESC)
+                    }
+                }
+                sort.text = orderingText.text
+            }
+            dialog.show(childFragmentManager, "sort")
+        }
     }
 
     private fun initRecyclerView() {
@@ -39,7 +68,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun resultSearch() {
-        viewModel.searchProducts(viewModel.searchText, DATE)
+        viewModel.searchProducts(viewModel.searchText, DATE, DESC)
         viewModel.getSearchText.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
                 is Result.Error -> {
