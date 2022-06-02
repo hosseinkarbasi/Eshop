@@ -1,11 +1,10 @@
 package com.example.eshop.data.remote.network
 
 import com.example.eshop.data.remote.model.Category
+import com.example.eshop.data.remote.model.Order
 import com.example.eshop.data.remote.model.Product
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface WooCommerceApi {
 
@@ -31,5 +30,8 @@ interface WooCommerceApi {
         @Query("orderby") orderBy: String,
         @Query("order") order: String
     ): Response<List<Product>>
+
+    @POST("orders")
+    suspend fun setOrder(@Body order: Order): Response<Order>
 
 }

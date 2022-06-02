@@ -1,6 +1,7 @@
 package com.example.eshop.data.remote
 
 import com.example.eshop.data.remote.model.Category
+import com.example.eshop.data.remote.model.Order
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.data.remote.network.WooCommerceApi
 import retrofit2.Response
@@ -22,4 +23,6 @@ class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) 
 
     suspend fun searchProducts(searchText: String, perPage: Int,orderBy:String,order: String): Response<List<Product>> =
         service.searchProducts(searchText, perPage,orderBy,order)
+
+    suspend fun setOrder(order:Order) : Response<Order> = service.setOrder(order)
 }

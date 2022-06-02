@@ -1,10 +1,13 @@
 package com.example.eshop.data.repository
 
+import com.example.eshop.data.local.LocalDataSource
+import com.example.eshop.data.local.model.LocalProduct
 import com.example.eshop.data.remote.Constants.DATE
 import com.example.eshop.data.remote.Constants.POPULARITY
 import com.example.eshop.data.remote.Constants.RATING
 import com.example.eshop.data.remote.RemoteDataSource
 import com.example.eshop.data.remote.model.Category
+import com.example.eshop.data.remote.model.Order
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.di.IoDispatcher
 import com.example.eshop.utils.Result
@@ -18,7 +21,8 @@ import javax.inject.Singleton
 class ProductRepository @Inject constructor(
     @IoDispatcher
     private val dispatcher: CoroutineDispatcher,
-    private val remoteDataSource: RemoteDataSource
+    private val localDataSource: LocalDataSource,
+    private val remoteDataSource: RemoteDataSource,
 ) {
 
 
@@ -69,6 +73,21 @@ class ProductRepository @Inject constructor(
     suspend fun getProductsByCategory(categoryId: Int): Flow<Result<List<Product>>> =
         requestFlow(dispatcher) { remoteDataSource.getProductsByCategory(categoryId) }
 
-    suspend fun searchProducts(searchText: String,orderBy: String,order: String): Flow<Result<List<Product>>> =
-        requestFlow(dispatcher) { remoteDataSource.searchProducts(searchText, 100, orderBy,order) }
+    suspend fun searchProducts(
+        searchText: String,
+        orderBy: String,
+        order: String
+    ): Flow<Result<List<Product>>> =
+        requestFlow(dispatcher) { remoteDataSource.searchProducts(searchText, 100, orderBy, order) }
+
+    suspend fun insertProduct(product: LocalProduct) {
+        withContext(dispatcher) {
+            localDataSource.insertProduct(product)
+        }
+    }
+
+    fun getProducts(): Flow<List<LocalProduct>> = localDataSource.gerProducts()
+
+    suspend fun setOrder(order: Order): Flow<Result<Order>> =
+        requestFlow(dispatcher) { remoteDataSource.setOrder(order) }
 }

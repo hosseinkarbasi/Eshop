@@ -1,5 +1,6 @@
 package com.example.eshop.data.remote.model
 
+
 data class Product(
     val id: Int,
     val name: String,

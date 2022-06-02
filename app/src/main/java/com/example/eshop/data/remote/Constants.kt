@@ -14,5 +14,6 @@ object Constants {
     const val PRICE_DESC = "priceDesc"
     const val PRICE = "price"
     const val SPECIAL_SALE = 608
+    const val CUSTOMER_ID = 542
 
 }

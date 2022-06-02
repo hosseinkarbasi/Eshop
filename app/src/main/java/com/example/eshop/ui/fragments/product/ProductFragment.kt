@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.eshop.R
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.databinding.FragmentProductBinding
+import com.example.eshop.utils.Mapper
 import com.example.eshop.utils.Result
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,22 +68,21 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun isSuccess(data:Product) = binding.apply {
+    private fun isSuccess(data: Product) = binding.apply {
         loading.gone()
         headerCardView.visible()
         footerCardView.visible()
         loading.pauseAnimation()
         productDetails = data
-        productRating.text =
-            "(${data.rating_count}) ${data.average_rating}"
+        productRating.text = "(${data.rating_count}) ${data.average_rating}"
         ratingBar.rating = data.average_rating.toFloat()
-        productDec.text = data.let { it1 ->
-            HtmlCompat.fromHtml(
-                it1.description,
-                HtmlCompat.FROM_HTML_MODE_LEGACY
-            )
+        productDec.text = data.let { product ->
+            HtmlCompat.fromHtml(product.description, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
         imageViewPagerAdapter.submitList(data.images)
+        basketBtn.setOnClickListener {
+            viewModel.insertProduct(Mapper.transformRemoteProductToLocalProduct(data))
+        }
     }
 
     private fun setUpViewPager() {

@@ -31,4 +31,5 @@
     <string name="sort">مرتب سازی</string>
     <string name="filters">فیلترها</string>
     <string name="basket">Basket</string>
+    <string name="cart_submit_text">خرید خود را نهایی کنید</string>
 </resources>
