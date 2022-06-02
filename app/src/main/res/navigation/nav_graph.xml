@@ -67,4 +67,8 @@
             android:name="query"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="com.example.eshop.ui.fragments.basket.BasketFragment"
+        android:label="BasketFragment" />
 </navigation>

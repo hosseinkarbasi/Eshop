@@ -16,4 +16,9 @@
         android:icon="@drawable/profile_icon_selector"
         android:title="@string/myShop" />
 
+    <item
+        android:id="@+id/basketFragment"
+        android:icon="@drawable/basket_icon_selector"
+        android:title="@string/basket" />
+
 </menu>
