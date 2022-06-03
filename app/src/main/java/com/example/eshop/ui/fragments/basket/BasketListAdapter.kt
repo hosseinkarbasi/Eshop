@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.eshop.R
 import com.example.eshop.data.local.model.LocalProduct
+import com.example.eshop.databinding.BasketListItemBinding
 import com.example.eshop.databinding.ProductsListItemBinding
 
 class BasketListAdapter :
@@ -17,7 +18,7 @@ class BasketListAdapter :
 
     private var itemClick: ((product: LocalProduct) -> Unit)? = null
 
-    inner class CustomViewHolder(private var binding: ProductsListItemBinding) :
+    inner class CustomViewHolder(private var binding: BasketListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
@@ -40,7 +41,7 @@ class BasketListAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder =
         CustomViewHolder(
-            ProductsListItemBinding.inflate(
+            BasketListItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )

@@ -7,6 +7,11 @@
         android:title="@string/home" />
 
     <item
+        android:id="@+id/basketFragment"
+        android:icon="@drawable/basket_icon_selector"
+        android:title="@string/basket" />
+
+    <item
         android:id="@+id/categoryFragment"
         android:icon="@drawable/category_icon_selector"
         android:title="@string/category" />
@@ -15,10 +20,5 @@
         android:id="@+id/profileFragment"
         android:icon="@drawable/profile_icon_selector"
         android:title="@string/myShop" />
-
-    <item
-        android:id="@+id/basketFragment"
-        android:icon="@drawable/basket_icon_selector"
-        android:title="@string/basket" />
 
 </menu>

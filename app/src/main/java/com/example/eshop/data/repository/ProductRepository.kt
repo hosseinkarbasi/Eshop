@@ -90,4 +90,7 @@ class ProductRepository @Inject constructor(
 
     suspend fun setOrder(order: Order): Flow<Result<Order>> =
         requestFlow(dispatcher) { remoteDataSource.setOrder(order) }
+
+    suspend fun deleteAllProductsBasket() =
+        withContext(dispatcher) { localDataSource.deleteProduct() }
 }

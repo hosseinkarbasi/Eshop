@@ -82,6 +82,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         imageViewPagerAdapter.submitList(data.images)
         basketBtn.setOnClickListener {
             viewModel.insertProduct(Mapper.transformRemoteProductToLocalProduct(data))
+            Toast.makeText(requireContext(), "به سبد خرید  اضافه شد", Toast.LENGTH_SHORT).show()
         }
     }
 

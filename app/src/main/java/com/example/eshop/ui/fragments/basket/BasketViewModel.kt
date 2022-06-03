@@ -34,6 +34,12 @@ class BasketViewModel @Inject constructor(private val productRepository: Product
         }
     }
 
+    fun deleteAllProductsBasket() {
+        viewModelScope.launch {
+            productRepository.deleteAllProductsBasket()
+        }
+    }
+
     private fun getLocalProducts() {
         viewModelScope.launch {
             productRepository.getProducts().collect {
