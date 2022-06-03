@@ -7,22 +7,30 @@ import com.example.eshop.data.remote.network.WooCommerceApi
 import retrofit2.Response
 import javax.inject.Inject
 
-class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) {
+class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) :
+    IRemoteDataSource {
 
-    suspend fun getCategories(categoryId: Int): Response<List<Category>> =
+    override suspend fun getCategories(categoryId: Int): Response<List<Category>> =
         service.getCategories(categoryId)
 
-    suspend fun getProducts(order: String, perPage: Int): Response<List<Product>> =
+    override suspend fun getProducts(order: String, perPage: Int): Response<List<Product>> =
         service.getProducts(order, perPage)
 
-    suspend fun getProduct(id: Int): Response<Product> =
+    override suspend fun getProduct(id: Int): Response<Product> =
         service.getProduct(id)
 
-    suspend fun getProductsByCategory(categoryId: Int): Response<List<Product>> =
+    override suspend fun getProductsByCategory(categoryId: Int): Response<List<Product>> =
         service.getProductsByCategory(categoryId)
 
-    suspend fun searchProducts(searchText: String, perPage: Int,orderBy:String,order: String): Response<List<Product>> =
-        service.searchProducts(searchText, perPage,orderBy,order)
+    override suspend fun setOrder(order: Order): Response<Order> =
+        service.setOrder(order)
 
-    suspend fun setOrder(order:Order) : Response<Order> = service.setOrder(order)
+    override suspend fun searchProducts(
+        searchText: String,
+        perPage: Int,
+        orderBy: String,
+        order: String
+    ): Response<List<Product>> =
+        service.searchProducts(searchText, perPage, orderBy, order)
+
 }

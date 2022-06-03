@@ -1,7 +1,11 @@
 package com.example.eshop.data.remote.model
 
+import com.google.gson.annotations.SerializedName as SN
+
 data class Order(
-    val customer_id: Int,
-    val line_items: List<LineItem>,
+    @SN("customer_id")
+    val customerId: Int,
+    @SN("line_items")
+    val lineItems: List<LineItem>,
     val number: String
 )

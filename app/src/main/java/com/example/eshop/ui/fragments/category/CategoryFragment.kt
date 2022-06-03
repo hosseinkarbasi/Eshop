@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
 import com.example.eshop.databinding.FragmentCategoryBinding
-import com.example.eshop.utils.Result
+import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -61,36 +61,36 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
     private fun getCategoriesList() {
         viewModel.getClothingCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
-                is Result.Error -> {}
-                is Result.Loading -> {}
-                is Result.Success -> {
+                is ResultWrapper.Error -> {}
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.Success -> {
                     clothingAdapter.submitList(it.data)
                 }
             }
         }
         viewModel.getDigitalCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
-                is Result.Error -> {}
-                is Result.Loading -> {}
-                is Result.Success -> {
+                is ResultWrapper.Error -> {}
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.Success -> {
                     digitalAdapter.submitList(it.data)
                 }
             }
         }
         viewModel.getSuperMarketCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
-                is Result.Error -> {}
-                is Result.Loading -> {}
-                is Result.Success -> {
+                is ResultWrapper.Error -> {}
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.Success -> {
                     superMarketAdapter.submitList(it.data)
                 }
             }
         }
         viewModel.getBooksAndArtCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
-                is Result.Error -> {}
-                is Result.Loading -> {}
-                is Result.Success -> {
+                is ResultWrapper.Error -> {}
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.Success -> {
                     booksAndArtAdapter.submitList(it.data)
                 }
             }

@@ -6,12 +6,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.eshop.R
 import com.example.eshop.data.local.model.LocalProduct
-import com.example.eshop.data.remote.Constants.CUSTOMER_ID
+import com.example.eshop.application.Constants.CUSTOMER_ID
 import com.example.eshop.data.remote.model.Order
 import com.example.eshop.databinding.FragmentBasketBinding
 import com.example.eshop.utils.Mapper
-import com.example.eshop.utils.Result
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
+import com.example.eshop.data.remote.ResultWrapper
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,7 +47,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
     private fun getOrderStatus() {
         viewModel.getOrder.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
-                is Result.Success -> {
+                is ResultWrapper.Success -> {
                     val orderDialog = MaterialAlertDialogBuilder(requireContext())
                     orderDialog.apply {
                         setTitle("ثبت سفارش")
@@ -58,7 +58,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
                     }
                     viewModel.deleteAllProductsBasket()
                 }
-                is Result.Error -> {
+                is ResultWrapper.Error -> {
                     val orderDialog = MaterialAlertDialogBuilder(requireContext())
                     orderDialog.apply {
                         setTitle("ثبت سفارش")

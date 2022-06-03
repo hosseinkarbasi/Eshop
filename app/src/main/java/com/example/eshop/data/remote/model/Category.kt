@@ -1,5 +1,7 @@
 package com.example.eshop.data.remote.model
 
+import com.google.gson.annotations.SerializedName as SN
+
 data class Category(
     val id: Int,
     val name: String,
@@ -7,7 +9,8 @@ data class Category(
     val count: Int,
     val description: String,
     val display: String,
-    val menu_order: Int,
+    @SN("menu_order")
+    val menuOrder: Int,
     val parent: Int,
     val slug: String
 )

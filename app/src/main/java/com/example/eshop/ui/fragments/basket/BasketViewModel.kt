@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.eshop.data.local.model.LocalProduct
 import com.example.eshop.data.remote.model.Order
 import com.example.eshop.data.repository.ProductRepository
-import com.example.eshop.utils.Result
+import com.example.eshop.data.remote.ResultWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +19,7 @@ class BasketViewModel @Inject constructor(private val productRepository: Product
     private val _getProducts = MutableStateFlow<List<LocalProduct>>(emptyList())
     val getProducts = _getProducts.asStateFlow()
 
-    private val _getOrder = MutableStateFlow<Result<Order>>(Result.Success(null))
+    private val _getOrder = MutableStateFlow<ResultWrapper<Order>>(ResultWrapper.Success(null))
     val getOrder = _getOrder.asStateFlow()
 
     init {
@@ -42,7 +42,7 @@ class BasketViewModel @Inject constructor(private val productRepository: Product
 
     private fun getLocalProducts() {
         viewModelScope.launch {
-            productRepository.getProducts().collect {
+            productRepository.getLocalProducts().collect {
                 _getProducts.emit(it)
             }
         }

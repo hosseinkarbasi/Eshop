@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.data.repository.ProductRepository
-import com.example.eshop.utils.Result
+import com.example.eshop.data.remote.ResultWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,20 +16,20 @@ class HomeViewModel @Inject constructor(
     private val productRepository: ProductRepository
 ) : ViewModel() {
 
-    private val _getNewestProducts: MutableStateFlow<Result<List<Product>>> =
-        MutableStateFlow(Result.Loading())
+    private val _getNewestProducts: MutableStateFlow<ResultWrapper<List<Product>>> =
+        MutableStateFlow(ResultWrapper.Loading())
     val getNewestProducts = _getNewestProducts.asStateFlow()
 
-    private val _getMostViewedProducts: MutableStateFlow<Result<List<Product>>> =
-        MutableStateFlow(Result.Loading())
+    private val _getMostViewedProducts: MutableStateFlow<ResultWrapper<List<Product>>> =
+        MutableStateFlow(ResultWrapper.Loading())
     val getMostViewedProducts = _getMostViewedProducts.asStateFlow()
 
-    private val _getMostSalesProducts: MutableStateFlow<Result<List<Product>>> =
-        MutableStateFlow(Result.Loading())
+    private val _getMostSalesProducts: MutableStateFlow<ResultWrapper<List<Product>>> =
+        MutableStateFlow(ResultWrapper.Loading())
     val getMostSalesProducts = _getMostSalesProducts.asStateFlow()
 
-    private val _getSpecialSale: MutableStateFlow<Result<Product>> =
-        MutableStateFlow(Result.Loading())
+    private val _getSpecialSale: MutableStateFlow<ResultWrapper<Product>> =
+        MutableStateFlow(ResultWrapper.Loading())
     val getSpecialSale = _getSpecialSale.asStateFlow()
 
 

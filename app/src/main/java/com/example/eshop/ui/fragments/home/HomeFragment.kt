@@ -9,13 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
-import com.example.eshop.data.remote.Constants.DATE
-import com.example.eshop.data.remote.Constants.POPULARITY
-import com.example.eshop.data.remote.Constants.RATING
-import com.example.eshop.data.remote.Constants.SPECIAL_SALE
+import com.example.eshop.application.Constants.DATE
+import com.example.eshop.application.Constants.POPULARITY
+import com.example.eshop.application.Constants.RATING
+import com.example.eshop.application.Constants.SPECIAL_SALE
 import com.example.eshop.databinding.FragmentHomeBinding
 import com.example.eshop.ui.fragments.product.ImageViewPagerAdapter
-import com.example.eshop.utils.Result
+import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -42,7 +42,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         getProductsList()
         goProductDetails()
         seeMoreItems()
-        searchProducts()
     }
 
     private fun getSpecialSaleProducts() {
@@ -79,9 +78,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun getProductsList() {
         viewModel.getNewestProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
-                is Result.Error -> {}
-                is Result.Loading -> {}
-                is Result.Success -> {
+                is ResultWrapper.Error -> {}
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.Success -> {
                     newestProductAdapter.submitList(it.data)
                 }
             }
@@ -118,25 +117,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             val action = HomeFragmentDirections.actionGlobalProductFragment(it.id)
             findNavController().navigate(action)
         }
-    }
-
-    private fun searchProducts() {
-        binding.searchProducts.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                val search = query?.lowercase(Locale.getDefault())
-                if (search.isNullOrEmpty()) return false
-                else {
-                    val action = HomeFragmentDirections.actionHomeFragmentToSearchFragment(query)
-                    findNavController().navigate(action)
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-
-        })
     }
 
     override fun onDestroyView() {

@@ -1,8 +1,10 @@
 package com.example.eshop.di
 
-import com.example.eshop.data.remote.Constants.BASE_URL
-import com.example.eshop.data.remote.Constants.CONSUMER_KEY
-import com.example.eshop.data.remote.Constants.CONSUMER_SECRET
+import com.example.eshop.application.Constants.BASE_URL
+import com.example.eshop.application.Constants.CONSUMER_KEY
+import com.example.eshop.application.Constants.CONSUMER_SECRET
+import com.example.eshop.data.remote.IRemoteDataSource
+import com.example.eshop.data.remote.RemoteDataSource
 import com.example.eshop.data.remote.network.WooCommerceApi
 import dagger.Module
 import dagger.Provides
@@ -19,7 +21,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiModule {
+object NetworkModule {
 
     @Provides
     @IoDispatcher
@@ -64,12 +66,17 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient): WooCommerceApi {
+    fun provideRetrofit(): WooCommerceApi {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(client)
+            .client(provideClient())
             .addConverterFactory(jsonConvertorFactory())
             .build()
             .create(WooCommerceApi::class.java)
     }
+
+
+    @Provides
+    @Singleton
+    fun provideRemoteDataSource(): IRemoteDataSource = RemoteDataSource(provideRetrofit())
 }

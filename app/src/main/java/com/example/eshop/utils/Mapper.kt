@@ -2,9 +2,7 @@ package com.example.eshop.utils
 
 import com.example.eshop.data.local.model.LocalProduct
 import com.example.eshop.data.remote.model.LineItem
-import com.example.eshop.data.remote.model.Order
 import com.example.eshop.data.remote.model.Product
-import kotlin.random.Random
 
 object Mapper {
 
@@ -22,6 +20,5 @@ object Mapper {
             LineItem(it.id, quantity)
         }
     }
-
 
 }

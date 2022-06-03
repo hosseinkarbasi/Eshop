@@ -1,95 +1,66 @@
 package com.example.eshop.data.repository
 
-import com.example.eshop.data.local.LocalDataSource
 import com.example.eshop.data.local.model.LocalProduct
-import com.example.eshop.data.remote.Constants.DATE
-import com.example.eshop.data.remote.Constants.POPULARITY
-import com.example.eshop.data.remote.Constants.RATING
-import com.example.eshop.data.remote.RemoteDataSource
-import com.example.eshop.data.remote.model.Category
+import com.example.eshop.application.Constants.DATE
+import com.example.eshop.application.Constants.POPULARITY
+import com.example.eshop.application.Constants.RATING
+import com.example.eshop.data.local.ILocalDataSource
+import com.example.eshop.data.remote.IRemoteDataSource
 import com.example.eshop.data.remote.model.Order
 import com.example.eshop.data.remote.model.Product
+import com.example.eshop.data.remote.requestFlow
 import com.example.eshop.di.IoDispatcher
-import com.example.eshop.utils.Result
-import com.example.eshop.utils.requestFlow
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
+import com.example.eshop.data.remote.ResultWrapper
 
 @Singleton
 class ProductRepository @Inject constructor(
     @IoDispatcher
     private val dispatcher: CoroutineDispatcher,
-    private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: ILocalDataSource,
+    private val remoteDataSource: IRemoteDataSource
 ) {
 
-
-    suspend fun getNewestProducts(perPage: Int): Flow<Result<List<Product>>> {
+    suspend fun getNewestProducts(perPage: Int): Flow<ResultWrapper<List<Product>>> {
         return requestFlow(dispatcher) { remoteDataSource.getProducts(DATE, perPage) }
     }
 
-    suspend fun getMostViewedProducts(perPage: Int): Flow<Result<List<Product>>> {
+    suspend fun getMostViewedProducts(perPage: Int): Flow<ResultWrapper<List<Product>>> {
         return requestFlow(dispatcher) { remoteDataSource.getProducts(POPULARITY, perPage) }
     }
 
-    suspend fun getBestSalesProducts(perPage: Int): Flow<Result<List<Product>>> {
+    suspend fun getBestSalesProducts(perPage: Int): Flow<ResultWrapper<List<Product>>> {
         return requestFlow(dispatcher) { remoteDataSource.getProducts(RATING, perPage) }
     }
 
-    fun getCategories(
-        result: (
-            clothing: Flow<Result<List<Category>>>,
-            digital: Flow<Result<List<Category>>>,
-            superMarket: Flow<Result<List<Category>>>,
-            booksAndArt: Flow<Result<List<Category>>>
-        ) -> Unit
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val clothing = async {
-                requestFlow(dispatcher) { remoteDataSource.getCategories(62) }
-            }
-            val digital = async {
-                requestFlow(dispatcher) { remoteDataSource.getCategories(52) }
-            }
-            val superMarket = async {
-                requestFlow(dispatcher) { remoteDataSource.getCategories(81) }
-            }
-            val booksAndArt = async {
-                requestFlow(dispatcher) { remoteDataSource.getCategories(76) }
-            }
-            val clothingC = clothing.await()
-            val digitalC = digital.await()
-            val superMarketC = superMarket.await()
-            val booksAndArtC = booksAndArt.await()
-            result(clothingC, digitalC, superMarketC, booksAndArtC)
-        }
-    }
-
-    suspend fun getProduct(id: Int): Flow<Result<Product>> =
+    suspend fun getProduct(id: Int): Flow<ResultWrapper<Product>> =
         requestFlow(dispatcher) { remoteDataSource.getProduct(id) }
 
-    suspend fun getProductsByCategory(categoryId: Int): Flow<Result<List<Product>>> =
+    suspend fun getProductsByCategory(categoryId: Int): Flow<ResultWrapper<List<Product>>> =
         requestFlow(dispatcher) { remoteDataSource.getProductsByCategory(categoryId) }
 
     suspend fun searchProducts(
         searchText: String,
         orderBy: String,
         order: String
-    ): Flow<Result<List<Product>>> =
+    ): Flow<ResultWrapper<List<Product>>> =
         requestFlow(dispatcher) { remoteDataSource.searchProducts(searchText, 100, orderBy, order) }
 
+    suspend fun setOrder(order: Order): Flow<ResultWrapper<Order>> =
+        requestFlow(dispatcher) { remoteDataSource.setOrder(order) }
+
+
+    //local
     suspend fun insertProduct(product: LocalProduct) {
         withContext(dispatcher) {
             localDataSource.insertProduct(product)
         }
     }
 
-    fun getProducts(): Flow<List<LocalProduct>> = localDataSource.gerProducts()
-
-    suspend fun setOrder(order: Order): Flow<Result<Order>> =
-        requestFlow(dispatcher) { remoteDataSource.setOrder(order) }
+    fun getLocalProducts(): Flow<List<LocalProduct>> = localDataSource.gerProducts()
 
     suspend fun deleteAllProductsBasket() =
         withContext(dispatcher) { localDataSource.deleteProduct() }

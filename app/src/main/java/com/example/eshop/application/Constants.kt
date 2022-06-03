@@ -1,4 +1,4 @@
-package com.example.eshop.data.remote
+package com.example.eshop.application
 
 object Constants {
 

@@ -5,12 +5,12 @@ import com.example.eshop.data.local.model.LocalProduct
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class LocalDataSource @Inject constructor(private val dao: ProductDao) {
+class LocalDataSource @Inject constructor(private val dao: ProductDao) : ILocalDataSource {
 
-    fun gerProducts(): Flow<List<LocalProduct>> = dao.getProducts()
-    suspend fun insertProduct(product: LocalProduct) = dao.insertProduct(product)
-    suspend fun deleteProduct(id: String) = dao.deleteProduct(id)
-    suspend fun updateProduct(product: LocalProduct) = dao.updateProduct(product)
-    suspend fun deleteProduct() = dao.deleteAllProducts()
+    override fun gerProducts(): Flow<List<LocalProduct>> = dao.getProducts()
+    override suspend fun insertProduct(product: LocalProduct) = dao.insertProduct(product)
+    override suspend fun deleteProduct(id: String) = dao.deleteProduct(id)
+    override suspend fun updateProduct(product: LocalProduct) = dao.updateProduct(product)
+    override suspend fun deleteProduct() = dao.deleteAllProducts()
 
 }

@@ -148,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/yekan_bakh_regular"
-                        android:text='@{ productDetails.regular_price + " تومان" }'
+                        android:text='@{ productDetails.regularPrice + " تومان" }'
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="@+id/rating_bar"
                         app:layout_constraintTop_toBottomOf="@+id/rating_bar"

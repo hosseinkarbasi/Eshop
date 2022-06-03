@@ -4,13 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import com.example.eshop.R
-import com.example.eshop.data.remote.Constants.DATE
-import com.example.eshop.data.remote.Constants.PRICE
-import com.example.eshop.data.remote.Constants.PRICE_ASC
-import com.example.eshop.data.remote.Constants.PRICE_DESC
-import com.example.eshop.data.remote.Constants.RATING
 import com.example.eshop.databinding.DialogOrderingBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

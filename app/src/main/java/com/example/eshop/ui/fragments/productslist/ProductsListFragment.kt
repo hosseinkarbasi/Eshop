@@ -7,12 +7,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
-import com.example.eshop.data.remote.Constants.DATE
-import com.example.eshop.data.remote.Constants.POPULARITY
-import com.example.eshop.data.remote.Constants.RATING
+import com.example.eshop.application.Constants.DATE
+import com.example.eshop.application.Constants.POPULARITY
+import com.example.eshop.application.Constants.RATING
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.databinding.FragmentProductsListBinding
-import com.example.eshop.utils.Result
+import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,13 +47,13 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
         viewModel.getProductsByCategory(categoryId)
         viewModel.getProductsByCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
-                is Result.Error -> {
+                is ResultWrapper.Error -> {
                     it.message?.let { it1 -> isError(it1) }
                 }
-                is Result.Loading -> {
+                is ResultWrapper.Loading -> {
                     isLoading()
                 }
-                is Result.Success -> {
+                is ResultWrapper.Success -> {
                     it.data?.let { it1 -> isSuccess(it1) }
                 }
             }
@@ -66,13 +66,13 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
                 viewModel.getNewest()
                 viewModel.getNewestProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
                     when (it) {
-                        is Result.Error -> {
+                        is ResultWrapper.Error -> {
                             it.message?.let { it1 -> isError(it1) }
                         }
-                        is Result.Loading -> {
+                        is ResultWrapper.Loading -> {
                             isLoading()
                         }
-                        is Result.Success -> {
+                        is ResultWrapper.Success -> {
                             it.data?.let { it1 -> isSuccess(it1) }
                         }
                     }
@@ -82,13 +82,13 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
                 viewModel.getMostSales()
                 viewModel.getMostSalesProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
                     when (it) {
-                        is Result.Error -> {
+                        is ResultWrapper.Error -> {
                             it.message?.let { it1 -> isError(it1) }
                         }
-                        is Result.Loading -> {
+                        is ResultWrapper.Loading -> {
                             isLoading()
                         }
-                        is Result.Success -> {
+                        is ResultWrapper.Success -> {
                             it.data?.let { it1 -> isSuccess(it1) }
                         }
                     }
@@ -98,13 +98,13 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
                 viewModel.getMostViewed()
                 viewModel.getMostViewedProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
                     when (it) {
-                        is Result.Error -> {
+                        is ResultWrapper.Error -> {
                             it.message?.let { it1 -> isError(it1) }
                         }
-                        is Result.Loading -> {
+                        is ResultWrapper.Loading -> {
                             isLoading()
                         }
-                        is Result.Success -> {
+                        is ResultWrapper.Success -> {
                             it.data?.let { it1 -> isSuccess(it1) }
                         }
                     }

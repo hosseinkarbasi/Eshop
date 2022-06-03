@@ -14,7 +14,7 @@ import com.example.eshop.R
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.databinding.FragmentProductBinding
 import com.example.eshop.utils.Mapper
-import com.example.eshop.utils.Result
+import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,13 +39,13 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         viewModel.getProduct(args.productId)
         viewModel.getProduct.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
-                is Result.Error -> {
+                is ResultWrapper.Error -> {
                     isError(it.message.toString())
                 }
-                is Result.Loading -> {
+                is ResultWrapper.Loading -> {
                     isLoading()
                 }
-                is Result.Success -> {
+                is ResultWrapper.Success -> {
                     it.data?.let { it1 -> isSuccess(it1) }
                 }
             }
@@ -56,6 +56,8 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         loading.visible()
         headerCardView.gone()
         footerCardView.gone()
+        productDecTv.gone()
+        basketBtn.gone()
         loading.playAnimation()
     }
 
@@ -63,6 +65,8 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         loading.visible()
         headerCardView.gone()
         footerCardView.gone()
+        productDecTv.gone()
+        basketBtn.gone()
         loading.playAnimation()
         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
@@ -72,10 +76,12 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         loading.gone()
         headerCardView.visible()
         footerCardView.visible()
+        productDecTv.visible()
+        basketBtn.visible()
         loading.pauseAnimation()
         productDetails = data
-        productRating.text = "(${data.rating_count}) ${data.average_rating}"
-        ratingBar.rating = data.average_rating.toFloat()
+        productRating.text = "(${data.ratingCount}) ${data.averageRating}"
+        ratingBar.rating = data.averageRating.toFloat()
         productDec.text = data.let { product ->
             HtmlCompat.fromHtml(product.description, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }

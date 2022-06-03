@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.data.repository.ProductRepository
-import com.example.eshop.utils.Result
+import com.example.eshop.data.remote.ResultWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,8 +25,8 @@ class SearchViewModel @Inject constructor(
         }
 
 
-    private val _getSearchText: MutableStateFlow<Result<List<Product>>> =
-        MutableStateFlow(Result.Loading())
+    private val _getSearchText: MutableStateFlow<ResultWrapper<List<Product>>> =
+        MutableStateFlow(ResultWrapper.Loading())
     val getSearchText = _getSearchText.asStateFlow()
 
     fun searchProducts(searchText: String, orderBy: String,order: String) {

@@ -1,11 +1,17 @@
 package com.example.eshop.data.remote.model
 
+import com.google.gson.annotations.SerializedName as SN
+
 data class ProductImage(
     val alt: String,
-    val date_created: String,
-    val date_created_gmt: String,
-    val date_modified: String,
-    val date_modified_gmt: String,
+    @SN("date_created")
+    val dateCreated: String,
+    @SN("date_created_gmt")
+    val dateCreatedGmt: String,
+    @SN("date_modified")
+    val dateModified: String,
+    @SN("date_modified_gmt")
+    val dateModifiedGmt: String,
     val id: Int,
     val name: String,
     val src: String
