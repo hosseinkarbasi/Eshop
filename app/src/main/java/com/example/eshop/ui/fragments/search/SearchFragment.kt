@@ -18,8 +18,7 @@ import com.example.eshop.databinding.FragmentSearchBinding
 import com.example.eshop.ui.fragments.productslist.ProductsListAdapter
 import com.example.eshop.ui.fragments.productslist.ProductsListFragmentDirections
 import com.example.eshop.data.remote.ResultWrapper
-import com.example.eshop.ui.fragments.home.HomeFragmentDirections
-import com.example.eshop.utils.collectWithRepeatOnLifecycle
+import com.example.eshop.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -30,25 +29,35 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private val binding get() = _binding!!
     private val viewModel by viewModels<SearchViewModel>()
     private lateinit var searchAdapter: ProductsListAdapter
+    private lateinit var searchQuery: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSearchBinding.bind(view)
 
         initRecyclerView()
-        resultSearch()
+        searchProducts()
         goProductDetails()
         orderingSearchResult()
     }
 
-    private fun searchProducts() {
-        binding.searchProducts.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+    private fun searchProducts() = binding.apply {
+        searchProducts.onActionViewExpanded()
+        searchProducts.setOnQueryTextFocusChangeListener { _, hasFocus ->
+            if (hasFocus) searchProducts.showKeyboard()
+            else searchProducts.hideKeyboard()
+        }
+
+        searchProducts.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 val search = query?.lowercase(Locale.getDefault())
                 if (search.isNullOrEmpty()) return false
                 else {
-                    val action = HomeFragmentDirections.actionHomeFragmentToSearchFragment(query)
-                    findNavController().navigate(action)
+                    searchQuery = query
+                    viewModel.searchProducts(query, DATE, DESC)
+                    resultSearch()
+                    searchProducts.hideKeyboard()
+
                 }
                 return true
             }
@@ -56,12 +65,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
-
         })
     }
 
     private fun orderingSearchResult() = binding.apply {
-        val searchQuery = viewModel.searchText
         sort.setOnClickListener {
             val dialog = OrderingDialog { orderingText ->
                 when (orderingText) {
@@ -81,6 +88,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 sort.text = orderingText.text
             }
             dialog.show(childFragmentManager, "sort")
+            sort.hideKeyboard()
+            searchProducts.clearFocus()
         }
     }
 
@@ -90,7 +99,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun resultSearch() {
-        viewModel.searchProducts(viewModel.searchText, DATE, DESC)
         viewModel.getSearchText.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
                 is ResultWrapper.Error -> {
@@ -126,17 +134,12 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private fun isSuccess(data: List<Product>) = binding.apply {
         loading.gone()
+        sort.visible()
+        filter.visible()
         loading.pauseAnimation()
         searchAdapter.submitList(data)
     }
 
-    private fun View.visible() {
-        visibility = View.VISIBLE
-    }
-
-    private fun View.gone() {
-        visibility = View.GONE
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

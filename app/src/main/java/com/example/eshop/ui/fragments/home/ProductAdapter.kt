@@ -24,8 +24,8 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.CustomViewHolder>(Dif
             Glide.with(root)
                 .load(item.images[0].src)
                 .placeholder(R.drawable.online_shopping_palceholder)
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(productImage)
+
 
             binding.root.setOnClickListener {
                 itemClick?.let {

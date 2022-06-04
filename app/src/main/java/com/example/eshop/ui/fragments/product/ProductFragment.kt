@@ -16,6 +16,8 @@ import com.example.eshop.databinding.FragmentProductBinding
 import com.example.eshop.utils.Mapper
 import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
+import com.example.eshop.utils.gone
+import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -98,13 +100,6 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         binding.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
     }
 
-    private fun View.visible() {
-        visibility = View.VISIBLE
-    }
-
-    private fun View.gone() {
-        visibility = View.GONE
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

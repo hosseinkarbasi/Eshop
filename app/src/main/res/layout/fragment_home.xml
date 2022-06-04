@@ -167,12 +167,13 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/slider_vp"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="155dp"
                 android:layout_marginTop="16dp"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="NotSibling" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,4 +34,5 @@
     <string name="cart_submit_text">ثبت سفارش</string>
     <string name="pardakht">جزییات پرداخت</string>
     <string name="total_price">مبلغ کل خرید</string>
+    <string name="slider">slider</string>
 </resources>

@@ -14,6 +14,8 @@ import com.example.eshop.data.remote.model.Product
 import com.example.eshop.databinding.FragmentProductsListBinding
 import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
+import com.example.eshop.utils.gone
+import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -133,14 +135,6 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
         loading.gone()
         loading.pauseAnimation()
         productsAdapter.submitList(data)
-    }
-
-    private fun View.visible() {
-        visibility = View.VISIBLE
-    }
-
-    private fun View.gone() {
-        visibility = View.GONE
     }
 
     override fun onDestroyView() {

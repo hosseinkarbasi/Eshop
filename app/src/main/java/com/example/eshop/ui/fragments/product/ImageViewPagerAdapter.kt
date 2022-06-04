@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.example.eshop.R
 import com.example.eshop.data.remote.model.ProductImage
 import com.example.eshop.databinding.ImageItemBinding
@@ -21,7 +22,6 @@ class ImageViewPagerAdapter :
             Glide.with(binding.root)
                 .load(image.src)
                 .placeholder(R.drawable.online_shopping_palceholder)
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.productImage)
         }
     }

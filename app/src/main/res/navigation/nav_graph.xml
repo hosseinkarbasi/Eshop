@@ -62,11 +62,7 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.eshop.ui.fragments.search.SearchFragment"
-        android:label="SearchFragment" >
-        <argument
-            android:name="query"
-            app:argType="string" />
-    </fragment>
+        android:label="SearchFragment" />
     <fragment
         android:id="@+id/basketFragment"
         android:name="com.example.eshop.ui.fragments.basket.BasketFragment"
