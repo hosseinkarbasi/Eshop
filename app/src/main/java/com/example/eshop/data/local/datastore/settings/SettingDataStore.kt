@@ -1,4 +1,4 @@
-package com.example.eshop.data.local.datastore
+package com.example.eshop.data.local.datastore.settings
 
 import android.content.Context
 import android.util.Log
@@ -6,7 +6,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import com.example.eshop.data.local.datastore.SettingPreferencesKey.KEY_THEME
+import com.example.eshop.data.local.datastore.settings.SettingPreferencesKey.KEY_THEME
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map

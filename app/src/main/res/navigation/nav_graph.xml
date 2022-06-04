@@ -57,7 +57,12 @@
         android:label="ProfileFragment" >
         <action
             android:id="@+id/action_profileFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -67,4 +72,8 @@
         android:id="@+id/basketFragment"
         android:name="com.example.eshop.ui.fragments.basket.BasketFragment"
         android:label="BasketFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.eshop.ui.fragments.login.LoginFragment"
+        android:label="LoginFragment" />
 </navigation>

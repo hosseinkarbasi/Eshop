@@ -1,4 +1,4 @@
-package com.example.eshop.data.local.datastore
+package com.example.eshop.data.local.datastore.settings
 
 import androidx.appcompat.app.AppCompatDelegate
 

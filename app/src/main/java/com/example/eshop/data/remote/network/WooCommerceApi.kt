@@ -1,5 +1,6 @@
 package com.example.eshop.data.remote.network
 
+import com.example.eshop.data.local.model.User
 import com.example.eshop.data.remote.model.Category
 import com.example.eshop.data.remote.model.Order
 import com.example.eshop.data.remote.model.Product
@@ -33,5 +34,9 @@ interface WooCommerceApi {
 
     @POST("orders")
     suspend fun setOrder(@Body order: Order): Response<Order>
+
+    @GET("customers")
+    suspend fun getCustomer(@Query("email") email: String): Response<User>
+
 
 }

@@ -2,7 +2,6 @@ package com.example.eshop.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -12,6 +11,8 @@ import com.example.eshop.R
 import com.example.eshop.databinding.ActivityMainBinding
 import com.example.eshop.utils.conntectivitymanager.MyState
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
+import com.example.eshop.utils.gone
+import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         checkNetworkConnection()
         setupNavController()
         getPreferences()
+
 
     }
 
@@ -78,14 +80,6 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(mode)
             }
         }
-    }
-
-    private fun View.visible() {
-        visibility = View.VISIBLE
-    }
-
-    private fun View.gone() {
-        visibility = View.GONE
     }
 
 }

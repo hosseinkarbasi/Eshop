@@ -1,7 +1,7 @@
 package com.example.eshop.ui.activity
 
 import androidx.lifecycle.ViewModel
-import com.example.eshop.data.local.datastore.SettingDataStore
+import com.example.eshop.data.local.datastore.settings.SettingDataStore
 import com.example.eshop.utils.conntectivitymanager.MyState
 import com.example.eshop.utils.conntectivitymanager.NetworkStatusTracker
 import com.example.eshop.utils.conntectivitymanager.map

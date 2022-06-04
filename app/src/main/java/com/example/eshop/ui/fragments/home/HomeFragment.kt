@@ -48,6 +48,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         goProductDetails()
         seeMoreItems()
         goToSearch()
+
+
     }
 
     private fun goToSearch() {

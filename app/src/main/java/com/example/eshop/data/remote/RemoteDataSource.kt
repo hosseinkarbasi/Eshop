@@ -1,5 +1,6 @@
 package com.example.eshop.data.remote
 
+import com.example.eshop.data.local.model.User
 import com.example.eshop.data.remote.model.Category
 import com.example.eshop.data.remote.model.Order
 import com.example.eshop.data.remote.model.Product
@@ -24,6 +25,9 @@ class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) 
 
     override suspend fun setOrder(order: Order): Response<Order> =
         service.setOrder(order)
+
+    override suspend fun getCustomer(email: String): Response<User> =
+        service.getCustomer(email)
 
     override suspend fun searchProducts(
         searchText: String,
