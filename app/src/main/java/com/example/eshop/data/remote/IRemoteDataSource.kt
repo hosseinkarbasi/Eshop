@@ -13,7 +13,8 @@ interface IRemoteDataSource {
     suspend fun getCategories(categoryId: Int): Response<List<Category>>
     suspend fun getProductsByCategory(categoryId: Int): Response<List<Product>>
     suspend fun setOrder(order: Order): Response<Order>
-    suspend fun getCustomer(email: String): Response<User>
+    suspend fun getCustomer(email: String): Response<List<User>>
+    suspend fun createCustomer(user: User): Response<User>
     suspend fun searchProducts(
         searchText: String,
         perPage: Int,

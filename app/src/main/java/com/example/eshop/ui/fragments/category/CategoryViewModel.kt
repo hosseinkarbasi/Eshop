@@ -18,19 +18,19 @@ class CategoryViewModel @Inject constructor(
     ViewModel() {
 
     private val _getClothingCategory: MutableStateFlow<ResultWrapper<List<Category>>> =
-        MutableStateFlow(ResultWrapper.Loading())
+        MutableStateFlow(ResultWrapper.Loading)
     val getClothingCategory = _getClothingCategory.asStateFlow()
 
     private val _getDigitalCategory: MutableStateFlow<ResultWrapper<List<Category>>> =
-        MutableStateFlow(ResultWrapper.Loading())
+        MutableStateFlow(ResultWrapper.Loading)
     val getDigitalCategory = _getDigitalCategory.asStateFlow()
 
     private val _getSuperMarketCategory: MutableStateFlow<ResultWrapper<List<Category>>> =
-        MutableStateFlow(ResultWrapper.Loading())
+        MutableStateFlow(ResultWrapper.Loading)
     val getSuperMarketCategory = _getSuperMarketCategory.asStateFlow()
 
     private val _getBooksAndArtCategory: MutableStateFlow<ResultWrapper<List<Category>>> =
-        MutableStateFlow(ResultWrapper.Loading())
+        MutableStateFlow(ResultWrapper.Loading)
     val getBooksAndArtCategory = _getBooksAndArtCategory.asStateFlow()
 
 

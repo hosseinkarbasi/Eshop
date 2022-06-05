@@ -17,19 +17,19 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _getNewestProducts: MutableStateFlow<ResultWrapper<List<Product>>> =
-        MutableStateFlow(ResultWrapper.Loading())
+        MutableStateFlow(ResultWrapper.Loading)
     val getNewestProducts = _getNewestProducts.asStateFlow()
 
     private val _getMostViewedProducts: MutableStateFlow<ResultWrapper<List<Product>>> =
-        MutableStateFlow(ResultWrapper.Loading())
+        MutableStateFlow(ResultWrapper.Loading)
     val getMostViewedProducts = _getMostViewedProducts.asStateFlow()
 
     private val _getMostSalesProducts: MutableStateFlow<ResultWrapper<List<Product>>> =
-        MutableStateFlow(ResultWrapper.Loading())
+        MutableStateFlow(ResultWrapper.Loading)
     val getMostSalesProducts = _getMostSalesProducts.asStateFlow()
 
     private val _getSpecialSale: MutableStateFlow<ResultWrapper<Product>> =
-        MutableStateFlow(ResultWrapper.Loading())
+        MutableStateFlow(ResultWrapper.Loading)
     val getSpecialSale = _getSpecialSale.asStateFlow()
 
 

@@ -36,7 +36,9 @@ interface WooCommerceApi {
     suspend fun setOrder(@Body order: Order): Response<Order>
 
     @GET("customers")
-    suspend fun getCustomer(@Query("email") email: String): Response<User>
+    suspend fun getCustomer(@Query("email") email: String): Response<List<User>>
 
+    @POST("customers")
+    suspend fun createCustomer(@Body user: User): Response<User>
 
 }

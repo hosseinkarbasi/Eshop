@@ -19,7 +19,7 @@ class BasketViewModel @Inject constructor(private val productRepository: Product
     private val _getProducts = MutableStateFlow<List<LocalProduct>>(emptyList())
     val getProducts = _getProducts.asStateFlow()
 
-    private val _getOrder = MutableStateFlow<ResultWrapper<Order>>(ResultWrapper.Success(null))
+    private val _getOrder = MutableStateFlow<ResultWrapper<Order>>(ResultWrapper.Loading)
     val getOrder = _getOrder.asStateFlow()
 
     init {

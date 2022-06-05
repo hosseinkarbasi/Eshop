@@ -17,8 +17,12 @@ class UserRepository @Inject constructor(
     private val remoteDataSource: IRemoteDataSource
 ) {
 
-    suspend fun getCustomer(email: String): Flow<ResultWrapper<User>> {
+    suspend fun getCustomer(email: String): Flow<ResultWrapper<List<User>>> {
         return requestFlow(dispatcher) { remoteDataSource.getCustomer(email) }
+    }
+
+    suspend fun createCustomer(user: User): Flow<ResultWrapper<User>> {
+        return requestFlow(dispatcher) { remoteDataSource.createCustomer(user) }
     }
 
 }

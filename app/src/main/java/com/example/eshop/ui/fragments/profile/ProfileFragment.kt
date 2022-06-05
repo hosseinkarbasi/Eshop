@@ -10,7 +10,10 @@ import com.example.eshop.R
 import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.databinding.FragmentProfileBinding
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private var _binding: FragmentProfileBinding? = null
@@ -20,9 +23,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = DataBindingUtil.bind(view)
-        settingsFragment()
 
+        settingsFragment()
         checkUser()
+
+        binding.notification.setOnClickListener {
+            viewModel.insertUserEmail("")
+        }
 
     }
 
@@ -30,7 +37,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         viewModel.getCustomer.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
                 is ResultWrapper.Success -> {
-                    binding.user = it.data
+                    binding.user = it.data[0]
                 }
                 is ResultWrapper.Loading -> {}
                 is ResultWrapper.Error -> {}
@@ -39,8 +46,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun checkUser() {
-        viewModel.pref.collectWithRepeatOnLifecycle(viewLifecycleOwner) { userEmail ->
-            if (userEmail.length > 1) {
+        viewModel.pref.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            val userEmail = viewModel.pref.first()
+            if (userEmail.isNotEmpty()) {
                 viewModel.getCustomer(userEmail)
                 getUserInfo()
             } else {

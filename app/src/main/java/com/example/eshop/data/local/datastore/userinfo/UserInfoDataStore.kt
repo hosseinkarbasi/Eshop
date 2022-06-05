@@ -28,11 +28,12 @@ class UserInfoDataStore @Inject constructor(
         preferences[KEY_USER] ?: ""
     }
 
-    suspend fun getLogged(user: User) {
+    suspend fun getLogged(email: String) {
         dataStore.edit {
-            it[KEY_USER] = user.email
+            it[KEY_USER] = email
         }
     }
+
 
     val KEY_USER = stringPreferencesKey("user_email")
 }

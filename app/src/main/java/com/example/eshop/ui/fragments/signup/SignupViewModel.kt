@@ -1,4 +1,4 @@
-package com.example.eshop.ui.fragments.profile
+package com.example.eshop.ui.fragments.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,28 +13,27 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val userInfoDataStore: UserInfoDataStore
+class SignupViewModel @Inject constructor(
+    private val userInfoDataStore: UserInfoDataStore,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
-    private val _getCustomer: MutableStateFlow<ResultWrapper<List<User>>> =
+    private val _getCustomerInfo: MutableStateFlow<ResultWrapper<User>> =
         MutableStateFlow(ResultWrapper.Loading)
-    val getCustomer = _getCustomer.asStateFlow()
-
-    val pref = userInfoDataStore.preferences
-
-    fun getCustomer(email: String) {
-        viewModelScope.launch {
-            userRepository.getCustomer(email).collect {
-                _getCustomer.emit(it)
-            }
-        }
-    }
+    val getCustomerInfo = _getCustomerInfo.asStateFlow()
 
     fun insertUserEmail(email: String) {
         viewModelScope.launch {
             userInfoDataStore.getLogged(email)
         }
     }
+
+    fun createCustomer(user: User) {
+        viewModelScope.launch {
+            userRepository.createCustomer(user).collect {
+                _getCustomerInfo.emit(it)
+            }
+        }
+    }
+
 }

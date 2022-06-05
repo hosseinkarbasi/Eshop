@@ -9,7 +9,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor(private val settingDataStore: SettingDataStore) :
+class SettingsViewModel @Inject constructor(
+    private val settingDataStore: SettingDataStore) :
     ViewModel() {
 
     fun updateTheme(theme: Theme) {

@@ -35,4 +35,8 @@
     <string name="pardakht">جزییات پرداخت</string>
     <string name="total_price">مبلغ کل خرید</string>
     <string name="slider">slider</string>
+    <string name="email">پست الکترونیک</string>
+    <string name="last_name">نام خانوادگی</string>
+    <string name="first_name">نام</string>
+    <string name="create_account">ثبت نام</string>
 </resources>

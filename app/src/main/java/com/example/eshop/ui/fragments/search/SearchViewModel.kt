@@ -26,7 +26,7 @@ class SearchViewModel @Inject constructor(
 
 
     private val _getSearchText: MutableStateFlow<ResultWrapper<List<Product>>> =
-        MutableStateFlow(ResultWrapper.Loading())
+        MutableStateFlow(ResultWrapper.Loading)
     val getSearchText = _getSearchText.asStateFlow()
 
     fun searchProducts(searchText: String, orderBy: String,order: String) {

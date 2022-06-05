@@ -134,10 +134,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         viewModel.getMostSalesProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-            mostSalesProductAdapter.submitList(it.data)
+            when (it) {
+                is ResultWrapper.Error -> {}
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.Success -> {
+                    mostSalesProductAdapter.submitList(it.data)
+                }
+            }
         }
         viewModel.getMostViewedProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-            mostViewedProductAdapter.submitList(it.data)
+            when (it) {
+                is ResultWrapper.Error -> {}
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.Success -> {
+                    mostViewedProductAdapter.submitList(it.data)
+                }
+            }
         }
     }
 

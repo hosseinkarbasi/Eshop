@@ -18,7 +18,7 @@ class ProductViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _getProduct: MutableStateFlow<ResultWrapper<Product>> =
-        MutableStateFlow(ResultWrapper.Loading())
+        MutableStateFlow(ResultWrapper.Loading)
     val getProduct = _getProduct.asStateFlow()
 
     fun getProduct(productId: Int) {
