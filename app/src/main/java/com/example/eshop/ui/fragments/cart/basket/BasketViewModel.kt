@@ -13,7 +13,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BasketViewModel @Inject constructor(private val productRepository: ProductRepository) :
+class BasketViewModel @Inject constructor(
+    private val productRepository: ProductRepository
+) :
     ViewModel() {
 
     private val _getProducts = MutableStateFlow<List<LocalProduct>>(emptyList())
@@ -47,5 +49,29 @@ class BasketViewModel @Inject constructor(private val productRepository: Product
             }
         }
     }
+
+    private fun deleteProduct(id: Int) {
+        viewModelScope.launch {
+            productRepository.deleteProduct(id)
+        }
+    }
+
+    private fun updateProduct(product: LocalProduct) {
+        viewModelScope.launch {
+            productRepository.update(product)
+        }
+    }
+
+    fun increase(product: LocalProduct) {
+        product.quantity++
+        updateProduct(product)
+    }
+
+    fun decrease(product: LocalProduct) {
+        product.quantity--
+        if (product.quantity <= 0) deleteProduct(product.id)
+        else updateProduct(product)
+    }
+
 
 }

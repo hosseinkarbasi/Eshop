@@ -9,5 +9,6 @@ data class LocalProduct(
     val id: Int,
     val name: String,
     val price: String,
-    val images: String
+    val images: String,
+    var quantity: Int
 )

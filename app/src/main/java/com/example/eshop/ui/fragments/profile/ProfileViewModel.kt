@@ -32,9 +32,9 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun insertUserEmail(email: String) {
+    fun insertUserEmail(email: String, userId:Int) {
         viewModelScope.launch {
-            userInfoDataStore.setEmail(email)
+            userInfoDataStore.setEmail(email,userId)
         }
     }
 }

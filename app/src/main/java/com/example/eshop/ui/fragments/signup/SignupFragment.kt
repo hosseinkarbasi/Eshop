@@ -56,7 +56,7 @@ class SignupFragment : Fragment(R.layout.fragment_signup) {
                 }
                 is ResultWrapper.Loading -> {}
                 is ResultWrapper.Success -> {
-                    viewModel.insertUserEmail(it.data.email)
+                    viewModel.insertUserEmail(it.data.email, it.data.id)
                     Toast.makeText(
                         requireContext(),
                         "حساب شما با موفقیت ایجاد شد",

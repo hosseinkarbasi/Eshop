@@ -7,7 +7,7 @@ interface ILocalDataSource {
 
     fun gerProducts(): Flow<List<LocalProduct>>
     suspend fun insertProduct(product: LocalProduct)
-    suspend fun deleteProduct(id: String)
+    suspend fun deleteProduct(id: Int)
     suspend fun updateProduct(product: LocalProduct)
     suspend fun deleteProduct()
 

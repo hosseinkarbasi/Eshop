@@ -60,6 +60,18 @@ class ProductRepository @Inject constructor(
         }
     }
 
+    suspend fun update(product: LocalProduct) {
+        withContext(dispatcher) {
+            localDataSource.updateProduct(product)
+        }
+    }
+
+    suspend fun deleteProduct(id: Int) {
+        withContext(dispatcher) {
+            localDataSource.deleteProduct(id)
+        }
+    }
+
     fun getLocalProducts(): Flow<List<LocalProduct>> = localDataSource.gerProducts()
 
     suspend fun deleteAllProductsBasket() =

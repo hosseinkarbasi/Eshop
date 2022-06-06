@@ -22,9 +22,9 @@ class SignupViewModel @Inject constructor(
         MutableStateFlow(ResultWrapper.Loading)
     val getCustomerInfo = _getCustomerInfo.asStateFlow()
 
-    fun insertUserEmail(email: String) {
+    fun insertUserEmail(email: String, userId: Int) {
         viewModelScope.launch {
-            userInfoDataStore.setEmail(email)
+            userInfoDataStore.setEmail(email, userId)
         }
     }
 

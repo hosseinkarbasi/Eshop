@@ -1,5 +1,6 @@
 package com.example.eshop.ui.fragments.cart.basket
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -33,8 +34,24 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         iniRecyclerView()
         getProducts()
         setOrder()
+        changeQuantityCart()
+        goProductInfo()
+
     }
 
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun changeQuantityCart() {
+        basketAdapter.onItemIncrease { product, position ->
+            viewModel.increase(product)
+            this.basketAdapter.notifyDataSetChanged()
+        }
+
+        basketAdapter.onItemDecrease { product, position ->
+            viewModel.decrease(product)
+            this.basketAdapter.notifyDataSetChanged()
+        }
+    }
 
     private fun changeVisibility() = binding.apply {
         if (orders.size == 0) {
@@ -53,6 +70,12 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
             val order = Order(CUSTOMER_ID, items, "")
             viewModel.setOrder(order)
             getOrderStatus()
+        }
+    }
+
+    private fun goProductInfo() {
+        basketAdapter.onItemPosition {
+            val action = BasketFragmentDirections.actionGlobalProductFragment(it.id)
         }
     }
 
@@ -80,6 +103,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
                         show()
                     }
                 }
+                else -> {}
             }
         }
     }
@@ -87,7 +111,6 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
     private fun getProducts() {
         viewModel.getProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             basketAdapter.submitList(it)
-//            orders.clear()
             orders.addAll(it)
             changeVisibility()
         }

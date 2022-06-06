@@ -11,11 +11,13 @@ object Mapper {
             id = remoteProduct.id,
             name = remoteProduct.name,
             price = remoteProduct.price,
-            images = remoteProduct.images[0].src
+            images = remoteProduct.images[0].src,
+            quantity = 1
         )
     }
 
-    fun transformProductsToLineItem(products: List<LocalProduct>, quantity: Int): List<LineItem> {
+    fun transformProductsToLineItem(products: List<LocalProduct>, quantity: Int)
+            : List<LineItem> {
         return products.map {
             LineItem(it.id, quantity)
         }

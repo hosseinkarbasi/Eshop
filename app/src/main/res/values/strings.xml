@@ -40,4 +40,5 @@
     <string name="first_name">نام</string>
     <string name="create_account">ثبت نام</string>
     <string name="account">حساب کاربری ندارید؟</string>
+    <string name="order_number">شماره پیگیری</string>
 </resources>

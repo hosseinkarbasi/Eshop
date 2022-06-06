@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        android:fontFamily="@font/yekan_bakh_regular"
+        android:fontFamily="@font/titr_bold"
         android:text="price"
         android:textSize="15sp"
         android:textStyle="bold"
@@ -22,9 +22,10 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/product_image"
-        android:layout_width="150dp"
-        android:layout_height="180dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="180dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,13 +38,14 @@
         android:fontFamily="@font/roboto_bold"
         android:lines="2"
         android:text="title"
-        android:textSize="17sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/product_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
+        android:id="@+id/line"
         android:layout_width="280dp"
         android:layout_height="1dp"
         android:layout_marginTop="4dp"
@@ -56,44 +58,61 @@
         app:layout_constraintTop_toBottomOf="@+id/product_price"
         app:layout_constraintVertical_bias="1.0" />
 
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/counter"
-        android:layout_width="39dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="10"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/plus"
-        app:layout_constraintHorizontal_bias="0.937"
-        app:layout_constraintStart_toEndOf="@+id/minus"
-        app:layout_constraintTop_toBottomOf="@+id/product_price" />
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/product_image"
+        app:strokeColor="@color/dark_shadow"
+        app:strokeWidth="1dp">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/plus"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="4dp"
-        app:icon="@drawable/ic_baseline_add"
-        app:layout_constraintEnd_toStartOf="@+id/product_image"
-        app:layout_constraintTop_toBottomOf="@+id/product_title" />
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/minus"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="68dp"
-        app:icon="@drawable/ic_baseline_remove"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/product_title" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/minus"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                app:icon="@drawable/ic_baseline_remove"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/product_title" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/counter"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/plus"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                app:icon="@drawable/ic_baseline_add"
+                app:layout_constraintEnd_toStartOf="@+id/product_image"
+                app:layout_constraintTop_toBottomOf="@+id/product_title" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/delete"
@@ -102,6 +121,7 @@
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="72dp"
+        android:visibility="gone"
         app:icon="@drawable/ic_baseline_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

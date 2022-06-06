@@ -32,14 +32,9 @@ class UserInfoDataStore @Inject constructor(
         UserInfo(email, id)
     }
 
-    suspend fun setEmail(email: String) {
+    suspend fun setEmail(email: String, userId: Int) {
         dataStore.edit {
             it[USER_EMAIL] = email
-        }
-    }
-
-    suspend fun setUserId(userId: Int) {
-        dataStore.edit {
             it[USER_ID] = userId
         }
     }

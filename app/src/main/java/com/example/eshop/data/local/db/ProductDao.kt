@@ -10,7 +10,7 @@ interface ProductDao {
     suspend fun insertProduct(product: LocalProduct)
 
     @Query("DELETE FROM product WHERE id=:id")
-    suspend fun deleteProduct(id: String)
+    suspend fun deleteProduct(id: Int)
 
     @Query("DELETE FROM product")
     suspend fun deleteAllProducts()

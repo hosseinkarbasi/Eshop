@@ -28,7 +28,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         checkUser()
 
         binding.notification.setOnClickListener {
-            viewModel.insertUserEmail("")
+            viewModel.insertUserEmail("", 0)
         }
 
     }

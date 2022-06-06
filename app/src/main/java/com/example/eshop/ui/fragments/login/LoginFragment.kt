@@ -45,7 +45,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         viewModel.getCustomer.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
                 is ResultWrapper.Success -> {
-                    viewModel.insertUserEmail(it.data[0].email)
+                    viewModel.insertUserEmail(it.data[0].email, it.data[0].id)
                     delay(100)
                     val action = LoginFragmentDirections.actionLoginFragmentToProfileFragment()
                     findNavController().navigate(action)

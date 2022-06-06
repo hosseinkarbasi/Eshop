@@ -34,4 +34,6 @@ class ProductViewModel @Inject constructor(
             productRepository.insertProduct(product)
         }
     }
+
+
 }
