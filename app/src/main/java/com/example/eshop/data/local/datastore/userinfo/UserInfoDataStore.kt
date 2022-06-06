@@ -5,10 +5,12 @@ import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.eshop.data.local.model.User
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -22,18 +24,27 @@ class UserInfoDataStore @Inject constructor(
 ) {
 
     private val dataStore = context.dataStore
-    val preferences = dataStore.data.catch { cause ->
+    val preferences: Flow<UserInfo> = dataStore.data.catch { cause ->
         Log.e("datastore_error", cause.message.toString())
     }.map { preferences ->
-        preferences[KEY_USER] ?: ""
+        val email = preferences[USER_EMAIL] ?: ""
+        val id = preferences[USER_ID] ?: 0
+        UserInfo(email, id)
     }
 
-    suspend fun getLogged(email: String) {
+    suspend fun setEmail(email: String) {
         dataStore.edit {
-            it[KEY_USER] = email
+            it[USER_EMAIL] = email
+        }
+    }
+
+    suspend fun setUserId(userId: Int) {
+        dataStore.edit {
+            it[USER_ID] = userId
         }
     }
 
 
-    val KEY_USER = stringPreferencesKey("user_email")
+    private val USER_EMAIL = stringPreferencesKey("user_email")
+    private val USER_ID = intPreferencesKey("user_id")
 }

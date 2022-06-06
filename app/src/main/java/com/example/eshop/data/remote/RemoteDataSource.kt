@@ -32,6 +32,9 @@ class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) 
     override suspend fun createCustomer(user: User): Response<User> =
         service.createCustomer(user)
 
+    override suspend fun getOrders(customerId: Int): Response<List<Order>> =
+        service.getOrders(customerId)
+
 
     override suspend fun searchProducts(
         searchText: String,

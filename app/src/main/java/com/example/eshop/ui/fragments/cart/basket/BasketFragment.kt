@@ -1,4 +1,4 @@
-package com.example.eshop.ui.fragments.basket
+package com.example.eshop.ui.fragments.cart.basket
 
 import android.os.Bundle
 import android.view.View
@@ -12,6 +12,8 @@ import com.example.eshop.databinding.FragmentBasketBinding
 import com.example.eshop.utils.Mapper
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import com.example.eshop.data.remote.ResultWrapper
+import com.example.eshop.utils.gone
+import com.example.eshop.utils.visible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,9 +33,19 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         iniRecyclerView()
         getProducts()
         setOrder()
-
     }
 
+
+    private fun changeVisibility() = binding.apply {
+        if (orders.size == 0) {
+            gpEmpty.visible()
+            gpBasketDetails.gone()
+
+        } else {
+            gpEmpty.gone()
+            gpBasketDetails.visible()
+        }
+    }
 
     private fun setOrder() {
         binding.cartSubmitBtn.setOnClickListener {
@@ -51,7 +63,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
                     val orderDialog = MaterialAlertDialogBuilder(requireContext())
                     orderDialog.apply {
                         setTitle("ثبت سفارش")
-                        setMessage(" سفارش شما با شماره پیگیری ${it.data?.number}ثبت شد. ")
+                        setMessage(" سفارش شما با شماره پیگیری ${it.data.number}ثبت شد. ")
                         setPositiveButton("ok") { _, _ ->
                         }
                         show()
@@ -75,8 +87,9 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
     private fun getProducts() {
         viewModel.getProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             basketAdapter.submitList(it)
-            orders.clear()
+//            orders.clear()
             orders.addAll(it)
+            changeVisibility()
         }
     }
 

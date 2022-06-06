@@ -24,7 +24,7 @@ class SignupViewModel @Inject constructor(
 
     fun insertUserEmail(email: String) {
         viewModelScope.launch {
-            userInfoDataStore.getLogged(email)
+            userInfoDataStore.setEmail(email)
         }
     }
 

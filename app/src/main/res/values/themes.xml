@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/dark_shadow</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -18,14 +18,15 @@
     <style name="Theme.splash_theme" parent="Theme.SplashScreen">
 
         <item name="windowSplashScreenBackground">@color/main_color</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/shopping_bag</item>
-        <item name="windowSplashScreenAnimationDuration">30</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash</item>
+        <item name="windowSplashScreenAnimationDuration">5000</item>
+        <item name="splashScreenIconSize">100dp</item>
         <item name="postSplashScreenTheme">@style/Theme.Eshop</item>
 
     </style>
 
 
-<!--    //Bottom Sheet Theme-->
+    <!--    //Bottom Sheet Theme-->
 
     <style name="BottomSheet" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_sheet_top_curve</item>

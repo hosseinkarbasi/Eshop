@@ -48,8 +48,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun checkUser() {
         viewModel.pref.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             val userEmail = viewModel.pref.first()
-            if (userEmail.isNotEmpty()) {
-                viewModel.getCustomer(userEmail)
+            if (userEmail.email.isNotEmpty()) {
+                viewModel.getCustomer(userEmail.email)
                 getUserInfo()
             } else {
                 val action = ProfileFragmentDirections.actionProfileFragmentToLoginFragment()

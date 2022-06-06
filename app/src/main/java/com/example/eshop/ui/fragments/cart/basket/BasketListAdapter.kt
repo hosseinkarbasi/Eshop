@@ -1,4 +1,4 @@
-package com.example.eshop.ui.fragments.basket
+package com.example.eshop.ui.fragments.cart.basket
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.eshop.R
 import com.example.eshop.data.local.model.LocalProduct
 import com.example.eshop.databinding.BasketListItemBinding
-import com.example.eshop.databinding.ProductsListItemBinding
 
 class BasketListAdapter :
     ListAdapter<LocalProduct, BasketListAdapter.CustomViewHolder>(DiffCallBack()) {

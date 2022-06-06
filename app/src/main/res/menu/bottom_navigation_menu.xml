@@ -7,7 +7,7 @@
         android:title="@string/home" />
 
     <item
-        android:id="@+id/basketFragment"
+        android:id="@+id/homeCartFragment"
         android:icon="@drawable/basket_icon_selector"
         android:title="@string/basket" />
 

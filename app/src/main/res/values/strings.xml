@@ -4,15 +4,15 @@
     <string name="newest">جدیدترین ها</string>
     <string name="most_viewed">پربازدیدترین</string>
     <string name="most_sales">پرفروش ترین ها</string>
-    <string name="home">Home</string>
-    <string name="category">Category</string>
+    <string name="home">خانه</string>
+    <string name="category">دسته بندی ها</string>
     <string name="light">Light</string>
     <string name="night">Night</string>
     <string name="save">Save</string>
     <string name="auto">System Default</string>
     <string name="settings">Settings</string>
     <string name="attribute_product">ویژگی های محصول</string>
-    <string name="myShop">MyShop</string>
+    <string name="myShop">ایشاپ من</string>
     <string name="title">title</string>
     <string name="price">price</string>
     <string name="basket_btn_text">افزودن به سبد خرید</string>
@@ -30,7 +30,7 @@
     <string name="submit">اعمال</string>
     <string name="sort">مرتب سازی</string>
     <string name="filters">فیلترها</string>
-    <string name="basket">Basket</string>
+    <string name="basket">سبد خرید</string>
     <string name="cart_submit_text">ثبت سفارش</string>
     <string name="pardakht">جزییات پرداخت</string>
     <string name="total_price">مبلغ کل خرید</string>
@@ -39,4 +39,5 @@
     <string name="last_name">نام خانوادگی</string>
     <string name="first_name">نام</string>
     <string name="create_account">ثبت نام</string>
+    <string name="account">حساب کاربری ندارید؟</string>
 </resources>

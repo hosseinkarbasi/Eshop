@@ -68,7 +68,7 @@
         android:label="SearchFragment" />
     <fragment
         android:id="@+id/basketFragment"
-        android:name="com.example.eshop.ui.fragments.basket.BasketFragment"
+        android:name="com.example.eshop.ui.fragments.cart.basket.BasketFragment"
         android:label="BasketFragment" />
     <fragment
         android:id="@+id/loginFragment"
@@ -76,10 +76,18 @@
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_enter_anim"
+            app:popExitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_loginFragment_to_signupFragment"
-            app:destination="@id/signupFragment" />
+            app:destination="@id/signupFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_enter_anim"
+            app:popExitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -88,7 +96,15 @@
         <action
             android:id="@+id/action_signupFragment_to_profileFragment"
             app:destination="@id/profileFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_enter_anim"
+            app:popExitAnim="@anim/nav_default_exit_anim"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="false" />
     </fragment>
+    <fragment
+        android:id="@+id/homeCartFragment"
+        android:name="com.example.eshop.ui.fragments.cart.HomeCartFragment"
+        android:label="HomeCartFragment" />
 </navigation>

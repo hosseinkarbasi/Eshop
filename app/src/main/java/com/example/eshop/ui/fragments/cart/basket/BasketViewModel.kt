@@ -1,4 +1,4 @@
-package com.example.eshop.ui.fragments.basket
+package com.example.eshop.ui.fragments.cart.basket
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
