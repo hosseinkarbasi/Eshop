@@ -31,7 +31,7 @@
     <string name="sort">مرتب سازی</string>
     <string name="filters">فیلترها</string>
     <string name="basket">سبد خرید</string>
-    <string name="cart_submit_text">ثبت سفارش</string>
+    <string name="cart_submit_text">ادامه فرآیند خرید</string>
     <string name="pardakht">جزییات پرداخت</string>
     <string name="total_price">مبلغ کل خرید</string>
     <string name="slider">slider</string>
@@ -41,4 +41,6 @@
     <string name="create_account">ثبت نام</string>
     <string name="account">حساب کاربری ندارید؟</string>
     <string name="order_number">شماره پیگیری</string>
+    <string name="logout">خروج از حساب کاربری</string>
+    <string name="login_btn">ورود به ایشاپ</string>
 </resources>

@@ -2,6 +2,7 @@ package com.example.eshop.ui.fragments.cart.basket
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eshop.data.local.datastore.userinfo.UserInfoDataStore
 import com.example.eshop.data.local.model.LocalProduct
 import com.example.eshop.data.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BasketViewModel @Inject constructor(
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val userInfoDataStore: UserInfoDataStore
 ) :
     ViewModel() {
 
@@ -21,6 +23,8 @@ class BasketViewModel @Inject constructor(
 
     private val _getTotalPrice = MutableStateFlow(0)
     val getTotalPrice = _getTotalPrice.asStateFlow()
+
+    val pref = userInfoDataStore.preferences
 
     init {
         getLocalProducts()

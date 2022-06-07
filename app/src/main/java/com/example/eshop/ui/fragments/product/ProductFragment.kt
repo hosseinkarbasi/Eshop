@@ -48,7 +48,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
                     isLoading()
                 }
                 is ResultWrapper.Success -> {
-                    it.data?.let { it1 -> isSuccess(it1) }
+                    isSuccess(it.data)
                 }
             }
         }
@@ -99,7 +99,6 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         binding.viewPager.adapter = imageViewPagerAdapter
         binding.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

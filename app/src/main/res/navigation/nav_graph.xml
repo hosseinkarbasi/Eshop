@@ -108,9 +108,24 @@
         <action
             android:id="@+id/action_homeCartFragment_to_paymentFragment"
             app:destination="@id/paymentFragment" />
+        <action
+            android:id="@+id/action_homeCartFragment_to_loginDialog"
+            app:destination="@id/loginDialog"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
         android:name="com.example.eshop.ui.fragments.cart.payment.PaymentFragment"
         android:label="PaymentFragment" />
+    <dialog
+        android:id="@+id/loginDialog"
+        android:name="com.example.eshop.ui.fragments.dialogs.login.LoginDialog"
+        android:label="LoginDialog" >
+        <action
+            android:id="@+id/action_loginDialog_to_paymentFragment2"
+            app:destination="@id/paymentFragment"
+            app:popUpTo="@id/homeCartFragment"
+            app:popUpToInclusive="false" />
+    </dialog>
 </navigation>

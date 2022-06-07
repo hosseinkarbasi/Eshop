@@ -10,11 +10,11 @@ import com.example.eshop.R
 import com.example.eshop.data.local.model.LocalProduct
 import com.example.eshop.databinding.FragmentBasketBinding
 import com.example.eshop.ui.fragments.cart.HomeCartFragmentDirections
-import com.example.eshop.ui.fragments.home.HomeFragmentDirections
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import com.example.eshop.utils.gone
 import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 
 @AndroidEntryPoint
 class BasketFragment : Fragment(R.layout.fragment_basket) {
@@ -70,8 +70,18 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 
     private fun goToPayment() {
         binding.cartSubmitBtn.setOnClickListener {
-            val action = HomeCartFragmentDirections.actionHomeCartFragmentToPaymentFragment()
-            findNavController().navigate(action)
+            viewModel.pref.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+                val checkUserLogged = viewModel.pref.first()
+                if (checkUserLogged.email.isNotEmpty()) {
+                    val action =
+                        HomeCartFragmentDirections.actionHomeCartFragmentToPaymentFragment()
+                    findNavController().navigate(action)
+                } else {
+                    val action =
+                        HomeCartFragmentDirections.actionHomeCartFragmentToLoginDialog()
+                    findNavController().navigate(action)
+                }
+            }
         }
     }
 

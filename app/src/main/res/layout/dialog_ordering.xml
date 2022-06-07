@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <ImageView
         android:id="@+id/btnNegative"
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="110dp"
@@ -32,8 +32,8 @@
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/newest_radio"
             android:layout_width="wrap_content"
-            android:layout_marginBottom="10dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/yekan_bakh_regular"
             android:text="@string/newest"
             android:textStyle="bold" />
@@ -41,8 +41,8 @@
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/bestselling_radio"
             android:layout_width="wrap_content"
-            android:layout_marginBottom="10dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/yekan_bakh_regular"
             android:text="@string/most_sales"
             android:textStyle="bold" />

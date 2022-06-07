@@ -18,6 +18,7 @@ import com.example.eshop.databinding.FragmentSearchBinding
 import com.example.eshop.ui.fragments.productslist.ProductsListAdapter
 import com.example.eshop.ui.fragments.productslist.ProductsListFragmentDirections
 import com.example.eshop.data.remote.ResultWrapper
+import com.example.eshop.ui.fragments.dialogs.OrderingDialog
 import com.example.eshop.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -108,7 +109,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     isLoading()
                 }
                 is ResultWrapper.Success -> {
-                    it.data?.let { it1 -> isSuccess(it1) }
+                    isSuccess(it.data)
                 }
             }
         }
@@ -139,7 +140,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         loading.pauseAnimation()
         searchAdapter.submitList(data)
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

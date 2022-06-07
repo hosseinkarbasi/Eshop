@@ -1,36 +1,40 @@
-package com.example.eshop.ui.fragments.login
+package com.example.eshop.ui.fragments.dialogs.login
 
 import android.os.Bundle
 import android.util.Patterns
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
 import com.example.eshop.data.local.model.User
 import com.example.eshop.data.remote.ResultWrapper
-import com.example.eshop.databinding.FragmentLoginBinding
-import com.example.eshop.ui.fragments.cart.payment.LoginDialogDirections
+import com.example.eshop.databinding.FragmentLoginDialogBinding
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
-class LoginFragment : Fragment(R.layout.fragment_login) {
+class LoginDialog : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentLoginBinding? = null
+    private var _binding: FragmentLoginDialogBinding? = null
     private val binding get() = _binding!!
-    private val viewModel by viewModels<LoginViewModel>()
+    private val viewModel by viewModels<LoginDialogViewModel>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentLoginBinding.bind(view)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentLoginDialogBinding.inflate(inflater, container, false)
 
         login()
         getUserInfo()
-        goToSignUp()
 
+        return binding.root
     }
 
     private fun login() {
@@ -40,6 +44,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             } else {
                 val email = binding.emailEd.text.toString()
                 viewModel.getCustomer(email)
+
             }
         }
     }
@@ -59,24 +64,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
-    private suspend fun isSuccess(data: List<User>) {
-        if (data.isNotEmpty()) {
-            viewModel.saveUserInfo(data[0].email, data[0].id)
-            delay(100)
-            val action = LoginDialogDirections.actionLoginDialogToPaymentFragment2()
-            findNavController().navigate(action)
-        } else {
-            Toast.makeText(requireContext(), "ایمیل وارد شده صحیح نیست", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private fun goToSignUp() {
-        binding.createAccount.setOnClickListener {
-            val action = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
-            findNavController().navigate(action)
-        }
-    }
-
     private fun getUserInfo() {
         viewModel.getCustomer.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
@@ -91,9 +78,23 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
+    private suspend fun isSuccess(data: List<User>) {
+        if (data.isNotEmpty()) {
+            viewModel.saveUserInfo(data[0].email, data[0].id)
+            delay(100)
+            val action = LoginDialogDirections.actionLoginDialogToPaymentFragment2()
+            findNavController().navigate(action)
+        } else {
+            Toast.makeText(requireContext(), "ایمیل وارد شده صحیح نیست", Toast.LENGTH_LONG).show()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    override fun getTheme(): Int {
+        return  R.style.BottomSheetDialogTheme
+    }
 }
