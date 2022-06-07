@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BasketViewModel @Inject constructor(
     private val productRepository: ProductRepository,
-    private val userInfoDataStore: UserInfoDataStore
+    userInfoDataStore: UserInfoDataStore
 ) :
     ViewModel() {
 
@@ -28,25 +28,19 @@ class BasketViewModel @Inject constructor(
 
     init {
         getLocalProducts()
-        totalPrice()
     }
 
     private fun getLocalProducts() {
         viewModelScope.launch {
-            productRepository.getLocalProducts().collect {
-                _getProducts.emit(it)
-            }
-        }
-    }
+            productRepository.getLocalProducts().collect {listProducts ->
+                _getProducts.emit(listProducts)
 
-    private fun totalPrice() {
-        viewModelScope.launch {
-            productRepository.getLocalProducts().collect { listProducts ->
                 val total = listProducts.sumOf { it.price.toInt() * it.quantity }
                 _getTotalPrice.emit(total)
             }
         }
     }
+
 
     private fun deleteProduct(id: Int) {
         viewModelScope.launch {

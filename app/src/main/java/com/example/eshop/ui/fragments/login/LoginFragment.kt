@@ -11,7 +11,6 @@ import com.example.eshop.R
 import com.example.eshop.data.local.model.User
 import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.databinding.FragmentLoginBinding
-import com.example.eshop.ui.fragments.cart.payment.LoginDialogDirections
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -63,7 +62,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         if (data.isNotEmpty()) {
             viewModel.saveUserInfo(data[0].email, data[0].id)
             delay(100)
-            val action = LoginDialogDirections.actionLoginDialogToPaymentFragment2()
+            val action = LoginFragmentDirections.actionLoginFragmentToProfileFragment()
             findNavController().navigate(action)
         } else {
             Toast.makeText(requireContext(), "ایمیل وارد شده صحیح نیست", Toast.LENGTH_LONG).show()

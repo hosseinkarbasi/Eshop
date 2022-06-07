@@ -27,7 +27,7 @@
     <string name="prices_from_high_to_low">قیمت از زیاد به کم</string>
     <string name="prices_from_low_to_high">قیمت از کم به زیاد</string>
     <string name="best_selling">Best Selling</string>
-    <string name="submit">اعمال</string>
+    <string name="submit">ثبت سفارش</string>
     <string name="sort">مرتب سازی</string>
     <string name="filters">فیلترها</string>
     <string name="basket">سبد خرید</string>
@@ -43,4 +43,5 @@
     <string name="order_number">شماره پیگیری</string>
     <string name="logout">خروج از حساب کاربری</string>
     <string name="login_btn">ورود به ایشاپ</string>
+    <string name="address">تهران،عبدل آباد،خیابان شکوفه،خیابان ایمان،پلاک 100،حسین کرباسی</string>
 </resources>

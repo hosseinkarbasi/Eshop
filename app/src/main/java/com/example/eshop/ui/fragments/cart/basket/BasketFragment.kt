@@ -53,11 +53,11 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
     private fun changeVisibility(list: List<LocalProduct>) = binding.apply {
         if (list.isEmpty()) {
             gpEmpty.visible()
-            gpBasketDetails.gone()
+            gpBasket.gone()
 
         } else {
             gpEmpty.gone()
-            gpBasketDetails.visible()
+            gpBasket.visible()
         }
     }
 
@@ -85,14 +85,15 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         }
     }
 
-    private fun totalPrice() {
+    private fun totalPrice() = binding.apply {
         viewModel.getTotalPrice.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-            binding.totalPrice.text = it.toString()
-            binding.totalPricePayment.text = it.toString()
+            totalPrice.text = it.toString()
+            totalPricePayment.text = it.toString()
+            sumOfPrice.text = it.toString()
         }
     }
 
-    private fun getProducts() {
+    private fun getProducts() = binding.apply {
         viewModel.getProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             basketAdapter.submitList(it)
             changeVisibility(it)

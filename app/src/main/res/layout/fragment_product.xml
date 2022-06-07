@@ -39,7 +39,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="#05AD1B"
+                android:backgroundTint="@color/main_color"
                 android:fontFamily="@font/titr_bold"
                 android:text="@string/basket_btn_text"
                 android:textSize="20sp"
@@ -143,7 +143,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/product_name" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/product_price"
+                        android:id="@+id/product_quantity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"

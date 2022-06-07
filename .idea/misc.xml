@@ -11,19 +11,20 @@
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/drawable/bottom_sheet_top_curve.xml" value="0.1175" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/drawable/home_icon.xml" value="0.139" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/drawable/home_icon_selector.xml" value="0.139" />
+        <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/drawable/ic_baseline_delete.xml" value="0.1195" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1175" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/basket_list_item.xml" value="0.1" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/category_item.xml" value="0.67" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/dialog_ordering.xml" value="0.1" />
-        <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_basket.xml" value="0.25" />
+        <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_basket.xml" value="0.22" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_category.xml" value="0.25" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_homecart.xml" value="0.203125" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_login.xml" value="0.25" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_login_dialog.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_payment.xml" value="0.203125" />
-        <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_product.xml" value="0.33" />
+        <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_payment.xml" value="0.25" />
+        <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_product.xml" value="0.25" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_products_list.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_profile.xml" value="0.18" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/fragment_registered_orders.xml" value="0.15" />
@@ -33,6 +34,7 @@
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/image_item.xml" value="0.153125" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/orders_item.xml" value="0.1" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/product_item.xml" value="0.33" />
+        <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/product_payment_item.xml" value="0.1" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/products_list _item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/layout/products_list_item.xml" value="0.22" />
         <entry key="..\:/Users/Hossein/AndroidStudioProjects/Eshop/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1675213675213675" />

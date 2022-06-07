@@ -23,6 +23,9 @@ class PaymentViewModel @Inject constructor(
         getLocalProducts()
     }
 
+    private val _getTotalPrice = MutableStateFlow(0)
+    val getTotalPrice = _getTotalPrice.asStateFlow()
+
     private val _getOrder = MutableStateFlow<ResultWrapper<Order>>(ResultWrapper.Loading)
     val getOrder = _getOrder.asStateFlow()
 
@@ -41,8 +44,11 @@ class PaymentViewModel @Inject constructor(
 
     private fun getLocalProducts() {
         viewModelScope.launch {
-            productRepository.getLocalProducts().collect {
-                _getProducts.emit(it)
+            productRepository.getLocalProducts().collect { listProducts ->
+                _getProducts.emit(listProducts)
+
+                val total = listProducts.sumOf { it.price.toInt() * it.quantity }
+                _getTotalPrice.emit(total)
             }
         }
     }

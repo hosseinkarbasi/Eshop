@@ -50,6 +50,9 @@ class BasketListAdapter :
                 .load(item.images)
                 .placeholder(R.drawable.online_shopping_palceholder)
                 .into(productImage)
+            if (item.quantity == 1){
+                minus.setIconResource(R.drawable.ic_baseline_delete)
+            }else minus.setIconResource(R.drawable.ic_baseline_remove)
         }
     }
 
