@@ -56,7 +56,7 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/newest_list_btn"
+                android:id="@+id/mostSales_list_btn"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/newest_rv" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/mostViewed_list_btn"
+                android:id="@+id/newest_list_btn"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/mostViewed_rv" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/mostSales_list_btn"
+                android:id="@+id/mostViewed_list_btn"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

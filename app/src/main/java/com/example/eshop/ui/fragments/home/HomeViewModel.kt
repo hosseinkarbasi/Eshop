@@ -50,7 +50,7 @@ class HomeViewModel @Inject constructor(
 
     private fun getNewestProducts() {
         viewModelScope.launch {
-            productRepository.getNewestProducts(10).collect {
+            productRepository.getNewestProducts(10,1).collect {
                 _getNewestProducts.emit(it)
             }
         }
@@ -58,7 +58,7 @@ class HomeViewModel @Inject constructor(
 
     private fun getMostViewed() {
         viewModelScope.launch {
-            productRepository.getMostViewedProducts(10).collect {
+            productRepository.getMostViewedProducts(10,1).collect {
                 _getMostViewedProducts.emit(it)
             }
         }
@@ -66,7 +66,7 @@ class HomeViewModel @Inject constructor(
 
     private fun getMostSales() {
         viewModelScope.launch {
-            productRepository.getBestSalesProducts(10).collect {
+            productRepository.getBestSalesProducts(10,1).collect {
                 _getMostSalesProducts.emit(it)
             }
         }

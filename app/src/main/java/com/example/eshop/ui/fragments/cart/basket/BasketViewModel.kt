@@ -3,9 +3,7 @@ package com.example.eshop.ui.fragments.cart.basket
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eshop.data.local.model.LocalProduct
-import com.example.eshop.data.remote.model.Order
 import com.example.eshop.data.repository.ProductRepository
-import com.example.eshop.data.remote.ResultWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,31 +19,27 @@ class BasketViewModel @Inject constructor(
     private val _getProducts = MutableStateFlow<List<LocalProduct>>(emptyList())
     val getProducts = _getProducts.asStateFlow()
 
-    private val _getOrder = MutableStateFlow<ResultWrapper<Order>>(ResultWrapper.Loading)
-    val getOrder = _getOrder.asStateFlow()
+    private val _getTotalPrice = MutableStateFlow(0)
+    val getTotalPrice = _getTotalPrice.asStateFlow()
 
     init {
         getLocalProducts()
-    }
-
-    fun setOrder(order: Order) {
-        viewModelScope.launch {
-            productRepository.setOrder(order).collect {
-                _getOrder.emit(it)
-            }
-        }
-    }
-
-    fun deleteAllProductsBasket() {
-        viewModelScope.launch {
-            productRepository.deleteAllProductsBasket()
-        }
+        totalPrice()
     }
 
     private fun getLocalProducts() {
         viewModelScope.launch {
             productRepository.getLocalProducts().collect {
                 _getProducts.emit(it)
+            }
+        }
+    }
+
+    private fun totalPrice() {
+        viewModelScope.launch {
+            productRepository.getLocalProducts().collect { listProducts ->
+                val total = listProducts.sumOf { it.price.toInt() * it.quantity }
+                _getTotalPrice.emit(total)
             }
         }
     }

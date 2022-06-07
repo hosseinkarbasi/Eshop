@@ -36,7 +36,7 @@ class BasketListAdapter :
 
             binding.minus.setOnClickListener {
                 itemDecrease?.let {
-                    it(getItem(bindingAdapterPosition),bindingAdapterPosition)
+                    it(getItem(bindingAdapterPosition), bindingAdapterPosition)
                 }
             }
         }
@@ -45,7 +45,7 @@ class BasketListAdapter :
         fun bind(item: LocalProduct) = binding.apply {
             counter.text = item.quantity.toString()
             productTitle.text = item.name
-            productPrice.text = " ${item.price} تومان "
+            productPrice.text = " ${item.price.toInt() * item.quantity}  تومان "
             Glide.with(root)
                 .load(item.images)
                 .placeholder(R.drawable.online_shopping_palceholder)

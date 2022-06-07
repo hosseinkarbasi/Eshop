@@ -14,14 +14,18 @@ class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) 
     override suspend fun getCategories(categoryId: Int): Response<List<Category>> =
         service.getCategories(categoryId)
 
-    override suspend fun getProducts(order: String, perPage: Int): Response<List<Product>> =
-        service.getProducts(order, perPage)
+    override suspend fun getProducts(
+        order: String,
+        perPage: Int,
+        page: Int
+    ): Response<List<Product>> =
+        service.getProducts(order, perPage, page)
 
     override suspend fun getProduct(id: Int): Response<Product> =
         service.getProduct(id)
 
-    override suspend fun getProductsByCategory(categoryId: Int): Response<List<Product>> =
-        service.getProductsByCategory(categoryId)
+    override suspend fun getProductsByCategory(categoryId: Int, perPage: Int, page: Int): Response<List<Product>> =
+        service.getProductsByCategory(categoryId,perPage,page)
 
     override suspend fun setOrder(order: Order): Response<Order> =
         service.setOrder(order)

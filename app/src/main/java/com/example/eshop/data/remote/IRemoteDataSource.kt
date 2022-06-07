@@ -8,10 +8,10 @@ import retrofit2.Response
 
 interface IRemoteDataSource {
 
-    suspend fun getProducts(order: String, perPage: Int): Response<List<Product>>
+    suspend fun getProducts(order: String, perPage: Int, page: Int): Response<List<Product>>
     suspend fun getProduct(id: Int): Response<Product>
     suspend fun getCategories(categoryId: Int): Response<List<Category>>
-    suspend fun getProductsByCategory(categoryId: Int): Response<List<Product>>
+    suspend fun getProductsByCategory(categoryId: Int, perPage: Int, page: Int): Response<List<Product>>
     suspend fun setOrder(order: Order): Response<Order>
     suspend fun getCustomer(email: String): Response<List<User>>
     suspend fun createCustomer(user: User): Response<User>

@@ -16,10 +16,10 @@ object Mapper {
         )
     }
 
-    fun transformProductsToLineItem(products: List<LocalProduct>, quantity: Int)
+    fun transformProductsToLineItem(products: List<LocalProduct>)
             : List<LineItem> {
         return products.map {
-            LineItem(it.id, quantity)
+            LineItem(it.id, it.quantity)
         }
     }
 

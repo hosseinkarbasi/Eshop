@@ -18,28 +18,10 @@ class ProductsListViewModel @Inject constructor(
     private val state: SavedStateHandle
 ) : ViewModel() {
 
-    private val _getProductsByCategory: MutableStateFlow<ResultWrapper<List<Product>>> =
+    private val _getProductsList: MutableStateFlow<ResultWrapper<List<Product>>> =
         MutableStateFlow(ResultWrapper.Loading)
-    val getProductsByCategory = _getProductsByCategory.asStateFlow()
+    val getProductsList = _getProductsList.asStateFlow()
 
-    private val _getNewestProducts: MutableStateFlow<ResultWrapper<List<Product>>> =
-        MutableStateFlow(ResultWrapper.Loading)
-    val getNewestProducts = _getNewestProducts.asStateFlow()
-
-    private val _getMostViewedProducts: MutableStateFlow<ResultWrapper<List<Product>>> =
-        MutableStateFlow(ResultWrapper.Loading)
-    val getMostViewedProducts = _getMostViewedProducts.asStateFlow()
-
-    private val _getMostSalesProducts: MutableStateFlow<ResultWrapper<List<Product>>> =
-        MutableStateFlow(ResultWrapper.Loading)
-    val getMostSalesProducts = _getMostSalesProducts.asStateFlow()
-
-
-    var categoryId = state.get<Int>("categoryId") ?: ""
-        set(value) {
-            field = value
-            state.set("categoryId", value)
-        }
 
     var productsType = state.get<String>("productsType") ?: ""
         set(value) {
@@ -48,36 +30,35 @@ class ProductsListViewModel @Inject constructor(
         }
 
 
-    fun getNewest() {
+    fun getNewest(perPage: Int, page: Int) {
         viewModelScope.launch {
-            productRepository.getNewestProducts(100).collect {
-                _getNewestProducts.emit(it)
+            productRepository.getNewestProducts(perPage, page).collect {
+                _getProductsList.emit(it)
             }
         }
     }
 
-    fun getMostViewed() {
+    fun getMostViewed(perPage: Int, page: Int) {
         viewModelScope.launch {
-            productRepository.getMostViewedProducts(100).collect {
-                _getMostViewedProducts.emit(it)
+            productRepository.getMostViewedProducts(perPage, page).collect {
+                _getProductsList.emit(it)
             }
         }
     }
 
-    fun getMostSales() {
+    fun getMostSales(perPage: Int, page: Int) {
         viewModelScope.launch {
-            productRepository.getBestSalesProducts(100).collect {
-                _getMostSalesProducts.emit(it)
+            productRepository.getBestSalesProducts(perPage, page).collect {
+                _getProductsList.emit(it)
             }
         }
     }
 
-    fun getProductsByCategory(categoryId: Int) {
+    fun getProductsByCategory(categoryId: Int,perPage: Int, page: Int) {
         viewModelScope.launch {
-            productRepository.getProductsByCategory(categoryId).collect {
-                _getProductsByCategory.emit(it)
+            productRepository.getProductsByCategory(categoryId,perPage, page).collect {
+                _getProductsList.emit(it)
             }
         }
     }
-
 }

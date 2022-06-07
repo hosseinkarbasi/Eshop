@@ -35,25 +35,25 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
     private fun goProductsByCategory() {
         clothingAdapter.onItemPosition {
             val action =
-                CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id,"")
+                CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id.toString())
             findNavController().navigate(action)
         }
 
         digitalAdapter.onItemPosition {
             val action =
-                CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id,"")
+                CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id.toString())
             findNavController().navigate(action)
         }
 
         superMarketAdapter.onItemPosition {
             val action =
-                CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id,"")
+                CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id.toString())
             findNavController().navigate(action)
         }
 
         booksAndArtAdapter.onItemPosition {
             val action =
-                CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id,"")
+                CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id.toString())
             findNavController().navigate(action)
         }
     }

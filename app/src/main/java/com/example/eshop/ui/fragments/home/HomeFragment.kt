@@ -64,7 +64,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.getSpecialSale.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
                 is ResultWrapper.Success -> {
-                    imageList.addAll(it.data!!.images)
+                    imageList.addAll(it.data.images)
                     imageViewPagerAdapter = SliderImageAdapter(imageList, binding.sliderVp)
                     binding.sliderVp.adapter = imageViewPagerAdapter
                 }
@@ -107,17 +107,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun seeMoreItems() = binding.apply {
 
         newestListBtn.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment(-1, DATE)
+            val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment( DATE)
             findNavController().navigate(action)
         }
         mostSalesListBtn.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment(-1, RATING)
+            val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment( RATING)
             findNavController().navigate(action)
 
         }
         mostViewedListBtn.setOnClickListener {
             val action =
-                HomeFragmentDirections.actionHomeFragmentToProductsListFragment(-1, POPULARITY)
+                HomeFragmentDirections.actionHomeFragmentToProductsListFragment( POPULARITY)
             findNavController().navigate(action)
         }
     }

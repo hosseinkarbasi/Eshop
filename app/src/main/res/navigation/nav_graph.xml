@@ -41,8 +41,6 @@
         android:id="@+id/productsListFragment"
         android:name="com.example.eshop.ui.fragments.productslist.ProductsListFragment"
         android:label="ProductsListFragment" >
-        <argument android:name="categoryId"
-            app:argType="integer" />
         <argument
             android:name="productsType"
             app:argType="string" />
@@ -106,5 +104,13 @@
     <fragment
         android:id="@+id/homeCartFragment"
         android:name="com.example.eshop.ui.fragments.cart.HomeCartFragment"
-        android:label="HomeCartFragment" />
+        android:label="HomeCartFragment" >
+        <action
+            android:id="@+id/action_homeCartFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.example.eshop.ui.fragments.cart.payment.PaymentFragment"
+        android:label="PaymentFragment" />
 </navigation>

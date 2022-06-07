@@ -12,7 +12,8 @@ interface WooCommerceApi {
     @GET("products")
     suspend fun getProducts(
         @Query("orderby") orderBy: String,
-        @Query("per_page") perPage: Int
+        @Query("per_page") perPage: Int,
+        @Query("page") page: Int
     ): Response<List<Product>>
 
     @GET("products/categories")
@@ -22,7 +23,11 @@ interface WooCommerceApi {
     suspend fun getProduct(@Path("id") productId: Int): Response<Product>
 
     @GET("products")
-    suspend fun getProductsByCategory(@Query("category") categoryId: Int): Response<List<Product>>
+    suspend fun getProductsByCategory(
+        @Query("category") categoryId: Int,
+        @Query("per_page") perPage: Int,
+        @Query("page") page: Int
+    ): Response<List<Product>>
 
     @GET("products")
     suspend fun searchProducts(

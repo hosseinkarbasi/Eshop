@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.eshop.R
 import com.example.eshop.application.Constants.DATE
 import com.example.eshop.application.Constants.POPULARITY
@@ -24,30 +26,42 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
     private var _binding: FragmentProductsListBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<ProductsListViewModel>()
-    private lateinit var productsAdapter: ProductsListAdapter
+    private lateinit var adapter: ProductsAdapter
+    private lateinit var layoutManager: LinearLayoutManager
+    private var page = 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentProductsListBinding.bind(view)
+        layoutManager = LinearLayoutManager(activity)
 
         initRecyclerView()
-        getProductsListFromCategory()
         goProductDetails()
-        getProductsListFromHome()
+        getCompleteProducts()
+        pagination()
+        getProductsList()
 
     }
 
-    private fun goProductDetails() {
-        productsAdapter.onItemPosition {
-            val action = ProductsListFragmentDirections.actionGlobalProductFragment(it.id)
-            findNavController().navigate(action)
+    private fun getCompleteProducts() {
+        when (val productsType = viewModel.productsType) {
+            DATE -> {
+                viewModel.getNewest(5, page)
+            }
+            RATING -> {
+                viewModel.getMostSales(5, page)
+            }
+            POPULARITY -> {
+                viewModel.getMostViewed(5, page)
+            }
+            else -> {
+                viewModel.getProductsByCategory(productsType.toInt(), 5, page)
+            }
         }
     }
 
-    private fun getProductsListFromCategory() {
-        val categoryId = viewModel.categoryId as Int
-        viewModel.getProductsByCategory(categoryId)
-        viewModel.getProductsByCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+    private fun getProductsList() {
+        viewModel.getProductsList.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
                 is ResultWrapper.Error -> {
                     it.message?.let { it1 -> isError(it1) }
@@ -56,68 +70,40 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
                     isLoading()
                 }
                 is ResultWrapper.Success -> {
-                    it.data?.let { it1 -> isSuccess(it1) }
+                    isSuccess(it.data)
                 }
             }
         }
     }
 
-    private fun getProductsListFromHome() {
-        when (viewModel.productsType) {
-            DATE -> {
-                viewModel.getNewest()
-                viewModel.getNewestProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-                    when (it) {
-                        is ResultWrapper.Error -> {
-                            it.message?.let { it1 -> isError(it1) }
-                        }
-                        is ResultWrapper.Loading -> {
-                            isLoading()
-                        }
-                        is ResultWrapper.Success -> {
-                            it.data?.let { it1 -> isSuccess(it1) }
-                        }
+    private fun pagination() {
+        binding.productsRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val visibleItemCount = layoutManager.childCount
+                val pastVisibleItem = layoutManager.findFirstVisibleItemPosition()
+                val total = binding.productsRv.adapter?.itemCount
+                if (page >= 1) {
+                    if (visibleItemCount + pastVisibleItem >= total!!) {
+                        page++
+                        getCompleteProducts()
                     }
                 }
             }
-            RATING -> {
-                viewModel.getMostSales()
-                viewModel.getMostSalesProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-                    when (it) {
-                        is ResultWrapper.Error -> {
-                            it.message?.let { it1 -> isError(it1) }
-                        }
-                        is ResultWrapper.Loading -> {
-                            isLoading()
-                        }
-                        is ResultWrapper.Success -> {
-                            it.data?.let { it1 -> isSuccess(it1) }
-                        }
-                    }
-                }
-            }
-            POPULARITY -> {
-                viewModel.getMostViewed()
-                viewModel.getMostViewedProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-                    when (it) {
-                        is ResultWrapper.Error -> {
-                            it.message?.let { it1 -> isError(it1) }
-                        }
-                        is ResultWrapper.Loading -> {
-                            isLoading()
-                        }
-                        is ResultWrapper.Success -> {
-                            it.data?.let { it1 -> isSuccess(it1) }
-                        }
-                    }
-                }
-            }
+        })
+    }
+
+    private fun goProductDetails() {
+        adapter.onItemPosition {
+            val action = ProductsListFragmentDirections.actionGlobalProductFragment(it.id)
+            findNavController().navigate(action)
         }
     }
 
     private fun initRecyclerView() {
-        productsAdapter = ProductsListAdapter()
-        binding.productsRv.adapter = productsAdapter
+        binding.productsRv.layoutManager = layoutManager
+        adapter = ProductsAdapter()
+        binding.productsRv.adapter = adapter
     }
 
     private fun isLoading() = binding.apply {
@@ -134,7 +120,7 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
     private fun isSuccess(data: List<Product>) = binding.apply {
         loading.gone()
         loading.pauseAnimation()
-        productsAdapter.submitList(data)
+        adapter.addList(data)
     }
 
     override fun onDestroyView() {

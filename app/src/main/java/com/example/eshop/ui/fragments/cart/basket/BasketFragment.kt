@@ -5,17 +5,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
 import com.example.eshop.data.local.model.LocalProduct
-import com.example.eshop.application.Constants.CUSTOMER_ID
-import com.example.eshop.data.remote.model.Order
 import com.example.eshop.databinding.FragmentBasketBinding
-import com.example.eshop.utils.Mapper
+import com.example.eshop.ui.fragments.cart.HomeCartFragmentDirections
+import com.example.eshop.ui.fragments.home.HomeFragmentDirections
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
-import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.utils.gone
 import com.example.eshop.utils.visible
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +23,6 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
     private val binding get() = _binding!!
     private val viewModel by viewModels<BasketViewModel>()
     private lateinit var basketAdapter: BasketListAdapter
-    private val orders = mutableListOf<LocalProduct>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,12 +30,12 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 
         iniRecyclerView()
         getProducts()
-        setOrder()
         changeQuantityCart()
         goProductInfo()
+        totalPrice()
+        goToPayment()
 
     }
-
 
     @SuppressLint("NotifyDataSetChanged")
     private fun changeQuantityCart() {
@@ -53,8 +50,8 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         }
     }
 
-    private fun changeVisibility() = binding.apply {
-        if (orders.size == 0) {
+    private fun changeVisibility(list: List<LocalProduct>) = binding.apply {
+        if (list.isEmpty()) {
             gpEmpty.visible()
             gpBasketDetails.gone()
 
@@ -64,55 +61,31 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         }
     }
 
-    private fun setOrder() {
-        binding.cartSubmitBtn.setOnClickListener {
-            val items = Mapper.transformProductsToLineItem(orders, 1)
-            val order = Order(CUSTOMER_ID, items, "")
-            viewModel.setOrder(order)
-            getOrderStatus()
-        }
-    }
-
     private fun goProductInfo() {
         basketAdapter.onItemPosition {
             val action = BasketFragmentDirections.actionGlobalProductFragment(it.id)
+            findNavController().navigate(action)
         }
     }
 
-    private fun getOrderStatus() {
-        viewModel.getOrder.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-            when (it) {
-                is ResultWrapper.Success -> {
-                    val orderDialog = MaterialAlertDialogBuilder(requireContext())
-                    orderDialog.apply {
-                        setTitle("ثبت سفارش")
-                        setMessage(" سفارش شما با شماره پیگیری ${it.data.number}ثبت شد. ")
-                        setPositiveButton("ok") { _, _ ->
-                        }
-                        show()
-                    }
-                    viewModel.deleteAllProductsBasket()
-                }
-                is ResultWrapper.Error -> {
-                    val orderDialog = MaterialAlertDialogBuilder(requireContext())
-                    orderDialog.apply {
-                        setTitle("ثبت سفارش")
-                        setMessage(" متاسفانه ثبت سفارش شما با خطا مواجه شد ")
-                        setPositiveButton("ok") { _, _ ->
-                        }
-                        show()
-                    }
-                }
-                else -> {}
-            }
+    private fun goToPayment() {
+        binding.cartSubmitBtn.setOnClickListener {
+            val action = HomeCartFragmentDirections.actionHomeCartFragmentToPaymentFragment()
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun totalPrice() {
+        viewModel.getTotalPrice.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            binding.totalPrice.text = it.toString()
+            binding.totalPricePayment.text = it.toString()
         }
     }
 
     private fun getProducts() {
         viewModel.getProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             basketAdapter.submitList(it)
-            orders.addAll(it)
-            changeVisibility()
+            changeVisibility(it)
         }
     }
 

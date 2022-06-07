@@ -24,23 +24,24 @@ class ProductRepository @Inject constructor(
     private val remoteDataSource: IRemoteDataSource
 ) {
 
-    suspend fun getNewestProducts(perPage: Int): Flow<ResultWrapper<List<Product>>> {
-        return requestFlow(dispatcher) { remoteDataSource.getProducts(DATE, perPage) }
+
+     suspend fun getNewestProducts(perPage: Int, page: Int): Flow<ResultWrapper<List<Product>>> {
+        return requestFlow(dispatcher) { remoteDataSource.getProducts(DATE, perPage, page) }
     }
 
-    suspend fun getMostViewedProducts(perPage: Int): Flow<ResultWrapper<List<Product>>> {
-        return requestFlow(dispatcher) { remoteDataSource.getProducts(POPULARITY, perPage) }
+    suspend fun getMostViewedProducts(perPage: Int, page: Int): Flow<ResultWrapper<List<Product>>> {
+        return requestFlow(dispatcher) { remoteDataSource.getProducts(POPULARITY, perPage, page) }
     }
 
-    suspend fun getBestSalesProducts(perPage: Int): Flow<ResultWrapper<List<Product>>> {
-        return requestFlow(dispatcher) { remoteDataSource.getProducts(RATING, perPage) }
+    suspend fun getBestSalesProducts(perPage: Int, page: Int): Flow<ResultWrapper<List<Product>>> {
+        return requestFlow(dispatcher) { remoteDataSource.getProducts(RATING, perPage, page) }
     }
 
     suspend fun getProduct(id: Int): Flow<ResultWrapper<Product>> =
         requestFlow(dispatcher) { remoteDataSource.getProduct(id) }
 
-    suspend fun getProductsByCategory(categoryId: Int): Flow<ResultWrapper<List<Product>>> =
-        requestFlow(dispatcher) { remoteDataSource.getProductsByCategory(categoryId) }
+    suspend fun getProductsByCategory(categoryId: Int,perPage: Int, page: Int): Flow<ResultWrapper<List<Product>>> =
+        requestFlow(dispatcher) { remoteDataSource.getProductsByCategory(categoryId,perPage, page) }
 
     suspend fun searchProducts(
         searchText: String,
