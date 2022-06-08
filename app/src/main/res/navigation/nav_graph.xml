@@ -138,5 +138,12 @@
         <argument
             android:name="product_id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_reviewsFragment_to_reviewDialog"
+            app:destination="@id/reviewDialog" />
     </fragment>
+    <dialog
+        android:id="@+id/reviewDialog"
+        android:name="com.example.eshop.ui.fragments.dialogs.ReviewDialog"
+        android:label="ReviewDialog" />
 </navigation>

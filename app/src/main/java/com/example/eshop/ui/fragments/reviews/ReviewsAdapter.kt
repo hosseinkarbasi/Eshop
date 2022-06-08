@@ -7,7 +7,6 @@ import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eshop.data.remote.model.Review
 import com.example.eshop.databinding.ReviewsListItemBinding
-import java.text.DateFormat
 
 class ReviewsAdapter() : RecyclerView.Adapter<ReviewsAdapter.ReviewsViewHolder>() {
 
@@ -21,7 +20,7 @@ class ReviewsAdapter() : RecyclerView.Adapter<ReviewsAdapter.ReviewsViewHolder>(
             reviewerTv.text = item.reviewer
             ratingTv.text = item.rating.toString()
             reviewTv.text = HtmlCompat.fromHtml(item.review, HtmlCompat.FROM_HTML_MODE_LEGACY)
-            dateReviewerTv.text = item.date_created
+            dateReviewerTv.text = item.dateCreated
             binding.root.setOnClickListener {
                 itemClick?.let {
                     it(item)

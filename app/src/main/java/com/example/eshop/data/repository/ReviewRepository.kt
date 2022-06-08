@@ -17,12 +17,14 @@ class ReviewRepository @Inject constructor(
     private val remoteDataSource: IRemoteDataSource
 ) {
 
+    suspend fun createReview(review: Review): Flow<ResultWrapper<Review>> =
+        requestFlow(dispatcher) { remoteDataSource.createReview(review) }
+
     suspend fun getReviews(
         productId: Int,
         perPage: Int,
         page: Int
     ): Flow<ResultWrapper<List<Review>>> =
         requestFlow(dispatcher) { remoteDataSource.getReviews(productId, perPage, page) }
-
 
 }

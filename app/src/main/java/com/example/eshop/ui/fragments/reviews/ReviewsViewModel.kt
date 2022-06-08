@@ -9,6 +9,7 @@ import com.example.eshop.data.repository.ReviewRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,11 +23,24 @@ class ReviewsViewModel @Inject constructor(
         MutableStateFlow(ResultWrapper.Loading)
     val getReviewsList = _getReviewsList.asStateFlow()
 
+    private val _getReview: MutableStateFlow<ResultWrapper<Review>> =
+        MutableStateFlow(ResultWrapper.Loading)
+    val getReview = _getReview.asStateFlow()
+
+
     var productId = state.get<Int>("product_id") ?: ""
         set(value) {
             field = value
             state.set("product_id", value)
         }
+
+    fun createReview(review: Review) {
+        viewModelScope.launch {
+            reviewRepository.createReview(review).collect {
+                _getReview.emit(it)
+            }
+        }
+    }
 
     fun getReviews(productId: Int, page: Int, perPage: Int) {
         viewModelScope.launch {

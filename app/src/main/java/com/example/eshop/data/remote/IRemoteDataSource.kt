@@ -22,6 +22,8 @@ interface IRemoteDataSource {
 
     suspend fun getOrders(customerId: Int): Response<List<Order>>
 
+    suspend fun createReview(review: Review): Response<Review>
+
     suspend fun getReviews(
         productId: Int,
         perPage: Int,

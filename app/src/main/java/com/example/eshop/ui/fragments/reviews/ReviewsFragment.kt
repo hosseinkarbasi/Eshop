@@ -9,6 +9,7 @@ import com.example.eshop.R
 import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.data.remote.model.Review
 import com.example.eshop.databinding.FragmentReviewsBinding
+import com.example.eshop.ui.fragments.dialogs.ReviewDialog
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import com.example.eshop.utils.gone
 import com.example.eshop.utils.visible
@@ -28,8 +29,33 @@ class ReviewsFragment : Fragment(R.layout.fragment_reviews) {
 
         initRecyclerView()
         getReviews()
+        submitReview()
+        review()
+    }
 
+    private fun review(){
+        viewModel.getReview.collectWithRepeatOnLifecycle(viewLifecycleOwner){
+            when(it){
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.Success -> {
+                    Toast.makeText(requireContext(), "نظر شما یا موفقیت ثبت شد", Toast.LENGTH_LONG).show()
+                    viewModel.getReviews(viewModel.productId as Int, 1, 100)
+                }
+                is ResultWrapper.Error -> {
+                    Toast.makeText(requireContext(), "مشکلی در ثبت نظر بوجود آمد", Toast.LENGTH_LONG).show()
 
+                }
+            }
+        }
+    }
+
+    private fun submitReview() {
+        binding.reviewFab.setOnClickListener {
+            val dialog = ReviewDialog(viewModel.productId as Int) {
+                viewModel.createReview(it)
+            }
+            dialog.show(childFragmentManager, "review")
+        }
     }
 
     private fun getReviews() {

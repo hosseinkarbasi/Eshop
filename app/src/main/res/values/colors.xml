@@ -14,4 +14,8 @@
     
     <color name="transparent_70">#B3000000</color>
 
+    <color name="lightGrey">#CFCFCC</color>
+    <color name="duskYellow">#FFE800</color>
+
+
 </resources>

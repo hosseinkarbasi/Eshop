@@ -7,33 +7,11 @@ import retrofit2.http.*
 
 interface WooCommerceApi {
 
-    @GET("products")
-    suspend fun getProducts(
-        @Query("orderby") orderBy: String,
-        @Query("per_page") perPage: Int,
-        @Query("page") page: Int
-    ): Response<List<Product>>
-
     @GET("products/categories")
     suspend fun getCategories(@Query("parent") parentId: Int): Response<List<Category>>
 
     @GET("products/{id}")
     suspend fun getProduct(@Path("id") productId: Int): Response<Product>
-
-    @GET("products")
-    suspend fun getProductsByCategory(
-        @Query("category") categoryId: Int,
-        @Query("per_page") perPage: Int,
-        @Query("page") page: Int
-    ): Response<List<Product>>
-
-    @GET("products")
-    suspend fun searchProducts(
-        @Query("search") searchText: String,
-        @Query("per_page") perPage: Int,
-        @Query("orderby") orderBy: String,
-        @Query("order") order: String
-    ): Response<List<Product>>
 
     @POST("orders")
     suspend fun setOrder(@Body order: Order): Response<Order>
@@ -49,6 +27,31 @@ interface WooCommerceApi {
 
     @GET("coupons")
     suspend fun getCoupon(@Query("code") code: String): Response<List<Coupon>>
+
+    @POST("products/reviews")
+    suspend fun createReview(@Body review: Review): Response<Review>
+
+    @GET("products")
+    suspend fun getProductsByCategory(
+        @Query("category") categoryId: Int,
+        @Query("per_page") perPage: Int,
+        @Query("page") page: Int
+    ): Response<List<Product>>
+
+    @GET("products")
+    suspend fun getProducts(
+        @Query("orderby") orderBy: String,
+        @Query("per_page") perPage: Int,
+        @Query("page") page: Int
+    ): Response<List<Product>>
+
+    @GET("products")
+    suspend fun searchProducts(
+        @Query("search") searchText: String,
+        @Query("per_page") perPage: Int,
+        @Query("orderby") orderBy: String,
+        @Query("order") order: String
+    ): Response<List<Product>>
 
     @GET("products/reviews")
     suspend fun getReviews(
