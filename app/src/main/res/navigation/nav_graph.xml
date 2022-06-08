@@ -30,6 +30,9 @@
         <argument
             android:name="product_id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_productFragment_to_reviewsFragment"
+            app:destination="@id/reviewsFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_productFragment"
@@ -128,4 +131,12 @@
             app:popUpTo="@id/homeCartFragment"
             app:popUpToInclusive="false" />
     </dialog>
+    <fragment
+        android:id="@+id/reviewsFragment"
+        android:name="com.example.eshop.ui.fragments.reviews.ReviewsFragment"
+        android:label="ReviewsFragment" >
+        <argument
+            android:name="product_id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

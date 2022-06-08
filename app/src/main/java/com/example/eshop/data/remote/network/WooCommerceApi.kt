@@ -1,10 +1,7 @@
 package com.example.eshop.data.remote.network
 
 import com.example.eshop.data.local.model.User
-import com.example.eshop.data.remote.model.Category
-import com.example.eshop.data.remote.model.Coupon
-import com.example.eshop.data.remote.model.Order
-import com.example.eshop.data.remote.model.Product
+import com.example.eshop.data.remote.model.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -52,5 +49,12 @@ interface WooCommerceApi {
 
     @GET("coupons")
     suspend fun getCoupon(@Query("code") code: String): Response<List<Coupon>>
+
+    @GET("products/reviews")
+    suspend fun getReviews(
+        @Query("product") productId: Int,
+        @Query("per_page") perPage: Int,
+        @Query("page") page: Int
+    ): Response<List<Review>>
 
 }

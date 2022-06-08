@@ -1,10 +1,7 @@
 package com.example.eshop.data.remote
 
 import com.example.eshop.data.local.model.User
-import com.example.eshop.data.remote.model.Category
-import com.example.eshop.data.remote.model.Coupon
-import com.example.eshop.data.remote.model.Order
-import com.example.eshop.data.remote.model.Product
+import com.example.eshop.data.remote.model.*
 import retrofit2.Response
 
 interface IRemoteDataSource {
@@ -24,6 +21,12 @@ interface IRemoteDataSource {
     suspend fun createCustomer(user: User): Response<User>
 
     suspend fun getOrders(customerId: Int): Response<List<Order>>
+
+    suspend fun getReviews(
+        productId: Int,
+        perPage: Int,
+        page: Int
+    ): Response<List<Review>>
 
     suspend fun getProductsByCategory(
         categoryId: Int,

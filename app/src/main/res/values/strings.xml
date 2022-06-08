@@ -46,4 +46,6 @@
     <string name="address">تهران،عبدل آباد،خیابان شکوفه،خیابان ایمان،پلاک 100،حسین کرباسی</string>
     <string name="coupon_tv">کد تخفیف</string>
     <string name="Add_coupon">افزودن کد تخفیف</string>
+    <string name="reviews_user">دیدگاه کاربران</string>
+    <string name="insert_review">ثبت دیدگاه</string>
 </resources>

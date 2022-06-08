@@ -8,6 +8,7 @@ import androidx.core.text.HtmlCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.example.eshop.R
@@ -37,6 +38,13 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         setUpViewPager()
     }
 
+    private fun goToReviews(productId: Int) {
+        binding.reviewsBtn.setOnClickListener {
+            val action = ProductFragmentDirections.actionProductFragmentToReviewsFragment(productId)
+            findNavController().navigate(action)
+        }
+    }
+
     private fun getProduct() = binding.apply {
         viewModel.getProduct(args.productId)
         viewModel.getProduct.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
@@ -49,6 +57,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
                 }
                 is ResultWrapper.Success -> {
                     isSuccess(it.data)
+                    goToReviews(it.data.id)
                 }
             }
         }

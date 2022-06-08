@@ -6,7 +6,6 @@ import com.example.eshop.application.Constants.POPULARITY
 import com.example.eshop.application.Constants.RATING
 import com.example.eshop.data.local.ILocalDataSource
 import com.example.eshop.data.remote.IRemoteDataSource
-import com.example.eshop.data.remote.model.Order
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.data.remote.requestFlow
 import com.example.eshop.di.IoDispatcher
