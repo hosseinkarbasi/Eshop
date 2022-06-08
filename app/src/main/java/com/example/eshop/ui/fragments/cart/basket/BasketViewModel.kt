@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eshop.data.local.datastore.userinfo.UserInfoDataStore
 import com.example.eshop.data.local.model.LocalProduct
-import com.example.eshop.data.repository.ProductRepository
+import com.example.eshop.data.repository.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BasketViewModel @Inject constructor(
-    private val productRepository: ProductRepository,
+    private val cartRepository: CartRepository,
     userInfoDataStore: UserInfoDataStore
 ) :
     ViewModel() {
@@ -32,7 +32,7 @@ class BasketViewModel @Inject constructor(
 
     private fun getLocalProducts() {
         viewModelScope.launch {
-            productRepository.getLocalProducts().collect {listProducts ->
+            cartRepository.getLocalProducts().collect {listProducts ->
                 _getProducts.emit(listProducts)
 
                 val total = listProducts.sumOf { it.price.toInt() * it.quantity }
@@ -44,13 +44,13 @@ class BasketViewModel @Inject constructor(
 
     private fun deleteProduct(id: Int) {
         viewModelScope.launch {
-            productRepository.deleteProduct(id)
+            cartRepository.deleteProduct(id)
         }
     }
 
     private fun updateProduct(product: LocalProduct) {
         viewModelScope.launch {
-            productRepository.update(product)
+            cartRepository.update(product)
         }
     }
 

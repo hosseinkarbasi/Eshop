@@ -35,5 +35,4 @@ class ProductViewModel @Inject constructor(
         }
     }
 
-
 }

@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import com.example.eshop.R
 import com.example.eshop.data.local.model.LocalProduct
 import com.example.eshop.data.remote.ResultWrapper
+import com.example.eshop.data.remote.model.Coupon
 import com.example.eshop.data.remote.model.Order
 import com.example.eshop.databinding.FragmentPaymentBinding
 import com.example.eshop.utils.Mapper
@@ -31,9 +32,57 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         initRecyclerView()
         getProducts()
         totalPrice()
-
+        getCoupon()
     }
 
+    private fun getCoupon() = binding.apply {
+        couponEdLayout.setEndIconOnClickListener {
+            if (!validateEditText()) {
+                return@setEndIconOnClickListener
+            } else {
+                viewModel.getCoupon(couponEd.text.toString())
+            }
+        }
+
+        viewModel.getCoupon.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            when (it) {
+                is ResultWrapper.Error -> {
+                    couponEdLayout.helperText = "کد تخفیف وارد شده درست نیست"
+                }
+                is ResultWrapper.Success -> {
+                    isSuccessCoupon(it.data)
+                }
+                is ResultWrapper.Loading -> {}
+            }
+        }
+    }
+
+    private fun validateEditText(): Boolean {
+        return if (binding.couponEd.text?.isEmpty() == true) {
+            binding.couponEdLayout.helperText = "کد تخفیف را وارد کنید"
+            false
+        } else {
+            binding.couponEdLayout.helperText = null
+            true
+        }
+    }
+
+    private fun isSuccessCoupon(data: List<Coupon>) {
+        if (data.isEmpty()) {
+            binding.couponEdLayout.helperText = "کد تخفیف وارد شده درست نیست"
+        } else {
+            viewModel.getTotalPrice.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+                val totalPrice = it - it / data[0].amount.toDouble()
+                val convertPercent = DecimalFormat("0.#")
+                val percent = convertPercent.format(data[0].amount.toDouble())
+                val dec = DecimalFormat("###,###")
+                val price = dec.format(totalPrice)
+                binding.couponEdLayout.helperText = "$percent درصد از مبلغ کل کسر شد "
+                binding.couponPercent.text = "$percent درصد "
+                binding.totalPricePayment.text = "$price تومان "
+            }
+        }
+    }
 
     private fun initRecyclerView() {
         adapter = PaymentAdapter()
@@ -55,7 +104,9 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         viewModel.getTotalPrice.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             val dec = DecimalFormat("###,###")
             val price = dec.format(it)
-            priceTv.text = "$price تومان "
+            binding.totalPrice.text = "$price تومان "
+            binding.totalPricePayment.text = "$price تومان "
+
         }
     }
 

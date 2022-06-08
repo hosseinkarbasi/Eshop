@@ -50,9 +50,6 @@ class ProductRepository @Inject constructor(
     ): Flow<ResultWrapper<List<Product>>> =
         requestFlow(dispatcher) { remoteDataSource.searchProducts(searchText, 100, orderBy, order) }
 
-    suspend fun setOrder(order: Order): Flow<ResultWrapper<Order>> =
-        requestFlow(dispatcher) { remoteDataSource.setOrder(order) }
-
 
     //local
     suspend fun insertProduct(product: LocalProduct) {
@@ -61,20 +58,4 @@ class ProductRepository @Inject constructor(
         }
     }
 
-    suspend fun update(product: LocalProduct) {
-        withContext(dispatcher) {
-            localDataSource.updateProduct(product)
-        }
-    }
-
-    suspend fun deleteProduct(id: Int) {
-        withContext(dispatcher) {
-            localDataSource.deleteProduct(id)
-        }
-    }
-
-    fun getLocalProducts(): Flow<List<LocalProduct>> = localDataSource.gerProducts()
-
-    suspend fun deleteAllProductsBasket() =
-        withContext(dispatcher) { localDataSource.deleteProduct() }
 }

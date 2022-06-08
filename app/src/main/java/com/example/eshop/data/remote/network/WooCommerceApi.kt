@@ -2,6 +2,7 @@ package com.example.eshop.data.remote.network
 
 import com.example.eshop.data.local.model.User
 import com.example.eshop.data.remote.model.Category
+import com.example.eshop.data.remote.model.Coupon
 import com.example.eshop.data.remote.model.Order
 import com.example.eshop.data.remote.model.Product
 import retrofit2.Response
@@ -48,5 +49,8 @@ interface WooCommerceApi {
 
     @GET("orders")
     suspend fun getOrders(@Query("customer") customerId: Int): Response<List<Order>>
+
+    @GET("coupons")
+    suspend fun getCoupon(@Query("code") code: String): Response<List<Coupon>>
 
 }
