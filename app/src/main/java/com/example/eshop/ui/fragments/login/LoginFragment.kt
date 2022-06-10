@@ -14,6 +14,7 @@ import com.example.eshop.databinding.FragmentLoginBinding
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -29,7 +30,17 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         login()
         getUserInfo()
         goToSignUp()
+        goToProfile()
+    }
 
+    private fun goToProfile() {
+        viewModel.pref.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            val userEmail = viewModel.pref.first()
+            if (userEmail.email.isNotEmpty()) {
+                val action = LoginFragmentDirections.actionLoginFragmentToProfileFragment()
+                findNavController().navigate(action)
+            }
+        }
     }
 
     private fun login() {

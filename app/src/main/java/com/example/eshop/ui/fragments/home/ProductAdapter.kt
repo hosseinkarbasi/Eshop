@@ -19,13 +19,14 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.CustomViewHolder>(Dif
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Product) = binding.apply {
-            productTitle.text = item.name
-            productPrice.text = " ${item.price} تومان "
-            Glide.with(root)
-                .load(item.images[0].src)
-                .placeholder(R.drawable.online_shopping_palceholder)
-                .into(productImage)
-
+            if (!item.price.isNullOrEmpty()) {
+                productTitle.text = item.name
+                productPrice.text = " ${item.price} تومان "
+                Glide.with(root)
+                    .load(item.images[0].src)
+                    .placeholder(R.drawable.online_shopping_palceholder)
+                    .into(productImage)
+            }
 
             binding.root.setOnClickListener {
                 itemClick?.let {

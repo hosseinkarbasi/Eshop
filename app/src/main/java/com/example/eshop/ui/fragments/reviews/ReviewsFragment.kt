@@ -39,7 +39,7 @@ class ReviewsFragment : Fragment(R.layout.fragment_reviews) {
                 is ResultWrapper.Loading -> {}
                 is ResultWrapper.Success -> {
                     Toast.makeText(requireContext(), "نظر شما یا موفقیت ثبت شد", Toast.LENGTH_LONG).show()
-                    viewModel.getReviews(viewModel.productId as Int, 1, 100)
+                    viewModel.getReviews(viewModel.productId, 1, 100)
                 }
                 is ResultWrapper.Error -> {
                     Toast.makeText(requireContext(), "مشکلی در ثبت نظر بوجود آمد", Toast.LENGTH_LONG).show()

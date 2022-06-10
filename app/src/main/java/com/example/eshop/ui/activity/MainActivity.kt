@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         checkNetworkConnection()
         setupNavController()
         getPreferences()
-        CartViewPagerAdapter(supportFragmentManager, lifecycle)
+//        CartViewPagerAdapter(supportFragmentManager, lifecycle)
 
 
     }

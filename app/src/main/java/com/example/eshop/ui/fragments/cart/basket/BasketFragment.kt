@@ -29,11 +29,13 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         _binding = FragmentBasketBinding.bind(view)
 
         iniRecyclerView()
+        viewModel.getLocalProducts()
         getProducts()
         changeQuantityCart()
         goProductInfo()
         totalPrice()
         goToPayment()
+
 
     }
 

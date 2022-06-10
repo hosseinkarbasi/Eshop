@@ -26,13 +26,10 @@ class BasketViewModel @Inject constructor(
 
     val pref = userInfoDataStore.preferences
 
-    init {
-        getLocalProducts()
-    }
 
-    private fun getLocalProducts() {
+    fun getLocalProducts() {
         viewModelScope.launch {
-            cartRepository.getLocalProducts().collect {listProducts ->
+            cartRepository.getLocalProducts().collect { listProducts ->
                 _getProducts.emit(listProducts)
 
                 val total = listProducts.sumOf { it.price.toInt() * it.quantity }

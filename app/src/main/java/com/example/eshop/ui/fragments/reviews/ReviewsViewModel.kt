@@ -28,7 +28,7 @@ class ReviewsViewModel @Inject constructor(
     val getReview = _getReview.asStateFlow()
 
 
-    var productId = state.get<Int>("product_id") ?: ""
+    var productId: Int = state["product_id"] ?: 0
         set(value) {
             field = value
             state.set("product_id", value)

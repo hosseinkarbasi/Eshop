@@ -22,6 +22,8 @@ class LoginViewModel @Inject constructor(
         MutableStateFlow(ResultWrapper.Loading)
     val getCustomer = _getCustomer.asStateFlow()
 
+    val pref = userInfoDataStore.preferences
+
     fun getCustomer(email: String) {
         viewModelScope.launch {
             userRepository.getCustomer(email).collect {
