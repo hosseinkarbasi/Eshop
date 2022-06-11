@@ -30,6 +30,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         settingsFragment()
         checkUser()
         logOut()
+        goToNotification()
 
     }
 
@@ -72,6 +73,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun settingsFragment() {
         binding.settings.setOnClickListener {
             val action = ProfileFragmentDirections.actionProfileFragmentToSettingsFragment()
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun goToNotification() {
+        binding.notification.setOnClickListener {
+            val action = ProfileFragmentDirections.actionProfileFragmentToNotificationFragment()
             findNavController().navigate(action)
         }
     }

@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 import com.example.eshop.data.remote.ResultWrapper
+import retrofit2.Response
 
 @Singleton
 class ProductRepository @Inject constructor(
@@ -23,8 +24,11 @@ class ProductRepository @Inject constructor(
     private val remoteDataSource: IRemoteDataSource
 ) {
 
+    suspend fun getLastProduct(perPage: Int, page: Int): Response<List<Product>> {
+        return remoteDataSource.getProducts(DATE, perPage, page)
+    }
 
-     suspend fun getNewestProducts(perPage: Int, page: Int): Flow<ResultWrapper<List<Product>>> {
+    suspend fun getNewestProducts(perPage: Int, page: Int): Flow<ResultWrapper<List<Product>>> {
         return requestFlow(dispatcher) { remoteDataSource.getProducts(DATE, perPage, page) }
     }
 
@@ -39,8 +43,18 @@ class ProductRepository @Inject constructor(
     suspend fun getProduct(id: Int): Flow<ResultWrapper<Product>> =
         requestFlow(dispatcher) { remoteDataSource.getProduct(id) }
 
-    suspend fun getProductsByCategory(categoryId: Int,perPage: Int, page: Int): Flow<ResultWrapper<List<Product>>> =
-        requestFlow(dispatcher) { remoteDataSource.getProductsByCategory(categoryId,perPage, page) }
+    suspend fun getProductsByCategory(
+        categoryId: Int,
+        perPage: Int,
+        page: Int
+    ): Flow<ResultWrapper<List<Product>>> =
+        requestFlow(dispatcher) {
+            remoteDataSource.getProductsByCategory(
+                categoryId,
+                perPage,
+                page
+            )
+        }
 
     suspend fun searchProducts(
         searchText: String,
