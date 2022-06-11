@@ -5,14 +5,117 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/yekan_bakh_regular"
+        android:lines="3"
+        android:text="@string/notif_dec"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/notify_radio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView5">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/cancel_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/yekan_bakh_regular"
+            android:text="غیرغعال کردن اعلان" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/three_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/yekan_bakh_regular"
+            android:text="هر 3 ساعت یکبار" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/five_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/yekan_bakh_regular"
+            android:text="هر 5 ساعت یکبار" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/eight_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/yekan_bakh_regular"
+            android:text="هر 8 ساعت یکبار" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/twelve_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/yekan_bakh_regular"
+            android:text="هر 12 ساعت یکبار" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/userـchoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/yekan_bakh_regular"
+            android:text="بازه زمانی دلخواه" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/choice_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:hint="بازه زمانی بر حسب ساعت"
+            android:inputType="number"
+            android:translationY="-55dp"
+            android:visibility="gone"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeColor="@color/black"
+            app:hintEnabled="true"
+            app:hintTextColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/notify_radio"
+            app:layout_constraintStart_toStartOf="@+id/notify_radio"
+            app:layout_constraintTop_toBottomOf="@+id/notify_radio">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/choice_ed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/yekan_bakh_regular"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </RadioGroup>
+
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/notify_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="ok"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="24dp"
+        android:fontFamily="@font/titr_bold"
+        android:text="@string/save_notification_settings"
+        android:textSize="20sp"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/notify_radio" />
 </androidx.constraintlayout.widget.ConstraintLayout>

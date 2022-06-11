@@ -48,4 +48,6 @@
     <string name="Add_coupon">افزودن کد تخفیف</string>
     <string name="reviews_user">دیدگاه کاربران</string>
     <string name="insert_review">ثبت دیدگاه</string>
+    <string name="notif_dec">برای اطلاع از محصولات جدید یک بازه زمانی از گزینه های زیر انتخاب کنید</string>
+    <string name="save_notification_settings">ذخیره تنظیمات</string>
 </resources>

@@ -4,13 +4,17 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
+import androidx.navigation.NavDeepLinkBuilder
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.eshop.R
 import com.example.eshop.data.local.datastore.lastproduct.LastProductInfo
 import com.example.eshop.data.repository.ProductRepository
+import com.example.eshop.ui.activity.MainActivity
+import com.example.eshop.utils.vectorToBitmap
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
@@ -31,7 +35,7 @@ class NotifyWork @AssistedInject constructor(
         lastProductDataStore.preferences.collect {
             if (getLastRemoteProduct() != it) {
                 lastProductDataStore.saveUserInfo(getLastRemoteProduct())
-                createNotification("salam", getLastRemoteProduct().toString())
+                createNotification(getLastRemoteProduct())
             }
         }
     }
@@ -41,7 +45,7 @@ class NotifyWork @AssistedInject constructor(
         return newProducts.body()?.get(0)?.id ?: 0
     }
 
-    private fun createNotification(title: String, description: String) {
+    private fun createNotification(productId: Int) {
 
         val notificationManager =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -52,10 +56,23 @@ class NotifyWork @AssistedInject constructor(
             notificationManager.createNotificationChannel(notificationChannel)
         }
 
+        val bundle = Bundle()
+        bundle.putInt("product_id", productId)
+
+        val pendingIntent = NavDeepLinkBuilder(applicationContext)
+            .setComponentName(MainActivity::class.java)
+            .setGraph(R.navigation.nav_graph)
+            .setDestination(R.id.productFragment)
+            .setArguments(bundle)
+            .createPendingIntent()
+
+        val bitmap = applicationContext.vectorToBitmap(R.drawable.larg_icon_notif)
         val notificationBuilder = NotificationCompat.Builder(applicationContext, "101")
-            .setContentTitle(title)
-            .setContentText(description)
-            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setContentTitle("محصول جدید")
+            .setContentText("برای دیدن محصول جدید کلیک کن")
+            .setLargeIcon(bitmap)
+            .setSmallIcon(R.drawable.small_icon_notif)
+            .setContentIntent(pendingIntent)
 
         notificationManager.notify(1, notificationBuilder.build())
 
