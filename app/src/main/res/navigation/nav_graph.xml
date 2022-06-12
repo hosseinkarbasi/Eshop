@@ -151,6 +151,6 @@
         android:label="ReviewDialog" />
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.example.eshop.ui.fragments.NotificationFragment"
+        android:name="com.example.eshop.ui.fragments.notification.NotificationFragment"
         android:label="NotificationFragment" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.eshop.ui.fragments
+package com.example.eshop.ui.fragments.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -33,7 +33,7 @@ class NotifyWork @AssistedInject constructor(
 
     private suspend fun getLastLocalProduct() {
         lastProductDataStore.preferences.collect {
-            if (getLastRemoteProduct() != it) {
+            if (getLastRemoteProduct() == it) {
                 lastProductDataStore.saveUserInfo(getLastRemoteProduct())
                 createNotification(getLastRemoteProduct())
             }

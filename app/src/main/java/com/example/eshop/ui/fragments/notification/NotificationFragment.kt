@@ -1,8 +1,8 @@
-package com.example.eshop.ui.fragments
+package com.example.eshop.ui.fragments.notification
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
@@ -25,14 +25,22 @@ class NotificationFragment : Fragment(R.layout.fragment_notification) {
         _binding = FragmentNotificationBinding.bind(view)
 
         setNotification()
-
+//        val request2 = OneTimeWorkRequestBuilder<NotifyWork>().build()
+//
+//        WorkManager.getInstance(requireContext()).getWorkInfoByIdLiveData(request.id)
+//            .observe(viewLifecycleOwner) {
+//                val status: String = it.state.name
+//                Toast.makeText(requireContext(), status, Toast.LENGTH_LONG).show()
+//            }
     }
 
     private fun setNotification() = binding.apply {
-
-        val text = choiceEd.text.toString()
-        createWorkManager(text.toLong())
-        Log.d("as", text)
+        binding.notifyBtn.setOnClickListener {
+            if (!choiceEd.text.isNullOrEmpty()) {
+                val text = choiceEd.text.toString()
+                createWorkManager(text.toLong())
+            }
+        }
 
         notifyRadio.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
@@ -64,10 +72,10 @@ class NotificationFragment : Fragment(R.layout.fragment_notification) {
     }
 
     private fun createWorkManager(period: Long) {
-        val request = PeriodicWorkRequestBuilder<NotifyWork>(period, TimeUnit.HOURS)
-            .build()
-
         binding.notifyBtn.setOnClickListener {
+            val request = PeriodicWorkRequestBuilder<NotifyWork>(period, TimeUnit.HOURS)
+                .build()
+
             WorkManager
                 .getInstance(requireContext())
                 .enqueueUniquePeriodicWork(
@@ -75,6 +83,11 @@ class NotificationFragment : Fragment(R.layout.fragment_notification) {
                     ExistingPeriodicWorkPolicy.REPLACE,
                     request
                 )
+            WorkManager.getInstance(requireContext()).getWorkInfoByIdLiveData(request.id)
+                .observe(viewLifecycleOwner) {
+                    val status: String = it.state.name
+                    Toast.makeText(requireContext(), status, Toast.LENGTH_LONG).show()
+                }
         }
     }
 
