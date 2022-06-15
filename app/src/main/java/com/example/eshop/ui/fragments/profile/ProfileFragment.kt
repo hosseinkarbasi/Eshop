@@ -31,7 +31,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         checkUser()
         logOut()
         goToNotification()
+        goToUserReviews()
 
+    }
+
+    private fun goToUserReviews() {
+        binding.userReviewsBtn.setOnClickListener {
+            val action = ProfileFragmentDirections.actionProfileFragmentToUserReviewsFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun logOut() {

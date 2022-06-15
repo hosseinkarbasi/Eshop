@@ -65,6 +65,9 @@
         <action
             android:id="@+id/action_profileFragment_to_notificationFragment"
             app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_userReviewsFragment"
+            app:destination="@id/userReviewsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -157,4 +160,8 @@
         android:id="@+id/basketFragment"
         android:name="com.example.eshop.ui.fragments.cart.basket.BasketFragment"
         android:label="BasketFragment" />
+    <fragment
+        android:id="@+id/userReviewsFragment"
+        android:name="com.example.eshop.ui.fragments.userreviews.UserReviewsFragment"
+        android:label="UserReviewsFragment" />
 </navigation>

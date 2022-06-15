@@ -27,4 +27,11 @@ class ReviewRepository @Inject constructor(
     ): Flow<ResultWrapper<List<Review>>> =
         requestFlow(dispatcher) { remoteDataSource.getReviews(productId, perPage, page) }
 
+    suspend fun getUserReviews(
+        userEmail: String,
+        perPage: Int,
+        page: Int
+    ): Flow<ResultWrapper<List<Review>>> =
+        requestFlow(dispatcher) { remoteDataSource.getUserReviews(userEmail, perPage, page) }
+
 }

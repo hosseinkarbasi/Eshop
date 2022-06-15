@@ -46,6 +46,12 @@ class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) 
     ): Response<List<Review>> =
         service.getReviews(productId, perPage, page)
 
+    override suspend fun getUserReviews(
+        userEmail: String,
+        perPage: Int,
+        page: Int
+    ): Response<List<Review>> =
+        service.getUserReviews(userEmail,perPage,page)
 
     override suspend fun getProductsByCategory(
         categoryId: Int,

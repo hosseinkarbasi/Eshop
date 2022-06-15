@@ -34,6 +34,12 @@ interface IRemoteDataSource {
         page: Int
     ): Response<List<Review>>
 
+    suspend fun getUserReviews(
+        userEmail: String,
+        perPage: Int,
+        page: Int
+    ): Response<List<Review>>
+
     suspend fun getProductsByCategory(
         categoryId: Int,
         perPage: Int,

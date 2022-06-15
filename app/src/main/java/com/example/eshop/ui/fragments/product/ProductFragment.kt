@@ -27,8 +27,8 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
     private val binding get() = _binding!!
     private val viewModel by viewModels<ProductViewModel>()
     private val args by navArgs<ProductFragmentArgs>()
-    private var customerId: Int = 0
     private lateinit var imageViewPagerAdapter: ImageViewPagerAdapter
+    private var customerId: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,7 +47,6 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
     }
 
     private fun check() {
-
         viewModel.getOrders(customerId, "pending")
         viewModel.getOrderList.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
@@ -92,9 +91,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
             when (it) {
                 is ResultWrapper.Loading -> {}
                 is ResultWrapper.Success -> {
-                    binding.basketBtn.gone()
-                    binding.cardViewCounter.visible()
-                    binding.counter.text = it.data.lineItems[0].quantity.toString()
+                    visibilityAddToCartBtn(it)
                     inc(it.data)
                     dec(it.data)
                 }
@@ -103,16 +100,28 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         }
     }
 
-    private fun inc(orderItem: Order) {
-        binding.plus.setOnClickListener {
-            val x = orderItem.lineItems[0].quantity
+    private fun visibilityAddToCartBtn(it: ResultWrapper.Success<Order>) {
+        val productIdItem = Mapper.transformLineItemToProductsId(it.data.lineItems)
+        if (productIdItem.contains(args.productId)) {
+            binding.basketBtn.gone()
+            binding.cardViewCounter.visible()
+        } else {
+            binding.basketBtn.visible()
+            binding.cardViewCounter.gone()
+        }
+    }
+
+    private fun inc(orderItem: Order)=binding.apply {
+        counter.text = orderItem.lineItems.last().quantity.toString()
+        plus.setOnClickListener {
+            val quantity = orderItem.lineItems.last().quantity
             val lineItemList = mutableListOf<LineItem>()
             val lineItem =
                 LineItem(
-                    orderItem.lineItems[0].id,
-                    orderItem.lineItems[0].name,
-                    orderItem.lineItems[0].productId,
-                    x + 1,
+                    orderItem.lineItems.last().id,
+                    orderItem.lineItems.last().name,
+                    orderItem.lineItems.last().productId,
+                    quantity + 1,
                     emptyList(),
                     0
                 )
@@ -128,16 +137,21 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         }
     }
 
-    private fun dec(orderItem: Order) {
-        binding.minus.setOnClickListener {
-            val x = orderItem.lineItems[0].quantity
+    private fun dec(orderItem: Order) = binding.apply {
+        counter.text = orderItem.lineItems.last().quantity.toString()
+        if (orderItem.lineItems.last().quantity == 1) {
+            minus.setIconResource(R.drawable.ic_baseline_delete)
+        } else minus.setIconResource(R.drawable.ic_baseline_remove)
+
+        minus.setOnClickListener {
+            val quantity = orderItem.lineItems.last().quantity
             val lineItemList = mutableListOf<LineItem>()
             val lineItem =
                 LineItem(
-                    orderItem.lineItems[0].id,
-                    orderItem.lineItems[0].name,
-                    orderItem.lineItems[0].productId,
-                    x - 1,
+                    orderItem.lineItems.last().id,
+                    orderItem.lineItems.last().name,
+                    orderItem.lineItems.last().productId,
+                    quantity - 1,
                     emptyList(),
                     0
                 )
@@ -151,12 +165,34 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
             )
             viewModel.updateOrder(orderItem.id, order)
 
-//            if (localProduct.quantity[i].quantity <= 0) {
-//                deleteProductFromOrder(localProduct, i)
-//            } else {
-//                viewModel.updateOrder(orderId, order)
-//            }
+            if (quantity <= 0) {
+                deleteProductFromOrder(orderItem)
+            } else {
+                viewModel.updateOrder(orderItem.id, order)
+            }
         }
+    }
+
+    private fun deleteProductFromOrder(orderItems: Order) {
+        val lineItemList = mutableListOf<LineItem>()
+        val lineItem = LineItem(
+            orderItems.lineItems.last().id,
+            "",
+            orderItems.lineItems.last().productId,
+            0,
+            emptyList(),
+            0
+        )
+
+        lineItemList.add(lineItem)
+        val order = SetOrder(
+            orderItems.id,
+            customerId,
+            lineItemList,
+            "pending",
+            emptyList()
+        )
+        viewModel.updateOrder(orderItems.id, order)
     }
 
     private fun updateOrder(data: Product, orderId: List<Order>) {

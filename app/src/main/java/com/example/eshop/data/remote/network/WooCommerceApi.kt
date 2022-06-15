@@ -69,4 +69,11 @@ interface WooCommerceApi {
         @Query("page") page: Int
     ): Response<List<Review>>
 
+    @GET("products/reviews")
+    suspend fun getUserReviews(
+        @Query("reviewer_email") userEmail: String,
+        @Query("per_page") perPage: Int,
+        @Query("page") page: Int
+    ): Response<List<Review>>
+
 }

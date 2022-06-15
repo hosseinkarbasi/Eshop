@@ -51,7 +51,7 @@ class ReviewsFragment : Fragment(R.layout.fragment_reviews) {
 
     private fun submitReview() {
         binding.reviewFab.setOnClickListener {
-            val dialog = ReviewDialog(viewModel.productId as Int) {
+            val dialog = ReviewDialog(viewModel.productId) {
                 viewModel.createReview(it)
             }
             dialog.show(childFragmentManager, "review")
@@ -59,7 +59,7 @@ class ReviewsFragment : Fragment(R.layout.fragment_reviews) {
     }
 
     private fun getReviews() {
-        viewModel.getReviews(viewModel.productId as Int, 1, 100)
+        viewModel.getReviews(viewModel.productId, 1, 100)
         viewModel.getReviewsList.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
                 is ResultWrapper.Success -> {

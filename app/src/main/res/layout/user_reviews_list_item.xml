@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/rating_tv"
+        android:layout_width="35dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_corner_text_view"
+        android:fontFamily="@font/titr_bold"
+        android:gravity="center"
+        android:text="5"
+        android:textColor="@color/white"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/reviewer_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="نام نظر دهنده"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/rating_tv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/date_reviewer_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/yekan_bakh_regular"
+        android:text="تاریخ و ساعت"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/reviewer_tv"
+        app:layout_constraintTop_toBottomOf="@+id/reviewer_tv" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/review_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="58dp"
+        android:fontFamily="@font/yekan_bakh_regular"
+        android:layoutDirection="rtl"
+        android:lines="3"
+        android:text="این برای تست است"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/date_reviewer_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_reviewer_tv" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/delete_review_btn"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/yekan_bakh_regular"
+        android:text="حذف دیدگاه"
+        android:textColor="#D40D0D"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="@+id/review_tv"
+        app:layout_constraintHorizontal_bias="0.293"
+        app:layout_constraintStart_toStartOf="@+id/review_tv"
+        app:layout_constraintTop_toBottomOf="@+id/review_tv" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/edit_review_btn"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/yekan_bakh_regular"
+        android:text="ویرایش دیدگاه"
+        android:textColor="#2F302F"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toStartOf="@+id/delete_review_btn"
+        app:layout_constraintTop_toBottomOf="@+id/review_tv" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="280dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="@color/dark_shadow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/delete_review_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
