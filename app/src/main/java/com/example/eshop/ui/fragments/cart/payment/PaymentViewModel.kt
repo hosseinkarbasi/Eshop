@@ -7,6 +7,8 @@ import com.example.eshop.data.local.model.LocalProduct
 import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.data.remote.model.Coupon
 import com.example.eshop.data.remote.model.Order
+import com.example.eshop.data.remote.model.Product
+import com.example.eshop.data.remote.model.SetOrder
 import com.example.eshop.data.repository.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,9 +22,9 @@ class PaymentViewModel @Inject constructor(
     userInfoDataStore: UserInfoDataStore
 ) : ViewModel() {
 
-    init {
-        getLocalProducts()
-    }
+//    init {
+//        getLocalProducts()
+//    }
 
     private val _getTotalPrice = MutableStateFlow(0)
     val getTotalPrice = _getTotalPrice.asStateFlow()
@@ -30,7 +32,10 @@ class PaymentViewModel @Inject constructor(
     private val _getOrder = MutableStateFlow<ResultWrapper<Order>>(ResultWrapper.Loading)
     val getOrder = _getOrder.asStateFlow()
 
-    private val _getProducts = MutableStateFlow<List<LocalProduct>>(emptyList())
+    private val _getListOrder = MutableStateFlow<ResultWrapper<List<Order>>>(ResultWrapper.Loading)
+    val getListOrder = _getListOrder.asStateFlow()
+
+    private val _getProducts = MutableStateFlow<ResultWrapper<List<Product>>>(ResultWrapper.Loading)
     val getProducts = _getProducts.asStateFlow()
 
     private val _getCoupon = MutableStateFlow<ResultWrapper<List<Coupon>>>(ResultWrapper.Loading)
@@ -38,7 +43,41 @@ class PaymentViewModel @Inject constructor(
 
     val pref = userInfoDataStore.preferences
 
-    fun setOrder(order: Order) {
+//    fun updateOrder(order: Order) {
+//        viewModelScope.launch {
+//            cartRepository.updateOrder(order).collect {
+//                _getOrder.emit(it)
+//            }
+//        }
+//    }
+
+    fun updateOrder(orderId: Int, order: SetOrder) {
+        viewModelScope.launch {
+            cartRepository.updateOrder(orderId, order).collect {
+                _getOrder.emit(it)
+            }
+        }
+    }
+
+
+    fun getProductsById(ids: Array<Int>) {
+        viewModelScope.launch {
+            cartRepository.getProductById(ids).collect {
+                _getProducts.emit(it)
+            }
+        }
+    }
+
+    fun getCartProduct(userId: Int, status: String) {
+        viewModelScope.launch {
+            cartRepository.getOrders(userId, status).collect {
+                _getListOrder.emit(it)
+            }
+        }
+    }
+
+
+    fun setOrder(order: SetOrder) {
         viewModelScope.launch {
             cartRepository.setOrder(order).collect {
                 _getOrder.emit(it)
@@ -46,22 +85,22 @@ class PaymentViewModel @Inject constructor(
         }
     }
 
-    private fun getLocalProducts() {
-        viewModelScope.launch {
-            cartRepository.getLocalProducts().collect { listProducts ->
-                _getProducts.emit(listProducts)
-
-                val total = listProducts.sumOf { it.price.toInt() * it.quantity }
-                _getTotalPrice.emit(total)
-            }
-        }
-    }
-
-    fun deleteAllProductsBasket() {
-        viewModelScope.launch {
-            cartRepository.deleteAllProductsBasket()
-        }
-    }
+//    private fun getLocalProducts() {
+//        viewModelScope.launch {
+//            cartRepository.getLocalProducts().collect { listProducts ->
+//                _getProducts.emit(listProducts)
+//
+//                val total = listProducts.sumOf { it.price.toInt() * it.quantity }
+//                _getTotalPrice.emit(total)
+//            }
+//        }
+//    }
+//
+//    fun deleteAllProductsBasket() {
+//        viewModelScope.launch {
+//            cartRepository.deleteAllProductsBasket()
+//        }
+//    }
 
     fun getCoupon(code: String) {
         viewModelScope.launch {
@@ -70,5 +109,4 @@ class PaymentViewModel @Inject constructor(
             }
         }
     }
-
 }

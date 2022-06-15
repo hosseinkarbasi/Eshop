@@ -10,197 +10,263 @@
             type="com.example.eshop.data.remote.model.Product" />
     </data>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#EDEDED">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading"
+            android:layout_width="244dp"
+            android:layout_height="234dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading_animation" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/product_dec_tv"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="30dp"
+            app:cardElevation="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView_counter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:fontFamily="@font/titr_bold"
-                android:text="@string/attribute_product"
-                android:textColor="#B38C8A8A"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/footer_cardView" />
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:cardCornerRadius="8dp"
+                app:strokeColor="@color/dark_shadow"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/minus"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        app:icon="@drawable/ic_baseline_remove"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/product_title" />
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/counter"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@color/main_color"
+                        android:textStyle="bold"
+                        tools:ignore="MissingConstraints" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/plus"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        app:icon="@drawable/ic_baseline_add"
+                        app:layout_constraintEnd_toStartOf="@+id/product_image"
+                        app:layout_constraintTop_toBottomOf="@+id/product_title" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/basket_btn"
-                android:layout_width="match_parent"
+                android:layout_width="180dp"
                 android:layout_height="60dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:backgroundTint="@color/main_color"
                 android:fontFamily="@font/titr_bold"
                 android:text="@string/basket_btn_text"
+                android:textSize="15sp"
+                app:cornerRadius="8dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/sum_of_price"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/titr_bold"
+                android:gravity="center"
+                android:text='@{ productDetails.regularPrice + " تومان" }'
                 android:textSize="20sp"
-                app:cornerRadius="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/footer2_cardView" />
+                android:textStyle="bold" />
+        </com.google.android.material.card.MaterialCardView>
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/loading"
-                android:layout_width="244dp"
-                android:layout_height="234dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="false"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/loading_animation" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/header_cardView"
+        <ScrollView
+            android:id="@+id/scr"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:elevation="10dp"
-                app:cardElevation="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/product_dec_tv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="15dp">
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/titr_bold"
+                    android:text="@string/attribute_product"
+                    android:textColor="#B38C8A8A"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/header_cardView" />
 
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/view_pager"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/reviews_btn"
-                        style="@style/Widget.Material3.Button.TextButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/reviews_user"
-                        android:textColor="@color/teal_200"
-                        android:textSize="15sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view_pager" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/footer_cardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="24dp"
-                android:elevation="20dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="6dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/header_cardView"
-                app:layout_constraintVertical_bias="0.0">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/header_cardView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="15dp">
+                    android:layout_height="match_parent"
+                    android:elevation="10dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/product_name"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="@{productDetails.name}"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:padding="15dp">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/product_rating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toStartOf="@+id/rating_bar"
-                        app:layout_constraintTop_toBottomOf="@+id/product_name" />
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/view_pager"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.appcompat.widget.AppCompatRatingBar
-                        android:id="@+id/rating_bar"
-                        style="?android:ratingBarStyleSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:numStars="1"
-                        app:layout_constraintEnd_toEndOf="@+id/product_name"
-                        app:layout_constraintTop_toBottomOf="@+id/product_name" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/product_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="@{productDetails.name}"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="@+id/view_pager"
+                            app:layout_constraintTop_toBottomOf="@+id/view_pager" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/product_quantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/yekan_bakh_regular"
-                        android:text='@{ productDetails.regularPrice + " تومان" }'
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="@+id/rating_bar"
-                        app:layout_constraintTop_toBottomOf="@+id/rating_bar"
-                        tools:text="12585686" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/product_rating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="1212"
+                            app:layout_constraintEnd_toStartOf="@+id/rating_bar"
+                            app:layout_constraintTop_toBottomOf="@+id/product_name" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        <androidx.appcompat.widget.AppCompatRatingBar
+                            android:id="@+id/rating_bar"
+                            style="?android:ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:numStars="1"
+                            android:theme="@style/RatingBar"
+                            app:layout_constraintEnd_toEndOf="@+id/product_name"
+                            app:layout_constraintTop_toBottomOf="@+id/product_name" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/footer2_cardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:elevation="20dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="6dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/product_dec_tv">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/reviews_btn"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/yekan_bakh_regular"
+                            android:text="@string/reviews_user"
+                            android:textColor="@color/teal_200"
+                            android:textSize="15sp"
+                            app:layout_constraintEnd_toStartOf="@+id/product_rating"
+                            app:layout_constraintTop_toBottomOf="@+id/product_name" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/footer_cardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp">
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="90dp"
+                    android:elevation="20dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/product_dec_tv">
 
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/product_dec"
-                        android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:fontFamily="@font/roboto_bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:padding="15dp">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/product_dec"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:fontFamily="@font/roboto_bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/product_gp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="scr,cardView_submit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -3,7 +3,9 @@ package com.example.eshop.ui.fragments.cart.basket
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eshop.data.local.datastore.userinfo.UserInfoDataStore
-import com.example.eshop.data.local.model.LocalProduct
+import com.example.eshop.data.remote.ResultWrapper
+import com.example.eshop.data.remote.model.Order
+import com.example.eshop.data.remote.model.SetOrder
 import com.example.eshop.data.repository.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,52 +17,32 @@ import javax.inject.Inject
 class BasketViewModel @Inject constructor(
     private val cartRepository: CartRepository,
     userInfoDataStore: UserInfoDataStore
-) :
-    ViewModel() {
+) : ViewModel() {
 
-    private val _getProducts = MutableStateFlow<List<LocalProduct>>(emptyList())
-    val getProducts = _getProducts.asStateFlow()
+    private val _getOrder = MutableStateFlow<ResultWrapper<List<Order>>>(ResultWrapper.Loading)
+    val getOrder = _getOrder.asStateFlow()
 
-    private val _getTotalPrice = MutableStateFlow(0)
-    val getTotalPrice = _getTotalPrice.asStateFlow()
+    private val _getUpdateOrder =
+        MutableStateFlow<ResultWrapper<Order>>(ResultWrapper.Loading)
+    val getUpdateOrder = _getUpdateOrder.asStateFlow()
 
     val pref = userInfoDataStore.preferences
 
 
-    fun getLocalProducts() {
+    fun updateOrder(orderId: Int, order: SetOrder) {
         viewModelScope.launch {
-            cartRepository.getLocalProducts().collect { listProducts ->
-                _getProducts.emit(listProducts)
-
-                val total = listProducts.sumOf { it.price.toInt() * it.quantity }
-                _getTotalPrice.emit(total)
+            cartRepository.updateOrder(orderId, order).collect {
+                _getUpdateOrder.emit(it)
             }
         }
     }
 
-
-    private fun deleteProduct(id: Int) {
+    fun getCartProduct(userId: Int, status: String) {
         viewModelScope.launch {
-            cartRepository.deleteProduct(id)
+            cartRepository.getOrders(userId, status).collect {
+                _getOrder.emit(it)
+            }
         }
     }
-
-    private fun updateProduct(product: LocalProduct) {
-        viewModelScope.launch {
-            cartRepository.update(product)
-        }
-    }
-
-    fun increase(product: LocalProduct) {
-        product.quantity++
-        updateProduct(product)
-    }
-
-    fun decrease(product: LocalProduct) {
-        product.quantity--
-        if (product.quantity <= 0) deleteProduct(product.id)
-        else updateProduct(product)
-    }
-
 
 }

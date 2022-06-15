@@ -25,9 +25,9 @@ class RegisteredOrdersViewModel @Inject constructor(
 
     val pref = userInfoDataStore.preferences
 
-    fun getOrders(customerId: Int) {
+    fun getOrders(customerId: Int, status: String) {
         viewModelScope.launch {
-            cartRepository.getOrders(customerId).collect {
+            cartRepository.getOrders(customerId, status).collect {
                 _getOrders.emit(it)
             }
         }

@@ -1,14 +1,12 @@
 package com.example.eshop.data.local.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.example.eshop.data.remote.model.LineItem
 
-@Entity(tableName = "product")
 data class LocalProduct(
-    @PrimaryKey
+
     val id: Int,
     val name: String,
     val price: String,
     val images: String,
-    var quantity: Int
+    var lineItems: List<LineItem>
 )

@@ -14,15 +14,19 @@ interface IRemoteDataSource {
 
     suspend fun getCoupon(code: String): Response<List<Coupon>>
 
-    suspend fun setOrder(order: Order): Response<Order>
+    suspend fun setOrder(order: SetOrder): Response<Order>
+
+    suspend fun updateOrder(orderId: Int, order: SetOrder): Response<Order>
 
     suspend fun getCustomer(email: String): Response<List<User>>
 
     suspend fun createCustomer(user: User): Response<User>
 
-    suspend fun getOrders(customerId: Int): Response<List<Order>>
+    suspend fun getOrders(customerId: Int, status: String): Response<List<Order>>
 
     suspend fun createReview(review: Review): Response<Review>
+
+    suspend fun getProductsById(ids: String): Response<List<Product>>
 
     suspend fun getReviews(
         productId: Int,

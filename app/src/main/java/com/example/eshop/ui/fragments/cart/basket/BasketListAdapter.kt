@@ -8,15 +8,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.eshop.R
-import com.example.eshop.data.local.model.LocalProduct
+import com.example.eshop.data.remote.model.LineItem
 import com.example.eshop.databinding.BasketListItemBinding
 
 class BasketListAdapter :
-    ListAdapter<LocalProduct, BasketListAdapter.CustomViewHolder>(DiffCallBack()) {
+    ListAdapter<LineItem, BasketListAdapter.CustomViewHolder>(DiffCallBack()) {
 
-    private var itemClick: ((product: LocalProduct) -> Unit)? = null
-    private var itemIncrease: ((counter: LocalProduct, position: Int) -> Unit)? = null
-    private var itemDecrease: ((counter: LocalProduct, position: Int) -> Unit)? = null
+    private var itemClick: ((product: LineItem) -> Unit)? = null
+    private var itemIncrease: ((counter: LineItem, position: Int) -> Unit)? = null
+    private var itemDecrease: ((counter: LineItem, position: Int) -> Unit)? = null
 
     inner class CustomViewHolder(private var binding: BasketListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -42,17 +42,18 @@ class BasketListAdapter :
         }
 
         @SuppressLint("SetTextI18n")
-        fun bind(item: LocalProduct) = binding.apply {
-            counter.text = item.quantity.toString()
+        fun bind(item: LineItem) = binding.apply {
             productTitle.text = item.name
-            productPrice.text = " ${item.price.toInt() * item.quantity}  تومان "
+            counter.text = item.quantity.toString()
+            productPrice.text = " ${item.price}  تومان "
             Glide.with(root)
-                .load(item.images)
+                .load(item.metaData[0].value)
                 .placeholder(R.drawable.online_shopping_palceholder)
                 .into(productImage)
-            if (item.quantity == 1){
+
+            if (counter.text == "1") {
                 minus.setIconResource(R.drawable.ic_baseline_delete)
-            }else minus.setIconResource(R.drawable.ic_baseline_remove)
+            } else minus.setIconResource(R.drawable.ic_baseline_remove)
         }
     }
 
@@ -65,26 +66,25 @@ class BasketListAdapter :
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.bind(getItem(position))
-
     }
 
-    fun onItemPosition(clickListener: (LocalProduct) -> Unit) {
+    fun onItemPosition(clickListener: (LineItem) -> Unit) {
         itemClick = clickListener
     }
 
-    fun onItemIncrease(clickListener: (LocalProduct, Int) -> Unit) {
+    fun onItemIncrease(clickListener: (LineItem, Int) -> Unit) {
         itemIncrease = clickListener
     }
 
-    fun onItemDecrease(clickListener: (LocalProduct, Int) -> Unit) {
+    fun onItemDecrease(clickListener: (LineItem, Int) -> Unit) {
         itemDecrease = clickListener
     }
 
-    class DiffCallBack : DiffUtil.ItemCallback<LocalProduct>() {
-        override fun areItemsTheSame(oldItem: LocalProduct, newItem: LocalProduct) =
-            oldItem.id == newItem.id
+    class DiffCallBack : DiffUtil.ItemCallback<LineItem>() {
+        override fun areItemsTheSame(oldItem: LineItem, newItem: LineItem) =
+            oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: LocalProduct, newItem: LocalProduct) =
+        override fun areContentsTheSame(oldItem: LineItem, newItem: LineItem) =
             oldItem == newItem
     }
 }

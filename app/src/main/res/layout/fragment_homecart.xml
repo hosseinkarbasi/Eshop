@@ -10,6 +10,7 @@
         android:layout_height="?android:attr/actionBarSize"
         android:elevation="5dp"
         android:fadeScrollbars="true"
+        app:tabTextAppearance="@style/TabFont"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

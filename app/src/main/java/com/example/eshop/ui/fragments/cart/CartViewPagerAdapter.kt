@@ -17,7 +17,7 @@ class CartViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycl
         return when (position) {
             0 -> BasketFragment()
             1 -> RegisteredOrdersFragment()
-            else -> BasketFragment()
+            else -> RegisteredOrdersFragment()
         }
     }
 }

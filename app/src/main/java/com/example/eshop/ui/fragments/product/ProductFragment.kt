@@ -1,6 +1,5 @@
 package com.example.eshop.ui.fragments.product
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -12,10 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.example.eshop.R
-import com.example.eshop.data.remote.model.Product
 import com.example.eshop.databinding.FragmentProductBinding
-import com.example.eshop.utils.Mapper
 import com.example.eshop.data.remote.ResultWrapper
+import com.example.eshop.data.remote.model.*
+import com.example.eshop.utils.Mapper
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import com.example.eshop.utils.gone
 import com.example.eshop.utils.visible
@@ -28,14 +27,165 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
     private val binding get() = _binding!!
     private val viewModel by viewModels<ProductViewModel>()
     private val args by navArgs<ProductFragmentArgs>()
+    private var customerId: Int = 0
     private lateinit var imageViewPagerAdapter: ImageViewPagerAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = DataBindingUtil.bind(view)
 
+        getCustomerId()
         getProduct()
         setUpViewPager()
+        getOrder()
+    }
+
+    private fun getCustomerId() {
+        viewModel.pref.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            customerId = it.id
+        }
+    }
+
+    private fun check() {
+
+        viewModel.getOrders(customerId, "pending")
+        viewModel.getOrderList.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            when (it) {
+                is ResultWrapper.Success -> {
+                    if (it.data.isNotEmpty()) {
+                        val productIdItem =
+                            Mapper.transformLineItemToProductsId(it.data[0].lineItems)
+                        if (productIdItem.contains(args.productId)) {
+                            binding.basketBtn.gone()
+                            binding.cardViewCounter.visible()
+                        } else {
+                            binding.basketBtn.visible()
+                            binding.cardViewCounter.gone()
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    private fun checkStatusOrder(data: Product) {
+        binding.basketBtn.setOnClickListener {
+            viewModel.getOrders(customerId, "pending")
+            viewModel.getOrderList.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+                when (it) {
+                    is ResultWrapper.Success -> {
+                        if (it.data.isEmpty()) {
+                            createNewOrder(data)
+                        } else {
+                            updateOrder(data, it.data)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getOrder() {
+        viewModel.getOrder.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            when (it) {
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.Success -> {
+                    binding.basketBtn.gone()
+                    binding.cardViewCounter.visible()
+                    binding.counter.text = it.data.lineItems[0].quantity.toString()
+                    inc(it.data)
+                    dec(it.data)
+                }
+                is ResultWrapper.Error -> {}
+            }
+        }
+    }
+
+    private fun inc(orderItem: Order) {
+        binding.plus.setOnClickListener {
+            val x = orderItem.lineItems[0].quantity
+            val lineItemList = mutableListOf<LineItem>()
+            val lineItem =
+                LineItem(
+                    orderItem.lineItems[0].id,
+                    orderItem.lineItems[0].name,
+                    orderItem.lineItems[0].productId,
+                    x + 1,
+                    emptyList(),
+                    0
+                )
+            lineItemList.add(lineItem)
+            val order = SetOrder(
+                orderItem.id,
+                customerId,
+                lineItemList,
+                "pending",
+                emptyList()
+            )
+            viewModel.updateOrder(orderItem.id, order)
+        }
+    }
+
+    private fun dec(orderItem: Order) {
+        binding.minus.setOnClickListener {
+            val x = orderItem.lineItems[0].quantity
+            val lineItemList = mutableListOf<LineItem>()
+            val lineItem =
+                LineItem(
+                    orderItem.lineItems[0].id,
+                    orderItem.lineItems[0].name,
+                    orderItem.lineItems[0].productId,
+                    x - 1,
+                    emptyList(),
+                    0
+                )
+            lineItemList.add(lineItem)
+            val order = SetOrder(
+                orderItem.id,
+                customerId,
+                lineItemList,
+                "pending",
+                emptyList()
+            )
+            viewModel.updateOrder(orderItem.id, order)
+
+//            if (localProduct.quantity[i].quantity <= 0) {
+//                deleteProductFromOrder(localProduct, i)
+//            } else {
+//                viewModel.updateOrder(orderId, order)
+//            }
+        }
+    }
+
+    private fun updateOrder(data: Product, orderId: List<Order>) {
+        val lineItemList = mutableListOf<LineItem>()
+        val metaData = mutableListOf<MetaData>()
+        val metaDataItem = MetaData(0, "image", data.images[0].src)
+        metaData.add(metaDataItem)
+        val lineItem = LineItem(0, data.name, data.id, 1, metaData, 0)
+        lineItemList.add(lineItem)
+        val order = SetOrder(
+            orderId[0].id,
+            customerId,
+            lineItemList,
+            "pending",
+            emptyList()
+        )
+        viewModel.updateOrder(orderId[0].id, order)
+    }
+
+    private fun createNewOrder(data: Product) {
+        val lineItemList = mutableListOf<LineItem>()
+        val metaData = mutableListOf<MetaData>()
+        val metaDataItem = MetaData(0, "image", data.images[0].src)
+        metaData.add(metaDataItem)
+        val lineItem = LineItem(0, data.name, data.id, 1, metaData, 0)
+        lineItemList.add(lineItem)
+        val order =
+            SetOrder(0, customerId, lineItemList, "pending", emptyList())
+        viewModel.setOrder(order)
     }
 
     private fun goToReviews(productId: Int) {
@@ -57,6 +207,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
                 }
                 is ResultWrapper.Success -> {
                     isSuccess(it.data)
+                    checkStatusOrder(it.data)
                     goToReviews(it.data.id)
                 }
             }
@@ -65,30 +216,20 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
 
     private fun isLoading() = binding.apply {
         loading.visible()
-        headerCardView.gone()
-        footerCardView.gone()
-        productDecTv.gone()
-        basketBtn.gone()
+        productGp.gone()
         loading.playAnimation()
     }
 
     private fun isError(errorMessage: String) = binding.apply {
         loading.visible()
-        headerCardView.gone()
-        footerCardView.gone()
-        productDecTv.gone()
-        basketBtn.gone()
+        productGp.gone()
         loading.playAnimation()
         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
 
-    @SuppressLint("SetTextI18n")
     private fun isSuccess(data: Product) = binding.apply {
         loading.gone()
-        headerCardView.visible()
-        footerCardView.visible()
-        productDecTv.visible()
-        basketBtn.visible()
+        productGp.visible()
         loading.pauseAnimation()
         productDetails = data
         productRating.text = "(${data.ratingCount}) ${data.averageRating}"
@@ -97,11 +238,6 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
             HtmlCompat.fromHtml(product.description, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
         imageViewPagerAdapter.submitList(data.images)
-
-        basketBtn.setOnClickListener {
-            viewModel.insertProduct(Mapper.transformRemoteProductToLocalProduct(data))
-            Toast.makeText(requireContext(), "به سبد خرید  اضافه شد", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun setUpViewPager() {

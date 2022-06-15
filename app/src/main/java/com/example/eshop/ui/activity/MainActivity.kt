@@ -10,7 +10,6 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.eshop.R
 import com.example.eshop.databinding.ActivityMainBinding
-import com.example.eshop.ui.fragments.cart.CartViewPagerAdapter
 import com.example.eshop.utils.conntectivitymanager.MyState
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import com.example.eshop.utils.gone
@@ -34,9 +33,6 @@ class MainActivity : AppCompatActivity() {
         checkNetworkConnection()
         setupNavController()
         getPreferences()
-//        CartViewPagerAdapter(supportFragmentManager, lifecycle)
-
-
     }
 
     private fun checkNetworkConnection() {

@@ -71,10 +71,6 @@
         android:name="com.example.eshop.ui.fragments.search.SearchFragment"
         android:label="SearchFragment" />
     <fragment
-        android:id="@+id/basketFragment"
-        android:name="com.example.eshop.ui.fragments.cart.basket.BasketFragment"
-        android:label="BasketFragment" />
-    <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.eshop.ui.fragments.login.LoginFragment"
         android:label="LoginFragment" >
@@ -123,7 +119,11 @@
     <fragment
         android:id="@+id/paymentFragment"
         android:name="com.example.eshop.ui.fragments.cart.payment.PaymentFragment"
-        android:label="PaymentFragment" />
+        android:label="PaymentFragment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_homeCartFragment"
+            app:destination="@id/homeCartFragment" />
+    </fragment>
     <dialog
         android:id="@+id/loginDialog"
         android:name="com.example.eshop.ui.fragments.dialogs.login.LoginDialog"
@@ -153,4 +153,8 @@
         android:id="@+id/notificationFragment"
         android:name="com.example.eshop.ui.fragments.notification.NotificationFragment"
         android:label="NotificationFragment" />
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="com.example.eshop.ui.fragments.cart.basket.BasketFragment"
+        android:label="BasketFragment" />
 </navigation>

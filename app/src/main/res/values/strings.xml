@@ -50,4 +50,5 @@
     <string name="insert_review">ثبت دیدگاه</string>
     <string name="notif_dec">برای اطلاع از محصولات جدید یک بازه زمانی از گزینه های زیر انتخاب کنید</string>
     <string name="save_notification_settings">ذخیره تنظیمات</string>
+    <string name="basketSuccessAdd">به سبد خرید اضافه شد</string>
 </resources>

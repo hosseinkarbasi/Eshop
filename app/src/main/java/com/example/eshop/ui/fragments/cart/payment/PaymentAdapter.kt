@@ -8,12 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.eshop.R
 import com.example.eshop.data.local.model.LocalProduct
-import com.example.eshop.databinding.ProductItemBinding
 import com.example.eshop.databinding.ProductPaymentItemBinding
 
 class PaymentAdapter : ListAdapter<LocalProduct, PaymentAdapter.CustomViewHolder>(DiffCallBack()) {
-
-    private var itemClick: ((product: LocalProduct) -> Unit)? = null
 
     inner class CustomViewHolder(private var binding: ProductPaymentItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -24,13 +21,8 @@ class PaymentAdapter : ListAdapter<LocalProduct, PaymentAdapter.CustomViewHolder
                 .placeholder(R.drawable.online_shopping_palceholder)
                 .into(productImage)
 
-            binding.productQuantity.text = item.quantity.toString()
+            productQuantity.text = item.lineItems[layoutPosition].quantity.toString()
 
-            binding.root.setOnClickListener {
-                itemClick?.let {
-                    it(item)
-                }
-            }
         }
     }
 
@@ -43,10 +35,6 @@ class PaymentAdapter : ListAdapter<LocalProduct, PaymentAdapter.CustomViewHolder
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.bind(getItem(position))
-    }
-
-    fun onItemPosition(clickListener: (LocalProduct) -> Unit) {
-        itemClick = clickListener
     }
 
     class DiffCallBack : DiffUtil.ItemCallback<LocalProduct>() {

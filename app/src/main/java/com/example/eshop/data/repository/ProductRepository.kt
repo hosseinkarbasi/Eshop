@@ -1,10 +1,8 @@
 package com.example.eshop.data.repository
 
-import com.example.eshop.data.local.model.LocalProduct
 import com.example.eshop.application.Constants.DATE
 import com.example.eshop.application.Constants.POPULARITY
 import com.example.eshop.application.Constants.RATING
-import com.example.eshop.data.local.ILocalDataSource
 import com.example.eshop.data.remote.IRemoteDataSource
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.data.remote.requestFlow
@@ -14,15 +12,25 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 import com.example.eshop.data.remote.ResultWrapper
+import com.example.eshop.data.remote.model.Order
+import com.example.eshop.data.remote.model.SetOrder
 import retrofit2.Response
 
 @Singleton
 class ProductRepository @Inject constructor(
     @IoDispatcher
     private val dispatcher: CoroutineDispatcher,
-    private val localDataSource: ILocalDataSource,
     private val remoteDataSource: IRemoteDataSource
 ) {
+
+    suspend fun updateOrder(orderId: Int, order: SetOrder): Flow<ResultWrapper<Order>> =
+        requestFlow(dispatcher) { remoteDataSource.updateOrder(orderId, order) }
+
+    suspend fun getOrders(customerId: Int, status: String): Flow<ResultWrapper<List<Order>>> =
+        requestFlow(dispatcher) { remoteDataSource.getOrders(customerId, status) }
+
+    suspend fun setOrder(order: SetOrder): Flow<ResultWrapper<Order>> =
+        requestFlow(dispatcher) { remoteDataSource.setOrder(order) }
 
     suspend fun getLastProduct(perPage: Int, page: Int): Response<List<Product>> {
         return remoteDataSource.getProducts(DATE, perPage, page)
@@ -62,13 +70,5 @@ class ProductRepository @Inject constructor(
         order: String
     ): Flow<ResultWrapper<List<Product>>> =
         requestFlow(dispatcher) { remoteDataSource.searchProducts(searchText, 100, orderBy, order) }
-
-
-    //local
-    suspend fun insertProduct(product: LocalProduct) {
-        withContext(dispatcher) {
-            localDataSource.insertProduct(product)
-        }
-    }
 
 }

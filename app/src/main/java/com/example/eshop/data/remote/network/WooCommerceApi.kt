@@ -14,7 +14,7 @@ interface WooCommerceApi {
     suspend fun getProduct(@Path("id") productId: Int): Response<Product>
 
     @POST("orders")
-    suspend fun setOrder(@Body order: Order): Response<Order>
+    suspend fun setOrder(@Body order: SetOrder): Response<Order>
 
     @GET("customers")
     suspend fun getCustomer(@Query("email") email: String): Response<List<User>>
@@ -22,14 +22,23 @@ interface WooCommerceApi {
     @POST("customers")
     suspend fun createCustomer(@Body user: User): Response<User>
 
-    @GET("orders")
-    suspend fun getOrders(@Query("customer") customerId: Int): Response<List<Order>>
+    @POST("orders/{id}")
+    suspend fun updateOrder(@Path("id") orderId: Int, @Body order: SetOrder): Response<Order>
 
     @GET("coupons")
     suspend fun getCoupon(@Query("code") code: String): Response<List<Coupon>>
 
     @POST("products/reviews")
     suspend fun createReview(@Body review: Review): Response<Review>
+
+    @GET("products")
+    suspend fun getProductsById(@Query("include") ids: String): Response<List<Product>>
+
+    @GET("orders")
+    suspend fun getOrders(
+        @Query("customer") customerId: Int,
+        @Query("status") status: String
+    ): Response<List<Order>>
 
     @GET("products")
     suspend fun getProductsByCategory(

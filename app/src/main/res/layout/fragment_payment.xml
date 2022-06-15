@@ -4,9 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="244dp"
+        android:layout_height="234dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading_animation" />
+
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -109,6 +124,8 @@
                 android:layout_marginBottom="40dp"
                 android:fontFamily="@font/titr_bold"
                 android:text="@string/submit"
+                android:textSize="15sp"
+                app:cornerRadius="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -132,10 +149,10 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/coupon_tv"
-                android:layout_width="108dp"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="18dp"
                 android:fontFamily="@font/yekan_bakh_regular"
                 android:gravity="center"
                 android:text="@string/coupon_tv"

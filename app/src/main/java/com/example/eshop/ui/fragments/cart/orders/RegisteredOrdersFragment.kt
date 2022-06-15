@@ -37,17 +37,9 @@ class RegisteredOrdersFragment : Fragment(R.layout.fragment_registered_orders) {
 
     private fun getOrders() = binding.apply {
         viewModel.pref.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-            if (it.id == 0) {
-                ordersRv.gone()
-                emptyOrders.visible()
-                noOrdersTv.visible()
-            } else {
-                viewModel.getOrders(it.id)
-                getOrdersList()
-            }
+            viewModel.getOrders(it.id, "completed")
+            getOrdersList()
         }
-
-
     }
 
     private fun getOrdersList() {
@@ -67,12 +59,18 @@ class RegisteredOrdersFragment : Fragment(R.layout.fragment_registered_orders) {
     }
 
     private fun isSuccess(data: List<Order>) = binding.apply {
-        ordersRv.visible()
-        emptyOrders.gone()
-        noOrdersTv.gone()
         loading.gone()
         loading.pauseAnimation()
-        ordersAdapter.submitList(data)
+        if (data.isEmpty()) {
+            emptyOrders.visible()
+            noOrdersTv.visible()
+            ordersRv.gone()
+        } else {
+            ordersRv.visible()
+            emptyOrders.gone()
+            noOrdersTv.gone()
+            ordersAdapter.submitList(data)
+        }
     }
 
     private fun isError() = binding.apply {
