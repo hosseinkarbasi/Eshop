@@ -43,7 +43,6 @@ class ReviewsFragment : Fragment(R.layout.fragment_reviews) {
                 }
                 is ResultWrapper.Error -> {
                     Toast.makeText(requireContext(), "مشکلی در ثبت نظر بوجود آمد", Toast.LENGTH_LONG).show()
-
                 }
             }
         }

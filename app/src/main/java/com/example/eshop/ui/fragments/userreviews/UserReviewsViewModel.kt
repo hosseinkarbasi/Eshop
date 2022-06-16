@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eshop.data.local.datastore.userinfo.UserInfoDataStore
 import com.example.eshop.data.remote.ResultWrapper
+import com.example.eshop.data.remote.model.DeleteReview
 import com.example.eshop.data.remote.model.Review
 import com.example.eshop.data.repository.ReviewRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +24,31 @@ class UserReviewsViewModel @Inject constructor(
         MutableStateFlow(ResultWrapper.Loading)
     val getUserReviews = _getUserReviews.asStateFlow()
 
+    private val _getDeleteReview: MutableStateFlow<ResultWrapper<DeleteReview>> =
+        MutableStateFlow(ResultWrapper.Loading)
+    val getDeleteReview = _getDeleteReview.asStateFlow()
+
+    private val _getEditReview: MutableStateFlow<ResultWrapper<Review>> =
+        MutableStateFlow(ResultWrapper.Loading)
+    val getEditReview = _getEditReview.asStateFlow()
+
     val pref = userInfoDataStore.preferences
+
+    fun deleteReview(reviewId: Int) {
+        viewModelScope.launch {
+            reviewsRepository.deleteReview(reviewId).collect {
+                _getDeleteReview.emit(it)
+            }
+        }
+    }
+
+    fun editReview(reviewId: Int, review: Review) {
+        viewModelScope.launch {
+            reviewsRepository.editReview(reviewId, review).collect {
+                _getEditReview.emit(it)
+            }
+        }
+    }
 
     fun getUserReviews(userEmail: String, perPage: Int, page: Int) {
         viewModelScope.launch {

@@ -1,6 +1,7 @@
 package com.example.eshop.ui.fragments.userreviews
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -28,6 +29,67 @@ class UserReviewsFragment : Fragment(R.layout.fragment_user_reviews) {
 
         initRecyclerView()
         getUserReviews()
+        deleteReview()
+        editReview()
+
+    }
+
+    private fun deleteReview() {
+        adapter.itemDelete { review, i ->
+            viewModel.deleteReview(review.id)
+        }
+
+        viewModel.getDeleteReview.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            when (it) {
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.Error -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "عملیات حذف با مشکل مواجه شد",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                is ResultWrapper.Success -> {
+                    getUserReviews()
+                    Toast.makeText(
+                        requireContext(),
+                        " دیدگاه موردنظر با موفقیت حذف شد",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private fun editReview() {
+        adapter.itemEdit { review, i ->
+            val dialog = EditReviewDialog(review) {
+                viewModel.editReview(review.id, it)
+                Log.d("hossein",review.id.toString())
+            }
+            dialog.show(childFragmentManager, "edit_review")
+        }
+
+        viewModel.getEditReview.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            when (it) {
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.Error -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "عملیات ویرایش با مشکل مواجه شد",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                is ResultWrapper.Success -> {
+                    getUserReviews()
+                    Toast.makeText(
+                        requireContext(),
+                        " دیدگاه موردنظر با موفقیت ویرایش شد",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
     }
 
     private fun getUserReviews() {

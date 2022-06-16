@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.eshop.data.remote.model.LineItem
 import com.example.eshop.data.remote.model.Review
 import com.example.eshop.databinding.UserReviewsListItemBinding
 
-class UserReviewsAdapter() : RecyclerView.Adapter<UserReviewsAdapter.ReviewsViewHolder>() {
+class UserReviewsAdapter : RecyclerView.Adapter<UserReviewsAdapter.ReviewsViewHolder>() {
 
-    private var itemClick: ((product: Review) -> Unit)? = null
+    private var itemClick: ((review: Review) -> Unit)? = null
+    private var itemDelete: ((item: Review, position: Int) -> Unit)? = null
+    private var itemEdit: ((item: Review, position: Int) -> Unit)? = null
     var list = mutableListOf<Review>()
 
     inner class ReviewsViewHolder(val binding: UserReviewsListItemBinding) :
@@ -21,9 +24,22 @@ class UserReviewsAdapter() : RecyclerView.Adapter<UserReviewsAdapter.ReviewsView
             ratingTv.text = item.rating.toString()
             reviewTv.text = HtmlCompat.fromHtml(item.review, HtmlCompat.FROM_HTML_MODE_LEGACY)
             dateReviewerTv.text = item.dateCreated
-            binding.root.setOnClickListener {
+
+            root.setOnClickListener {
                 itemClick?.let {
                     it(item)
+                }
+            }
+
+            deleteReviewBtn.setOnClickListener {
+                itemDelete?.let {
+                    it(item, bindingAdapterPosition)
+                }
+            }
+
+            editReviewBtn.setOnClickListener {
+                itemEdit?.let {
+                    it(item, bindingAdapterPosition)
                 }
             }
         }
@@ -44,6 +60,14 @@ class UserReviewsAdapter() : RecyclerView.Adapter<UserReviewsAdapter.ReviewsView
 
     fun onItemPosition(clickListener: (Review) -> Unit) {
         itemClick = clickListener
+    }
+
+    fun itemDelete(clickListener: (Review, Int) -> Unit) {
+        itemDelete = clickListener
+    }
+
+    fun itemEdit(clickListener: (Review, Int) -> Unit) {
+        itemEdit = clickListener
     }
 
     @SuppressLint("NotifyDataSetChanged")

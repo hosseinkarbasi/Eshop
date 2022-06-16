@@ -21,8 +21,8 @@ class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) 
     override suspend fun setOrder(order: SetOrder): Response<Order> =
         service.setOrder(order)
 
-    override suspend fun updateOrder(orderId: Int,order: SetOrder): Response<Order> =
-        service.updateOrder(orderId,order)
+    override suspend fun updateOrder(orderId: Int, order: SetOrder): Response<Order> =
+        service.updateOrder(orderId, order)
 
     override suspend fun getCustomer(email: String): Response<List<User>> =
         service.getCustomer(email)
@@ -39,6 +39,12 @@ class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) 
     override suspend fun getProductsById(ids: String): Response<List<Product>> =
         service.getProductsById(ids)
 
+    override suspend fun deleteReview(reviewId: Int, force: String): Response<DeleteReview> =
+        service.deleteReview(reviewId, force)
+
+    override suspend fun editReview(reviewId: Int, review: Review): Response<Review> =
+        service.editReview(reviewId, review)
+
     override suspend fun getReviews(
         productId: Int,
         perPage: Int,
@@ -51,7 +57,7 @@ class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) 
         perPage: Int,
         page: Int
     ): Response<List<Review>> =
-        service.getUserReviews(userEmail,perPage,page)
+        service.getUserReviews(userEmail, perPage, page)
 
     override suspend fun getProductsByCategory(
         categoryId: Int,

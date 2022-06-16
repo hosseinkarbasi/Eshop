@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Eshop</string>
-    <string name="full_list_products">لیست کامل</string>
-    <string name="newest">جدیدترین ها</string>
-    <string name="most_viewed">پربازدیدترین</string>
-    <string name="most_sales">پرفروش ترین ها</string>
+    <string name="full_list_products">مشاهده همه</string>
+    <string name="newest">جدیدترین محصولات</string>
+    <string name="most_viewed">پربازدیدترین محصولات</string>
+    <string name="most_sales">پرفروش ترین ها محصولات</string>
     <string name="home">خانه</string>
     <string name="category">دسته بندی ها</string>
     <string name="light">Light</string>

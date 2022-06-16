@@ -2,6 +2,7 @@ package com.example.eshop.data.repository
 
 import com.example.eshop.data.remote.IRemoteDataSource
 import com.example.eshop.data.remote.ResultWrapper
+import com.example.eshop.data.remote.model.DeleteReview
 import com.example.eshop.data.remote.model.Review
 import com.example.eshop.data.remote.requestFlow
 import com.example.eshop.di.IoDispatcher
@@ -19,6 +20,12 @@ class ReviewRepository @Inject constructor(
 
     suspend fun createReview(review: Review): Flow<ResultWrapper<Review>> =
         requestFlow(dispatcher) { remoteDataSource.createReview(review) }
+
+    suspend fun deleteReview(reviewId: Int): Flow<ResultWrapper<DeleteReview>> =
+        requestFlow(dispatcher) { remoteDataSource.deleteReview(reviewId, "true") }
+
+    suspend fun editReview(reviewId: Int, review: Review): Flow<ResultWrapper<Review>> =
+        requestFlow(dispatcher) { remoteDataSource.editReview(reviewId, review) }
 
     suspend fun getReviews(
         productId: Int,

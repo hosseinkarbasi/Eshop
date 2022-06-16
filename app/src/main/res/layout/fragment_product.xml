@@ -177,7 +177,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/yekan_bakh_regular"
                             android:text="@{productDetails.name}"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -216,7 +216,12 @@
                             android:fontFamily="@font/yekan_bakh_regular"
                             android:text="@string/reviews_user"
                             android:textColor="@color/teal_200"
-                            android:textSize="15sp"
+                            android:textSize="13sp"
+                            app:icon="@drawable/message"
+                            app:iconGravity="end"
+                            app:iconSize="20dp"
+                            android:textStyle="bold"
+                            app:iconTint="@color/black"
                             app:layout_constraintEnd_toStartOf="@+id/product_rating"
                             app:layout_constraintTop_toBottomOf="@+id/product_name" />
 
@@ -265,7 +270,6 @@
             android:id="@+id/product_gp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             app:constraint_referenced_ids="scr,cardView_submit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

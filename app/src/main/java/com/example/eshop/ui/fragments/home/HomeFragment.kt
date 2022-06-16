@@ -48,8 +48,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         goProductDetails()
         seeMoreItems()
         goToSearch()
-
-
     }
 
     private fun goToSearch() {
@@ -193,7 +191,5 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.mostSalesRv.adapter = null
         binding.newestRv.adapter = null
         binding.sliderVp.adapter = null
-//        _binding = null
     }
-
 }

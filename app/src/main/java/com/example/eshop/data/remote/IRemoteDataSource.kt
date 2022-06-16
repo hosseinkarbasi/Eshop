@@ -28,6 +28,10 @@ interface IRemoteDataSource {
 
     suspend fun getProductsById(ids: String): Response<List<Product>>
 
+    suspend fun deleteReview(reviewId: Int, force: String): Response<DeleteReview>
+
+    suspend fun editReview(reviewId: Int, review: Review): Response<Review>
+
     suspend fun getReviews(
         productId: Int,
         perPage: Int,

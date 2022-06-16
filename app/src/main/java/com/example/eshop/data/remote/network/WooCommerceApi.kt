@@ -34,6 +34,15 @@ interface WooCommerceApi {
     @GET("products")
     suspend fun getProductsById(@Query("include") ids: String): Response<List<Product>>
 
+    @POST("products/reviews/{id}")
+    suspend fun editReview(@Path("id") reviewId: Int, @Body review: Review): Response<Review>
+
+    @DELETE("products/reviews/{id}")
+    suspend fun deleteReview(
+        @Path("id") reviewId: Int,
+        @Query("force") force: String
+    ): Response<DeleteReview>
+
     @GET("orders")
     suspend fun getOrders(
         @Query("customer") customerId: Int,

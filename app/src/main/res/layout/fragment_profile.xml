@@ -39,14 +39,26 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/full_name"
+            android:id="@+id/first_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="128dp"
             android:fontFamily="@font/roboto_bold"
             android:text="@{user.firstName}"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/last_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="128dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@{user.lastName}"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
@@ -56,26 +68,26 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@{user.email}"
-            app:layout_constraintEnd_toEndOf="@+id/full_name"
-            app:layout_constraintStart_toStartOf="@+id/full_name"
-            app:layout_constraintTop_toBottomOf="@+id/full_name" />
+            app:layout_constraintEnd_toEndOf="@+id/first_name"
+            app:layout_constraintStart_toStartOf="@+id/last_name"
+            app:layout_constraintTop_toBottomOf="@+id/first_name" />
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="206dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/comments"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phone_number" />
+            app:layout_constraintTop_toTopOf="@+id/user_reviews_btn" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/user_reviews_btn"
             style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="70dp"
             android:layout_marginEnd="12dp"
             android:fontFamily="@font/yekan_bakh_regular"
             android:gravity="start"
@@ -90,11 +102,11 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="206dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/ic_arrow"
             app:layout_constraintEnd_toStartOf="@+id/user_reviews_btn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phone_number" />
+            app:layout_constraintTop_toTopOf="@+id/user_reviews_btn" />
 
         <View
             android:id="@+id/view"
@@ -111,18 +123,18 @@
             android:id="@+id/imageView5"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/logout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            app:layout_constraintTop_toTopOf="@+id/logout_btn" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/logout_btn"
             style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="12dp"
             android:fontFamily="@font/yekan_bakh_regular"
             android:gravity="start"
@@ -137,11 +149,23 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/ic_arrow"
             app:layout_constraintEnd_toStartOf="@+id/logout_btn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+            app:layout_constraintTop_toTopOf="@+id/logout_btn" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="90dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/eshop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logout_btn" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
@@ -168,7 +192,7 @@
             android:id="@+id/gp_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="settings,notification,full_name,phone_number,guideline2" />
+            app:constraint_referenced_ids="settings,notification,first_name,phone_number,imageView3,user_reviews_btn,imageView4,view,imageView5,logout_btn,imageView6,imageView,guideline2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
