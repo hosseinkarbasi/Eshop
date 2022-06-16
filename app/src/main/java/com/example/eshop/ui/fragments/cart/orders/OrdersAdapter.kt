@@ -17,6 +17,9 @@ class OrdersAdapter :
         fun bind(item: Order) = binding.apply {
 
             numberOrder.text = item.number
+            numberOfProduct.text = "${item.lineItems.sumOf { it.quantity }} کالا "
+            totalPrice.text = "1000 تومان"
+            dateOrder.text = "1401/1/1"
         }
     }
 

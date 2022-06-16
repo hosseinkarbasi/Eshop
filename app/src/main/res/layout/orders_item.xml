@@ -12,40 +12,73 @@
     app:strokeColor="#EE6442"
     app:strokeWidth="1dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linear"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:layout_height="match_parent">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/number_order"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:fontFamily="@font/yekan_bakh_regular"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="2129"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/number_text"
+            app:layout_constraintEnd_toStartOf="@+id/number_text"
+            app:layout_constraintTop_toTopOf="@+id/number_text" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/number_text"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/yekan_bakh_regular"
             android:text="@string/order_number"
-            app:layout_constraintEnd_toEndOf="@+id/tvFirstName"
-            app:layout_constraintStart_toStartOf="@+id/tvFirstName"
-            app:layout_constraintTop_toBottomOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/yekan_bakh_regular"
+            android:text="1000 تومان"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/number_of_product"
+            app:layout_constraintStart_toStartOf="@+id/number_of_product"
+            app:layout_constraintTop_toBottomOf="@+id/number_of_product" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/date_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/yekan_bakh_regular"
+            android:text="1401/1/1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/number_text"
+            app:layout_constraintStart_toStartOf="@+id/number_order"
+            app:layout_constraintTop_toBottomOf="@+id/number_text" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/number_of_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/yekan_bakh_regular"
+            android:text="1 کالا"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

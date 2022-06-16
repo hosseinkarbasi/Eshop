@@ -40,7 +40,7 @@
     <string name="first_name">نام</string>
     <string name="create_account">ثبت نام</string>
     <string name="account">حساب کاربری ندارید؟</string>
-    <string name="order_number">شماره پیگیری</string>
+    <string name="order_number">کد سفارش</string>
     <string name="logout">خروج از حساب کاربری</string>
     <string name="login_btn">ورود به ایشاپ</string>
     <string name="address">تهران،عبدل آباد،خیابان شکوفه،خیابان ایمان،پلاک 100،حسین کرباسی</string>
