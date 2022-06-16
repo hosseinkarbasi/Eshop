@@ -145,17 +145,6 @@
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
         <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/ic_arrow"
-            app:layout_constraintEnd_toStartOf="@+id/logout_btn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/logout_btn" />
-
-        <ImageView
             android:id="@+id/imageView"
             android:layout_width="200dp"
             android:layout_height="200dp"
@@ -192,7 +181,7 @@
             android:id="@+id/gp_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="settings,notification,first_name,phone_number,imageView3,user_reviews_btn,imageView4,view,imageView5,logout_btn,imageView6,imageView,guideline2" />
+            app:constraint_referenced_ids="settings,notification,first_name,phone_number,imageView3,user_reviews_btn,imageView4,view,imageView5,logout_btn,imageView,guideline2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

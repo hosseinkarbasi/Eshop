@@ -10,12 +10,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.eshop.data.remote.model.Category
 import com.example.eshop.databinding.CategoryItemBinding
+import com.example.eshop.databinding.CategoryItemNewBinding
 
 class CategoryAdapter : ListAdapter<Category, CategoryAdapter.CustomViewHolder>(DiffCallBack()) {
 
     private var itemClick: ((Category: Category) -> Unit)? = null
 
-    inner class CustomViewHolder(private var binding: CategoryItemBinding) :
+    inner class CustomViewHolder(private var binding: CategoryItemNewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(item: Category) = binding.apply {
@@ -36,7 +37,7 @@ class CategoryAdapter : ListAdapter<Category, CategoryAdapter.CustomViewHolder>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder =
         CustomViewHolder(
-            CategoryItemBinding.inflate(
+            CategoryItemNewBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )

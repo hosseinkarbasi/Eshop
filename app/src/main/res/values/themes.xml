@@ -59,11 +59,13 @@
     <style name="TabFont" parent="TextAppearance.Design.Tab">
 
         <item name="android:fontFamily">@font/yekan_bakh_regular</item>
-
         <item name="android:textSize">17sp</item>
+        <item name="textAllCaps">false</item>
 
-        <item name="textAllCaps">false
-    </item>
-</style>
+    </style>
 
-    </resources>
+    <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/yekan_bakh_regular</item>
+    </style>
+
+</resources>
