@@ -12,20 +12,20 @@ plugins {
     //Navigation
     id 'androidx.navigation.safeargs.kotlin'
 }
-//def keystorePropertiesFile = rootProject.file("keystore.properties")
-//def keystoreProperties = new Properties()
-//keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-//
-//    signingConfigs {
-//        release {
-//            keyAlias = keystoreProperties["keyAlias"]
-//            keyPassword = keystoreProperties["keyPassword"]
-//            storeFile = file(keystoreProperties["storeFile"])
-//            storePassword = keystoreProperties["storePassword"]
-//        }
-//    }
+
+    signingConfigs {
+        release {
+            keyAlias = keystoreProperties["keyAlias"]
+            keyPassword = keystoreProperties["keyPassword"]
+            storeFile = file(keystoreProperties["storeFile"])
+            storePassword = keystoreProperties["storePassword"]
+        }
+    }
     compileSdk 32
 
     defaultConfig {
@@ -41,9 +41,10 @@ android {
     buildTypes {
 
         release {
-            minifyEnabled false
+            debuggable false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
