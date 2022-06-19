@@ -111,64 +111,74 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         }
     }
 
-    private fun inc(orderItem: Order)=binding.apply {
-        counter.text = orderItem.lineItems.last().quantity.toString()
-        plus.setOnClickListener {
-            val quantity = orderItem.lineItems.last().quantity
-            val lineItemList = mutableListOf<LineItem>()
-            val lineItem =
-                LineItem(
-                    orderItem.lineItems.last().id,
-                    orderItem.lineItems.last().name,
-                    orderItem.lineItems.last().productId,
-                    quantity + 1,
-                    emptyList(),
-                    0
+    private fun inc(orderItem: Order) = binding.apply {
+        if (orderItem.lineItems.isEmpty()) {
+            binding.basketBtn.visible()
+            binding.cardViewCounter.gone()
+        } else {
+            counter.text = orderItem.lineItems.last().quantity.toString()
+            plus.setOnClickListener {
+                val quantity = orderItem.lineItems.last().quantity
+                val lineItemList = mutableListOf<LineItem>()
+                val lineItem =
+                    LineItem(
+                        orderItem.lineItems.last().id,
+                        orderItem.lineItems.last().name,
+                        orderItem.lineItems.last().productId,
+                        quantity + 1,
+                        emptyList(),
+                        0
+                    )
+                lineItemList.add(lineItem)
+                val order = SetOrder(
+                    orderItem.id,
+                    customerId,
+                    lineItemList,
+                    "pending",
+                    emptyList()
                 )
-            lineItemList.add(lineItem)
-            val order = SetOrder(
-                orderItem.id,
-                customerId,
-                lineItemList,
-                "pending",
-                emptyList()
-            )
-            viewModel.updateOrder(orderItem.id, order)
+                viewModel.updateOrder(orderItem.id, order)
+            }
         }
     }
 
     private fun dec(orderItem: Order) = binding.apply {
-        counter.text = orderItem.lineItems.last().quantity.toString()
-        if (orderItem.lineItems.last().quantity == 1) {
-            minus.setIconResource(R.drawable.ic_baseline_delete)
-        } else minus.setIconResource(R.drawable.ic_baseline_remove)
+        if (orderItem.lineItems.isEmpty()) {
+            binding.basketBtn.visible()
+            binding.cardViewCounter.gone()
+        } else {
+            counter.text = orderItem.lineItems.last().quantity.toString()
+            if (orderItem.lineItems.last().quantity == 1) {
+                minus.setIconResource(R.drawable.ic_baseline_delete)
+            } else minus.setIconResource(R.drawable.ic_baseline_remove)
 
-        minus.setOnClickListener {
-            val quantity = orderItem.lineItems.last().quantity
-            val lineItemList = mutableListOf<LineItem>()
-            val lineItem =
-                LineItem(
-                    orderItem.lineItems.last().id,
-                    orderItem.lineItems.last().name,
-                    orderItem.lineItems.last().productId,
-                    quantity - 1,
-                    emptyList(),
-                    0
+            minus.setOnClickListener {
+                val quantity = orderItem.lineItems.last().quantity
+                val lineItemList = mutableListOf<LineItem>()
+                val lineItem =
+                    LineItem(
+                        orderItem.lineItems.last().id,
+                        orderItem.lineItems.last().name,
+                        orderItem.lineItems.last().productId,
+                        quantity - 1,
+                        emptyList(),
+                        0
+                    )
+                lineItemList.add(lineItem)
+                val order = SetOrder(
+                    orderItem.id,
+                    customerId,
+                    lineItemList,
+                    "pending",
+                    emptyList()
                 )
-            lineItemList.add(lineItem)
-            val order = SetOrder(
-                orderItem.id,
-                customerId,
-                lineItemList,
-                "pending",
-                emptyList()
-            )
-            viewModel.updateOrder(orderItem.id, order)
-
-            if (quantity <= 0) {
-                deleteProductFromOrder(orderItem)
-            } else {
                 viewModel.updateOrder(orderItem.id, order)
+
+                if (quantity <= 0) {
+                    deleteProductFromOrder(orderItem)
+                } else {
+                    viewModel.updateOrder(orderItem.id, order)
+                }
             }
         }
     }

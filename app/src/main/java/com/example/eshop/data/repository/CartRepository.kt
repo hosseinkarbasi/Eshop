@@ -32,8 +32,7 @@ class CartRepository @Inject constructor(
     suspend fun updateOrder(orderId: Int, order: SetOrder): Flow<ResultWrapper<Order>> =
         requestFlow(dispatcher) { remoteDataSource.updateOrder(orderId, order) }
 
-
-    suspend fun getProductById(ids: Array<Int>): Flow<ResultWrapper<List<Product>>> =
+    suspend fun getProductsList(ids: Array<Int>): Flow<ResultWrapper<List<Product>>> =
         requestFlow(dispatcher) {
             remoteDataSource.getProductsById(
                 ids.contentToString().replace("[", "[0, ")

@@ -141,7 +141,7 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                     isError(it.message.toString())
                 }
                 is ResultWrapper.Success -> {
-                    isSuccess(it.data)
+                    isSuccess()
                     val product = Mapper.transformRemoteProductToLocalProduct(it.data, lineItem)
                     adapter.submitList(product)
                 }
@@ -237,7 +237,7 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
 
-    private fun isSuccess(list: List<Product>) = binding.apply {
+    private fun isSuccess() = binding.apply {
         loading.gone()
         scrollView.visible()
         loading.pauseAnimation()

@@ -58,7 +58,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     viewModel.searchProducts(query, DATE, DESC)
                     resultSearch()
                     searchProducts.hideKeyboard()
-
                 }
                 return true
             }
@@ -69,6 +68,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         })
     }
 
+    //rename
     private fun orderingSearchResult() = binding.apply {
         sort.setOnClickListener {
             val dialog = OrderingDialog { orderingText ->

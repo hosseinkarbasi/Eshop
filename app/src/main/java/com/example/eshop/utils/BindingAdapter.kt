@@ -14,7 +14,6 @@ fun ImageView.setImage(url: String?) {
         .into(this)
 }
 
-
 @BindingAdapter("textSpan")
 fun MaterialTextView.setTextDec(text: String) {
     this.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)

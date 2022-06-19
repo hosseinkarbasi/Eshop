@@ -35,7 +35,7 @@ class UserReviewsFragment : Fragment(R.layout.fragment_user_reviews) {
     }
 
     private fun deleteReview() {
-        adapter.itemDelete { review, i ->
+        adapter.itemDelete { review, _ ->
             viewModel.deleteReview(review.id)
         }
 
@@ -62,7 +62,7 @@ class UserReviewsFragment : Fragment(R.layout.fragment_user_reviews) {
     }
 
     private fun editReview() {
-        adapter.itemEdit { review, i ->
+        adapter.itemEdit { review, _ ->
             val dialog = EditReviewDialog(review) {
                 viewModel.editReview(review.id, it)
                 Log.d("hossein",review.id.toString())

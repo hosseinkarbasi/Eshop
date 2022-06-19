@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -14,7 +13,7 @@
         android:background="@drawable/rounded_corner_text_view"
         android:fontFamily="@font/titr_bold"
         android:gravity="center"
-        android:text="5"
+        android:text="@string/rating_text_test"
         android:textColor="@color/white"
         android:textSize="11sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +27,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/roboto_bold"
-        android:text="نام نظر دهنده"
+        android:text="@string/reviewer_test"
         android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/rating_tv"
@@ -40,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/yekan_bakh_regular"
-        android:text="تاریخ و ساعت"
+        android:text="@string/review_date"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/reviewer_tv"
         app:layout_constraintTop_toBottomOf="@+id/reviewer_tv" />
@@ -55,7 +54,7 @@
         android:fontFamily="@font/yekan_bakh_regular"
         android:layoutDirection="rtl"
         android:lines="3"
-        android:text="این برای تست است"
+        android:text="@string/review_test"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/date_reviewer_tv"
         app:layout_constraintStart_toStartOf="parent"

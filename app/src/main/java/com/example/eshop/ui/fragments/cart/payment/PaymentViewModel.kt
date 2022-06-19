@@ -3,7 +3,6 @@ package com.example.eshop.ui.fragments.cart.payment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eshop.data.local.datastore.userinfo.UserInfoDataStore
-import com.example.eshop.data.local.model.LocalProduct
 import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.data.remote.model.Coupon
 import com.example.eshop.data.remote.model.Order
@@ -22,10 +21,6 @@ class PaymentViewModel @Inject constructor(
     userInfoDataStore: UserInfoDataStore
 ) : ViewModel() {
 
-//    init {
-//        getLocalProducts()
-//    }
-
     private val _getTotalPrice = MutableStateFlow(0)
     val getTotalPrice = _getTotalPrice.asStateFlow()
 
@@ -43,14 +38,6 @@ class PaymentViewModel @Inject constructor(
 
     val pref = userInfoDataStore.preferences
 
-//    fun updateOrder(order: Order) {
-//        viewModelScope.launch {
-//            cartRepository.updateOrder(order).collect {
-//                _getOrder.emit(it)
-//            }
-//        }
-//    }
-
     fun updateOrder(orderId: Int, order: SetOrder) {
         viewModelScope.launch {
             cartRepository.updateOrder(orderId, order).collect {
@@ -62,7 +49,7 @@ class PaymentViewModel @Inject constructor(
 
     fun getProductsById(ids: Array<Int>) {
         viewModelScope.launch {
-            cartRepository.getProductById(ids).collect {
+            cartRepository.getProductsList(ids).collect {
                 _getProducts.emit(it)
             }
         }
@@ -76,7 +63,6 @@ class PaymentViewModel @Inject constructor(
         }
     }
 
-
     fun setOrder(order: SetOrder) {
         viewModelScope.launch {
             cartRepository.setOrder(order).collect {
@@ -84,23 +70,6 @@ class PaymentViewModel @Inject constructor(
             }
         }
     }
-
-//    private fun getLocalProducts() {
-//        viewModelScope.launch {
-//            cartRepository.getLocalProducts().collect { listProducts ->
-//                _getProducts.emit(listProducts)
-//
-//                val total = listProducts.sumOf { it.price.toInt() * it.quantity }
-//                _getTotalPrice.emit(total)
-//            }
-//        }
-//    }
-//
-//    fun deleteAllProductsBasket() {
-//        viewModelScope.launch {
-//            cartRepository.deleteAllProductsBasket()
-//        }
-//    }
 
     fun getCoupon(code: String) {
         viewModelScope.launch {

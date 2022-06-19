@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -37,42 +36,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/yekan_bakh_regular"
-            android:text="غیرغعال کردن اعلان" />
+            android:text="@string/disable_notification" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/three_hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/yekan_bakh_regular"
-            android:text="هر 3 ساعت یکبار" />
+            android:text="@string/hour3" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/five_hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/yekan_bakh_regular"
-            android:text="هر 5 ساعت یکبار" />
+            android:text="@string/hour5" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/eight_hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/yekan_bakh_regular"
-            android:text="هر 8 ساعت یکبار" />
+            android:text="@string/hour8" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/twelve_hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/yekan_bakh_regular"
-            android:text="هر 12 ساعت یکبار" />
+            android:text="@string/hour12" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/userـchoice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/yekan_bakh_regular"
-            android:text="بازه زمانی دلخواه" />
+            android:text="@string/select_hour" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/choice_layout"
@@ -80,7 +79,7 @@
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:hint="بازه زمانی بر حسب ساعت"
+            android:hint="@string/select_hour_tv"
             android:inputType="number"
             android:translationY="-55dp"
             android:visibility="gone"

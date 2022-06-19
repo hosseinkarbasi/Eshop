@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,7 +13,8 @@
         android:src="@drawable/eshop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/image" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_btn"
@@ -24,7 +24,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="18dp"
         android:fontFamily="@font/titr_bold"
-        android:text="ورود به ایشاپ"
+        android:text="@string/login_to_eshop"
         android:textSize="20sp"
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="@+id/email_login_layout"
@@ -78,7 +78,7 @@
             android:fontFamily="@font/roboto_bold"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="ایجاد حساب"
+            android:text="@string/create_account_btn"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/materialTextView4"

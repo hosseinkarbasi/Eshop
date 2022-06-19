@@ -21,13 +21,6 @@ object Mapper {
         }
     }
 
-//    fun transformProductsToLineItem(products: List<LocalProduct>)
-//            : List<LineItem> {
-//        return products.map {
-//            LineItem(it.id, it.quantity)
-//        }
-//    }
-
     fun transformLineItemToProductsId(lineItem: List<LineItem>)
             : Array<Int> {
         return lineItem.map {

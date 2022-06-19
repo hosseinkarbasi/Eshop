@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="@android:color/holo_green_light"
-            android:text="RETRY"
+            android:text="@string/retry_connection"
             app:cornerRadius="8dp" />
 
     </LinearLayout>
