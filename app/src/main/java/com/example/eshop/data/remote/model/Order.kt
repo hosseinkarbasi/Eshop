@@ -10,5 +10,7 @@ data class Order(
     val lineItems: List<LineItem>,
     val number: String,
     val total: String?,
-    val status: String
+    val status: String,
+    @SN("date_created")
+    val dateCreated: String
 )

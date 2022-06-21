@@ -172,6 +172,21 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                            android:id="@+id/worm_dots_indicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:dotsColor="@color/black"
+                            app:dotsCornerRadius="8dp"
+                            app:dotsSize="10dp"
+                            app:dotsSpacing="4dp"
+                            app:dotsStrokeColor="#6E6E6E"
+                            app:dotsStrokeWidth="1dp"
+                            app:layout_constraintEnd_toEndOf="@+id/view_pager"
+                            app:layout_constraintStart_toStartOf="@+id/view_pager"
+                            app:layout_constraintTop_toBottomOf="@+id/view_pager" />
+
+
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/product_name"
                             android:layout_width="match_parent"
@@ -182,7 +197,7 @@
                             android:textSize="16sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="@+id/view_pager"
-                            app:layout_constraintTop_toBottomOf="@+id/view_pager" />
+                            app:layout_constraintTop_toBottomOf="@+id/worm_dots_indicator" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/product_rating"

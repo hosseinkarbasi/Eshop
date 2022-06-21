@@ -35,26 +35,70 @@ class CategoryViewModel @Inject constructor(
 
 
     init {
-        clothingCategory()
+        getClothingList()
+        getDigitalList()
+        getSuperMarketList()
+        getBooksAndArtList()
     }
 
-    private fun clothingCategory() {
-        repository.getCategories { clothing, digital, superMarket, booksAndArt ->
-            viewModelScope.launch {
-                clothing.collect {
-                    _getClothingCategory.emit(it)
-                }
-                digital.collect {
-                    _getDigitalCategory.emit(it)
-                }
-                superMarket.collect {
-                    _getSuperMarketCategory.emit(it)
-                }
-                booksAndArt.collect {
-                    _getBooksAndArtCategory.emit(it)
-                }
+    fun retry() {
+        if (_getClothingCategory.value !is ResultWrapper.Success) getClothingList()
+        if (_getDigitalCategory.value !is ResultWrapper.Success) getDigitalList()
+        if (_getSuperMarketCategory.value !is ResultWrapper.Success) getSuperMarketList()
+        if (_getBooksAndArtCategory.value !is ResultWrapper.Success) getBooksAndArtList()
+    }
+
+    private fun getClothingList() {
+        viewModelScope.launch {
+            repository.getClothingList().collect {
+                _getClothingCategory.emit(it)
             }
         }
+    }
+
+    private fun getDigitalList() {
+        viewModelScope.launch {
+            repository.getDigitalList().collect {
+                _getDigitalCategory.emit(it)
+            }
+        }
+    }
+
+    private fun getSuperMarketList() {
+        viewModelScope.launch {
+            repository.getSuperMarketList().collect {
+                _getSuperMarketCategory.emit(it)
+            }
+        }
+    }
+
+    private fun getBooksAndArtList() {
+        viewModelScope.launch {
+            repository.getBooksAndArtList().collect {
+                _getBooksAndArtCategory.emit(it)
+            }
+        }
+    }
+
+    fun isSuccess(): Boolean {
+        return _getClothingCategory.value is ResultWrapper.Success &&
+                _getDigitalCategory.value is ResultWrapper.Success &&
+                _getSuperMarketCategory.value is ResultWrapper.Success &&
+                _getBooksAndArtCategory.value is ResultWrapper.Success
+    }
+
+    fun isError(): Boolean {
+        return _getClothingCategory.value is ResultWrapper.Error &&
+                _getDigitalCategory.value is ResultWrapper.Error &&
+                _getSuperMarketCategory.value is ResultWrapper.Error &&
+                _getBooksAndArtCategory.value is ResultWrapper.Error
+    }
+
+    fun isLoading(): Boolean {
+        return _getClothingCategory.value is ResultWrapper.Loading &&
+                _getDigitalCategory.value is ResultWrapper.Loading &&
+                _getSuperMarketCategory.value is ResultWrapper.Loading &&
+                _getBooksAndArtCategory.value is ResultWrapper.Loading
     }
 
 }

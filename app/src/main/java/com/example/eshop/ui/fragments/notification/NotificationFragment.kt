@@ -25,13 +25,6 @@ class NotificationFragment : Fragment(R.layout.fragment_notification) {
         _binding = FragmentNotificationBinding.bind(view)
 
         setNotification()
-//        val request2 = OneTimeWorkRequestBuilder<NotifyWork>().build()
-//
-//        WorkManager.getInstance(requireContext()).getWorkInfoByIdLiveData(request.id)
-//            .observe(viewLifecycleOwner) {
-//                val status: String = it.state.name
-//                Toast.makeText(requireContext(), status, Toast.LENGTH_LONG).show()
-//            }
     }
 
     private fun setNotification() = binding.apply {
@@ -83,11 +76,6 @@ class NotificationFragment : Fragment(R.layout.fragment_notification) {
                     ExistingPeriodicWorkPolicy.REPLACE,
                     request
                 )
-            WorkManager.getInstance(requireContext()).getWorkInfoByIdLiveData(request.id)
-                .observe(viewLifecycleOwner) {
-                    val status: String = it.state.name
-                    Toast.makeText(requireContext(), status, Toast.LENGTH_LONG).show()
-                }
         }
     }
 

@@ -2,13 +2,17 @@ package com.example.eshop.ui.fragments.category
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
 import com.example.eshop.databinding.FragmentCategoryBinding
 import com.example.eshop.data.remote.ResultWrapper
+import com.example.eshop.data.remote.model.Category
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
+import com.example.eshop.utils.gone
+import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,6 +34,67 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         getCategoriesList()
         goProductsByCategory()
 
+    }
+
+    private fun getCategoriesList() {
+        viewModel.getClothingCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            setResultRequest(clothingAdapter, it)
+        }
+
+        viewModel.getDigitalCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            setResultRequest(digitalAdapter, it)
+        }
+
+        viewModel.getSuperMarketCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            setResultRequest(superMarketAdapter, it)
+        }
+
+        viewModel.getBooksAndArtCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            setResultRequest(booksAndArtAdapter, it)
+        }
+    }
+
+    private fun setResultRequest(adapter: CategoryAdapter, result: ResultWrapper<List<Category>>) {
+        when (result) {
+            is ResultWrapper.Success -> success(adapter, result.data)
+            is ResultWrapper.Error -> error()
+            is ResultWrapper.Loading -> loading()
+        }
+    }
+
+    private fun success(adapter: CategoryAdapter, list: List<Category>) = binding.apply {
+        adapter.submitList(list)
+        if (viewModel.isSuccess()) {
+            scr.visible()
+            loading.gone()
+            loading.pauseAnimation()
+            retry.gone()
+        }
+    }
+
+    private fun error() = binding.apply {
+        if (viewModel.isError()) {
+            scr.gone()
+            loading.gone()
+            loading.pauseAnimation()
+            retry.visible()
+            retry.setOnClickListener {
+                viewModel.retry()
+            }
+
+            Toast.makeText(
+                requireContext(),
+                "دریافت اطلاعات با مشکل مواجه شد",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private fun loading() = binding.apply {
+        loading.visible()
+        scr.gone()
+        retry.gone()
+        loading.playAnimation()
     }
 
     private fun goProductsByCategory() {
@@ -55,45 +120,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
             val action =
                 CategoryFragmentDirections.actionCategoryFragmentToProductsListFragment(it.id.toString())
             findNavController().navigate(action)
-        }
-    }
-
-    private fun getCategoriesList() {
-        viewModel.getClothingCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-            when (it) {
-                is ResultWrapper.Error -> {}
-                is ResultWrapper.Loading -> {}
-                is ResultWrapper.Success -> {
-                    clothingAdapter.submitList(it.data)
-                }
-            }
-        }
-        viewModel.getDigitalCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-            when (it) {
-                is ResultWrapper.Error -> {}
-                is ResultWrapper.Loading -> {}
-                is ResultWrapper.Success -> {
-                    digitalAdapter.submitList(it.data)
-                }
-            }
-        }
-        viewModel.getSuperMarketCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-            when (it) {
-                is ResultWrapper.Error -> {}
-                is ResultWrapper.Loading -> {}
-                is ResultWrapper.Success -> {
-                    superMarketAdapter.submitList(it.data)
-                }
-            }
-        }
-        viewModel.getBooksAndArtCategory.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-            when (it) {
-                is ResultWrapper.Error -> {}
-                is ResultWrapper.Loading -> {}
-                is ResultWrapper.Success -> {
-                    booksAndArtAdapter.submitList(it.data)
-                }
-            }
         }
     }
 

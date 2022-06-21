@@ -290,6 +290,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         imageViewPagerAdapter = ImageViewPagerAdapter()
         binding.viewPager.adapter = imageViewPagerAdapter
         binding.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        binding.wormDotsIndicator.attachTo(binding.viewPager)
     }
 
     override fun onDestroyView() {

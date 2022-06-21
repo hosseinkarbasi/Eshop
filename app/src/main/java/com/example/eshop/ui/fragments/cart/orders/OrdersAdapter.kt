@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.eshop.data.remote.model.Order
 import com.example.eshop.databinding.OrdersItemBinding
 
+
 class OrdersAdapter :
     ListAdapter<Order, OrdersAdapter.CustomViewHolder>(DiffCallBack()) {
 
@@ -18,8 +19,8 @@ class OrdersAdapter :
 
             numberOrder.text = item.number
             numberOfProduct.text = "${item.lineItems.sumOf { it.quantity }} کالا "
-            totalPrice.text = "1000 تومان"
-            dateOrder.text = "1401/1/1"
+            totalPrice.text = item.total
+            dateOrder.text = item.dateCreated
         }
     }
 

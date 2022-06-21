@@ -29,9 +29,9 @@ class LastProductInfo @Inject constructor(
         id
     }
 
-    suspend fun saveUserInfo(userId: Int) {
+    suspend fun saveLastProductId(productId: Int) {
         dataStore.edit {
-            it[PRODUCT_ID] = userId
+            it[PRODUCT_ID] = productId
         }
     }
 

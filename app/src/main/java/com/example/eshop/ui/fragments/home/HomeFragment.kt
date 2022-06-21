@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -18,8 +19,11 @@ import com.example.eshop.application.Constants.RATING
 import com.example.eshop.application.Constants.SPECIAL_SALE
 import com.example.eshop.databinding.FragmentHomeBinding
 import com.example.eshop.data.remote.ResultWrapper
+import com.example.eshop.data.remote.model.Product
 import com.example.eshop.data.remote.model.ProductImage
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
+import com.example.eshop.utils.gone
+import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
 
@@ -30,8 +34,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding get() = _binding!!
     private val viewModel by viewModels<HomeViewModel>()
     private var imageList = mutableListOf<ProductImage>()
-    private lateinit var handler: Handler
     lateinit var runnable: Runnable
+    private lateinit var handler: Handler
     private lateinit var newestProductAdapter: ProductAdapter
     private lateinit var mostViewedProductAdapter: ProductAdapter
     private lateinit var mostSalesProductAdapter: ProductAdapter
@@ -42,12 +46,72 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         _binding = FragmentHomeBinding.bind(view)
 
         initRecyclerView()
-        getSpecialSaleProducts()
+        getSpecialProducts()
         setUpViewPager()
         getProductsList()
         goProductDetails()
         seeMoreItems()
         goToSearch()
+    }
+
+    private fun setResultRequest(adapter: ProductAdapter, result: ResultWrapper<List<Product>>) {
+        when (result) {
+            is ResultWrapper.Success -> success(adapter, result.data)
+            is ResultWrapper.Error -> error()
+            is ResultWrapper.Loading -> loading()
+        }
+    }
+
+    private fun getProductsList() {
+        viewModel.getNewestProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            setResultRequest(newestProductAdapter, it)
+        }
+
+        viewModel.getMostViewedProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            setResultRequest(mostViewedProductAdapter, it)
+        }
+
+        viewModel.getMostSalesProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            setResultRequest(mostSalesProductAdapter, it)
+        }
+    }
+
+    private fun success(adapter: ProductAdapter, list: List<Product>) = binding.apply {
+        adapter.submitList(list)
+        if (viewModel.isSuccess()) {
+            cardViewSearch.visible()
+            scr.visible()
+            loading.gone()
+            loading.pauseAnimation()
+            retry.gone()
+        }
+    }
+
+    private fun error() = binding.apply {
+        if (viewModel.isError()) {
+            scr.gone()
+            cardViewSearch.gone()
+            loading.gone()
+            loading.pauseAnimation()
+            retry.visible()
+            retry.setOnClickListener {
+                viewModel.retry()
+            }
+
+            Toast.makeText(
+                requireContext(),
+                "دریافت اطلاعات با مشکل مواجه شد",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private fun loading() = binding.apply {
+        loading.visible()
+        cardViewSearch.gone()
+        scr.gone()
+        retry.gone()
+        loading.playAnimation()
     }
 
     private fun goToSearch() {
@@ -57,8 +121,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun getSpecialSaleProducts() {
-        viewModel.getProduct(SPECIAL_SALE)
+    private fun getSpecialProducts() {
+        viewModel.getSpecialProduct(SPECIAL_SALE)
         viewModel.getSpecialSale.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
                 is ResultWrapper.Success -> {
@@ -105,49 +169,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun seeMoreItems() = binding.apply {
 
         newestListBtn.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment( DATE)
+            val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment(DATE)
             findNavController().navigate(action)
         }
         mostSalesListBtn.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment( RATING)
+            val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment(RATING)
             findNavController().navigate(action)
 
         }
         mostViewedListBtn.setOnClickListener {
             val action =
-                HomeFragmentDirections.actionHomeFragmentToProductsListFragment( POPULARITY)
+                HomeFragmentDirections.actionHomeFragmentToProductsListFragment(POPULARITY)
             findNavController().navigate(action)
-        }
-    }
-
-    private fun getProductsList() {
-        viewModel.getNewestProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-            when (it) {
-                is ResultWrapper.Error -> {}
-                is ResultWrapper.Loading -> {}
-                is ResultWrapper.Success -> {
-                    newestProductAdapter.submitList(it.data)
-                }
-            }
-        }
-
-        viewModel.getMostSalesProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-            when (it) {
-                is ResultWrapper.Error -> {}
-                is ResultWrapper.Loading -> {}
-                is ResultWrapper.Success -> {
-                    mostSalesProductAdapter.submitList(it.data)
-                }
-            }
-        }
-        viewModel.getMostViewedProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-            when (it) {
-                is ResultWrapper.Error -> {}
-                is ResultWrapper.Loading -> {}
-                is ResultWrapper.Success -> {
-                    mostViewedProductAdapter.submitList(it.data)
-                }
-            }
         }
     }
 
@@ -192,4 +225,5 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.newestRv.adapter = null
         binding.sliderVp.adapter = null
     }
+
 }

@@ -81,4 +81,5 @@
     <string name="review_test">این برای تست است</string>
     <string name="delete_review">حذف دیدگاه</string>
     <string name="edit_review">ویرایش دیدگاه</string>
+    <string name="retry_txt">تلاش دوباره</string>
 </resources>
