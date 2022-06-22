@@ -28,6 +28,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
     private val viewModel by viewModels<ProductViewModel>()
     private val args by navArgs<ProductFragmentArgs>()
     private lateinit var imageViewPagerAdapter: ImageViewPagerAdapter
+    private lateinit var relatedProductsAdapter: RelatedProductsAdapter
     private var customerId: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,10 +36,29 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         _binding = DataBindingUtil.bind(view)
 
         getCustomerId()
+        initRecyclerView()
         getProduct()
         setUpViewPager()
         getOrder()
         checkIsToCard()
+    }
+
+    private fun initRecyclerView() {
+        relatedProductsAdapter = RelatedProductsAdapter()
+        binding.relatedRv.adapter = relatedProductsAdapter
+    }
+
+    private fun relatedProducts(list: Array<Int>) {
+        viewModel.getProductsById(list)
+        viewModel.getProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            when (it) {
+                is ResultWrapper.Success -> {
+                    relatedProductsAdapter.submitList(it.data)
+                }
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.Error -> {}
+            }
+        }
     }
 
     private fun getCustomerId() {
@@ -265,6 +285,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
                     isSuccess(it.data)
                     checkStatusOrder(it.data)
                     goToReviews(it.data.id)
+                    relatedProducts(it.data.relatedIds.toTypedArray())
                 }
             }
         }
@@ -305,6 +326,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.relatedRv.adapter = null
         _binding = null
     }
 }

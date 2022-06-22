@@ -13,6 +13,8 @@ data class Product(
     val averageRating: String,
     @SN("rating_count")
     val ratingCount: Int,
+    @SN("related_ids")
+    val relatedIds: List<Int>,
     val categories: List<Category>,
     val images: List<ProductImage>
 )

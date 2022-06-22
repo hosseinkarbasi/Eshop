@@ -30,6 +30,9 @@ class ProductViewModel @Inject constructor(
     private val _getOrderList = MutableStateFlow<ResultWrapper<List<Order>>>(ResultWrapper.Loading)
     val getOrderList = _getOrderList.asStateFlow()
 
+    private val _getProducts = MutableStateFlow<ResultWrapper<List<Product>>>(ResultWrapper.Loading)
+    val getProducts = _getProducts.asStateFlow()
+
     val pref = userInfoDataStore.preferences
 
 
@@ -45,6 +48,14 @@ class ProductViewModel @Inject constructor(
         viewModelScope.launch {
             productRepository.getOrders(userId, status).collect {
                 _getOrderList.emit(it)
+            }
+        }
+    }
+
+    fun getProductsById(ids: Array<Int>) {
+        viewModelScope.launch {
+            productRepository.getProductsList(ids).collect {
+                _getProducts.emit(it)
             }
         }
     }

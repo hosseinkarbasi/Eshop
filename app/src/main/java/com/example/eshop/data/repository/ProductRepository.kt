@@ -51,6 +51,13 @@ class ProductRepository @Inject constructor(
     suspend fun getProduct(id: Int): Flow<ResultWrapper<Product>> =
         requestFlow(dispatcher) { remoteDataSource.getProduct(id) }
 
+    suspend fun getProductsList(ids: Array<Int>): Flow<ResultWrapper<List<Product>>> =
+        requestFlow(dispatcher) {
+            remoteDataSource.getProductsById(
+                ids.contentToString().replace("[", "[0, ")
+            )
+        }
+
     suspend fun getProductsByCategory(
         categoryId: Int,
         perPage: Int,
