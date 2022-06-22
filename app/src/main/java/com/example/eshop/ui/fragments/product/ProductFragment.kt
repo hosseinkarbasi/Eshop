@@ -38,6 +38,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         getProduct()
         setUpViewPager()
         getOrder()
+        checkIsToCard()
     }
 
     private fun getCustomerId() {
@@ -46,27 +47,36 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         }
     }
 
-    private fun check() {
-        viewModel.getOrders(customerId, "pending")
+    private fun checkIsToCard() {
+        viewModel.pref.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            viewModel.getOrders(it.id, "pending")
+        }
         viewModel.getOrderList.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
                 is ResultWrapper.Success -> {
-                    if (it.data.isNotEmpty()) {
-                        val productIdItem =
-                            Mapper.transformLineItemToProductsId(it.data[0].lineItems)
-                        if (productIdItem.contains(args.productId)) {
-                            binding.basketBtn.gone()
-                            binding.cardViewCounter.visible()
-                        } else {
-                            binding.basketBtn.visible()
-                            binding.cardViewCounter.gone()
-                        }
-                    }
+                    hasCardVisibility(it.data)
                 }
             }
         }
+    }
 
-
+    private fun hasCardVisibility(data: List<Order>) = binding.apply {
+        if (data.isNotEmpty()) {
+            val productIds = Mapper.transformLineItemToProductsId(data[0].lineItems)
+            if (productIds.contains(args.productId)) {
+                basketBtn.gone()
+                cardViewCounter.gone()
+                cardViewHasCard.visible()
+                goToCardBtn.setOnClickListener {
+                    val action = ProductFragmentDirections.actionProductFragmentToHomeCartFragment()
+                    findNavController().navigate(action)
+                }
+            } else {
+                basketBtn.visible()
+                cardViewCounter.gone()
+                cardViewHasCard.gone()
+            }
+        }
     }
 
     private fun checkStatusOrder(data: Product) {

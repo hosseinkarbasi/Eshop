@@ -139,8 +139,9 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="70dp"
-                android:backgroundTint="#DFDEDE"
-                app:cardCornerRadius="14dp"
+                android:backgroundTint="#EAEAEA"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -185,9 +186,10 @@
                         android:layout_gravity="end"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:fontFamily="@font/titr_bold"
+                        android:fontFamily="@font/yekan_bakh_regular"
                         android:text="رایگان"
                         android:textSize="15sp"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/total_price" />
 
@@ -245,7 +247,6 @@
         android:id="@+id/gpBasket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:constraint_referenced_ids="scr,cardView_submit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

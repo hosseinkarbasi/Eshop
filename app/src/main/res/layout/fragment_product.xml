@@ -38,6 +38,38 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView_hasCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:cardElevation="0dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:fontFamily="@font/yekan_bakh_regular"
+                    android:text="@string/has_to_card"
+                    android:textSize="11sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/go_to_card_btn"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/yekan_bakh_regular"
+                    android:text="@string/see_card_btn"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardView_counter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -107,6 +139,7 @@
                 android:fontFamily="@font/titr_bold"
                 android:text="@string/basket_btn_text"
                 android:textSize="15sp"
+                android:visibility="gone"
                 app:cornerRadius="8dp" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -231,10 +264,10 @@
                             android:text="@string/reviews_user"
                             android:textColor="@color/teal_200"
                             android:textSize="13sp"
+                            android:textStyle="bold"
                             app:icon="@drawable/message"
                             app:iconGravity="end"
                             app:iconSize="20dp"
-                            android:textStyle="bold"
                             app:iconTint="@color/black"
                             app:layout_constraintEnd_toStartOf="@+id/product_rating"
                             app:layout_constraintTop_toBottomOf="@+id/product_name" />

@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.eshop.R
 import com.example.eshop.data.remote.model.LineItem
 import com.example.eshop.databinding.BasketListItemBinding
+import java.text.DecimalFormat
 
 class BasketListAdapter :
     ListAdapter<LineItem, BasketListAdapter.CustomViewHolder>(DiffCallBack()) {
@@ -43,9 +44,11 @@ class BasketListAdapter :
 
         @SuppressLint("SetTextI18n")
         fun bind(item: LineItem) = binding.apply {
+            val dec = DecimalFormat("###,###")
+            val price = dec.format(item.price)
             productTitle.text = item.name
             counter.text = item.quantity.toString()
-            productPrice.text = " ${item.price}  تومان "
+            productPrice.text = " $price  تومان "
             Glide.with(root)
                 .load(item.metaData[0].value)
                 .placeholder(R.drawable.online_shopping_palceholder)

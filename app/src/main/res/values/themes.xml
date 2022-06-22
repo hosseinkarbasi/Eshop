@@ -19,14 +19,14 @@
 
         <item name="windowSplashScreenBackground">@color/main_color</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash</item>
-        <item name="windowSplashScreenAnimationDuration">5000</item>
+        <item name="windowSplashScreenAnimationDuration">20</item>
         <item name="splashScreenIconSize">100dp</item>
         <item name="postSplashScreenTheme">@style/Theme.Eshop</item>
 
     </style>
 
 
-    <!--    //Bottom Sheet Theme-->
+    <!--Bottom Sheet Theme-->
 
     <style name="BottomSheet" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_sheet_top_curve</item>
@@ -45,7 +45,7 @@
     </style>
 
 
-    <!--Style for Dialog    -->
+    <!--Style for Dialog-->
     <style name="RoundShapeAppearance" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">21dp</item>
@@ -55,7 +55,7 @@
         <item name="shapeAppearanceMediumComponent">@style/RoundShapeAppearance</item>
     </style>
 
-
+    <!--TabLayout Font-->
     <style name="TabFont" parent="TextAppearance.Design.Tab">
 
         <item name="android:fontFamily">@font/yekan_bakh_regular</item>
@@ -63,6 +63,8 @@
         <item name="textAllCaps">false</item>
 
     </style>
+
+    <!--BottomNavigation Font-->
 
     <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/yekan_bakh_regular</item>

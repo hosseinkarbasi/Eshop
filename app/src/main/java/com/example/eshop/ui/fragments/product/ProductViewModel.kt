@@ -3,7 +3,6 @@ package com.example.eshop.ui.fragments.product
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eshop.data.local.datastore.userinfo.UserInfoDataStore
-import com.example.eshop.data.local.model.LocalProduct
 import com.example.eshop.data.remote.model.Product
 import com.example.eshop.data.repository.ProductRepository
 import com.example.eshop.data.remote.ResultWrapper
@@ -57,12 +56,6 @@ class ProductViewModel @Inject constructor(
             }
         }
     }
-
-//    fun insertProduct(product: LocalProduct) {
-//        viewModelScope.launch {
-//            productRepository.insertProduct(product)
-//        }
-//    }
 
     fun setOrder(order: SetOrder) {
         viewModelScope.launch {

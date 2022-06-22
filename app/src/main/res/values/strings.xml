@@ -82,4 +82,8 @@
     <string name="delete_review">حذف دیدگاه</string>
     <string name="edit_review">ویرایش دیدگاه</string>
     <string name="retry_txt">تلاش دوباره</string>
+    <string name="garanti_txt">گارانتی اصالت و سلامت فیزیکی کالا</string>
+    <string name="store_txt">موجود در انبار ایشاپ</string>
+    <string name="has_to_card">در سبد شما وجود دارد</string>
+    <string name="see_card_btn">مشاهده سبد خرید</string>
 </resources>

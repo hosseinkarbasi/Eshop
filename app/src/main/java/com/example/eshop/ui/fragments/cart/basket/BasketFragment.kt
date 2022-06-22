@@ -16,6 +16,7 @@ import com.example.eshop.utils.gone
 import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class BasketFragment : Fragment(R.layout.fragment_basket) {
@@ -163,7 +164,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 
     private fun goProductInfo() {
         basketAdapter.onItemPosition {
-            val action = BasketFragmentDirections.actionGlobalProductFragment(it.id)
+            val action = BasketFragmentDirections.actionGlobalProductFragment(it.productId)
             findNavController().navigate(action)
         }
     }
@@ -196,9 +197,11 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
     }
 
     private fun totalPrice(data: Order) = binding.apply {
-        totalPrice.text = data.total
-        totalPricePayment.text = data.total
-        sumOfPrice.text = data.total
+        val dec = DecimalFormat("###,###")
+        val price = dec.format(data.total?.toDouble())
+        totalPrice.text = price
+        totalPricePayment.text = price
+        sumOfPrice.text = price
     }
 
     private fun iniRecyclerView() {

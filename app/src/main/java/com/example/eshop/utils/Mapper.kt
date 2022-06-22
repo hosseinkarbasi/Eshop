@@ -21,11 +21,8 @@ object Mapper {
         }
     }
 
-    fun transformLineItemToProductsId(lineItem: List<LineItem>)
-            : Array<Int> {
-        return lineItem.map {
-            it.productId
-        }.toTypedArray()
+    fun transformLineItemToProductsId(lineItem: List<LineItem>): Array<Int> {
+        return lineItem.map { it.productId }.toTypedArray()
     }
 
 }

@@ -1,14 +1,13 @@
 package com.example.eshop.ui.fragments.cart.payment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eshop.R
-import com.example.eshop.data.local.model.LocalProduct
 import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.data.remote.model.*
 import com.example.eshop.databinding.FragmentPaymentBinding
@@ -26,10 +25,9 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
     private var _binding: FragmentPaymentBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<PaymentViewModel>()
+    private var couponLine = mutableListOf<Coupon>()
     private lateinit var adapter: PaymentAdapter
     var customerId: Int = 0
-    private var couponLine = mutableListOf<Coupon>()
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +40,7 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
     }
 
     private fun setOrder(orderId: List<Order>) {
-        binding.finishSubmitBtn.setOnClickListener {
+        binding.cartSubmitBtn.setOnClickListener {
             val order = SetOrder(
                 orderId[0].id,
                 customerId,
@@ -88,9 +86,9 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         }
     }
 
-    private fun isSuccessCoupon(data: List<Coupon>) {
+    private fun isSuccessCoupon(data: List<Coupon>) = binding.apply {
         if (data.isEmpty()) {
-            binding.couponEdLayout.helperText = "کد تخفیف وارد شده درست نیست"
+            couponEdLayout.helperText = "کد تخفیف وارد شده درست نیست"
         } else {
             viewModel.getTotalPrice.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
                 val totalPrice = it - it / data[0].amount.toDouble()
@@ -98,9 +96,9 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                 val percent = convertPercent.format(data[0].amount.toDouble())
                 val dec = DecimalFormat("###,###")
                 val price = dec.format(totalPrice)
-                binding.couponEdLayout.helperText = "$percent درصد از مبلغ کل کسر شد "
-                binding.couponPercent.text = "$percent درصد "
-                binding.totalPricePayment.text = "$price تومان "
+                couponEdLayout.helperText = "$percent درصد از مبلغ کل کسر شد "
+                couponPercent.text = "$percent درصد "
+                totalPricePayment.text = "$price تومان "
             }
         }
     }
@@ -125,7 +123,8 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                     setOrder(it.data)
                     getProducts(it.data[0].lineItems)
                     totalPrice(it.data[0])
-                    viewModel.getProductsById(Mapper.transformLineItemToProductsId(it.data[0].lineItems))
+                    val ids = Mapper.transformLineItemToProductsId(it.data[0].lineItems)
+                    viewModel.getProductsById(ids)
                 }
             }
         }
@@ -149,38 +148,6 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         }
     }
 
-//    @SuppressLint("SetTextI18n")
-//    private fun getProducts() {
-//        viewModel.getProducts.collectWithRepeatOnLifecycle(viewLifecycleOwner) { productList ->
-//            setOrder(productList)
-//            adapter.submitList(productList)
-//            val totalQuantity = productList.sumOf { it.quantity }.toString()
-//            binding.totalQuantity.text = "$totalQuantity کالا "
-//        }
-//    }
-
-//    @SuppressLint("SetTextI18n")
-//    private fun totalPrice() = binding.apply {
-//        viewModel.getTotalPrice.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
-//            val dec = DecimalFormat("###,###")
-//            val price = dec.format(it)
-//            binding.totalPrice.text = "$price تومان "
-//            binding.totalPricePayment.text = "$price تومان "
-//
-//        }
-//    }
-
-//    private fun setOrder(list: List<LocalProduct>) {
-//        binding.finishSubmitBtn.setOnClickListener {
-//            viewModel.pref.collectWithRepeatOnLifecycle(viewLifecycleOwner) { userInfo ->
-//                val productsList = Mapper.transformProductsToLineItem(list)
-//                val order = Order(userInfo.id, productsList, "",)
-//                viewModel.setOrder(order)
-//                getOrderStatus()
-//            }
-//        }
-//    }
-
     private fun getOrderStatus() {
         viewModel.getOrder.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
@@ -197,10 +164,10 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                         }
                         show()
                     }
-//                    viewModel.deleteAllProductsBasket()
                 }
                 is ResultWrapper.Error -> {
-                    val orderDialog = MaterialAlertDialogBuilder(requireContext())
+                    val orderDialog =
+                        MaterialAlertDialogBuilder(requireContext(), R.style.RoundShapeTheme)
                     orderDialog.apply {
                         setTitle("ثبت سفارش")
                         setMessage(" متاسفانه ثبت سفارش شما با خطا مواجه شد ")
@@ -209,7 +176,6 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                         show()
                     }
                 }
-                else -> {}
             }
         }
     }
@@ -217,22 +183,26 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
     private fun totalPrice(data: Order) = binding.apply {
         val dec = DecimalFormat("###,###")
         val price = dec.format(data.total?.toInt())
-        binding.totalPrice.text = "$price تومان "
-        binding.totalPricePayment.text = "$price تومان "
-        val totalQuantity = data.lineItems.sumOf { it.quantity }.toString()
-        binding.totalQuantity.text = "$totalQuantity کالا "
-
+        sumOfPrice.text = "$price تومان "
+        totalPrice.text = "$price تومان "
+        totalPricePayment.text = "$price تومان "
+        val quantity = data.lineItems.sumOf { it.quantity }.toString()
+        totalQuantity.text = "$quantity کالا "
     }
 
     private fun isLoading() = binding.apply {
+        cardView.gone()
         loading.visible()
         scrollView.gone()
+        cardViewSubmit.gone()
         loading.playAnimation()
     }
 
     private fun isError(errorMessage: String) = binding.apply {
         loading.gone()
-        scrollView.visible()
+        cardView.gone()
+        scrollView.gone()
+        cardViewSubmit.gone()
         loading.pauseAnimation()
         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
@@ -240,6 +210,8 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
     private fun isSuccess() = binding.apply {
         loading.gone()
         scrollView.visible()
+        cardView.visible()
+        cardViewSubmit.visible()
         loading.pauseAnimation()
     }
 
