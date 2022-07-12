@@ -18,6 +18,15 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
 
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a'
+            universalApk false
+        }
+    }
+
     signingConfigs {
         release {
             keyAlias = keystoreProperties["keyAlias"]
@@ -43,6 +52,7 @@ android {
         release {
             debuggable false
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -146,6 +156,18 @@ dependencies {
 
     //viewPager Indicator
     implementation("com.tbuonomo:dotsindicator:4.3")
+
+    //Neshan sdk library
+    implementation 'neshan-android-sdk:mobile-sdk:1.0.1'
+    implementation 'neshan-android-sdk:services-sdk:1.0.0'
+    implementation 'neshan-android-sdk:common-sdk:0.0.2'
+
+    //Play Services
+    implementation 'com.google.android.gms:play-services-gcm:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
+
+    // dexter runtime permissions
+    implementation 'com.karumi:dexter:6.2.3'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

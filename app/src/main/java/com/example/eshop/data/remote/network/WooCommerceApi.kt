@@ -2,6 +2,7 @@ package com.example.eshop.data.remote.network
 
 import com.example.eshop.data.local.model.User
 import com.example.eshop.data.remote.model.*
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -36,6 +37,13 @@ interface WooCommerceApi {
 
     @POST("products/reviews/{id}")
     suspend fun editReview(@Path("id") reviewId: Int, @Body review: Review): Response<Review>
+
+    @Headers("Api-Key: service.UyZbZ9QzO6ngD5BPzZGmL2QFGsZCjHmdE1b9qCyI")
+    @GET("https://api.neshan.org/v4/reverse")
+    suspend fun getAddress(
+        @Query("lat") lat: Double?,
+        @Query("lng") lng: Double?
+    ): Response<NeshanAddress>
 
     @DELETE("products/reviews/{id}")
     suspend fun deleteReview(

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="user"
             type="com.example.eshop.data.local.model.User" />
@@ -76,10 +78,49 @@
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:contentDescription="@string/image"
             android:src="@drawable/comments"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/user_reviews_btn"
-            android:contentDescription="@string/image" />
+            app:layout_constraintTop_toTopOf="@+id/user_reviews_btn" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_address"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="12dp"
+            android:fontFamily="@font/yekan_bakh_regular"
+            android:gravity="start"
+            android:text="@string/Address"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toStartOf="@+id/imageView3_1"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <ImageView
+            android:id="@+id/imageView4_1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/ic_arrow"
+            app:layout_constraintEnd_toStartOf="@+id/user_reviews_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_address" />
+
+
+        <ImageView
+            android:id="@+id/imageView3_1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/ic_baseline_add_business_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/user_reviews_btn"
@@ -101,12 +142,24 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/image"
             android:src="@drawable/ic_arrow"
             app:layout_constraintEnd_toStartOf="@+id/user_reviews_btn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/user_reviews_btn"
-            android:contentDescription="@string/image" />
+            app:layout_constraintTop_toTopOf="@+id/user_reviews_btn" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="270dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/dark_shadow"
+            app:layout_constraintEnd_toEndOf="@+id/btn_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_address" />
+
 
         <View
             android:id="@+id/view"
@@ -125,17 +178,17 @@
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:contentDescription="@string/image"
             android:src="@drawable/logout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/logout_btn"
-            android:contentDescription="@string/image" />
+            app:layout_constraintTop_toTopOf="@+id/logout_btn" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/logout_btn"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="12dp"
             android:fontFamily="@font/yekan_bakh_regular"
             android:gravity="start"
@@ -143,20 +196,20 @@
             android:textColor="#D40D0D"
             android:textSize="17sp"
             app:layout_constraintEnd_toStartOf="@+id/imageView5"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="50dp"
+            android:contentDescription="@string/image"
             android:scaleType="centerCrop"
             android:src="@drawable/eshop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logout_btn"
-            android:contentDescription="@string/image" />
+            app:layout_constraintTop_toBottomOf="@+id/logout_btn" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
@@ -183,7 +236,7 @@
             android:id="@+id/gp_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="settings,notification,first_name,phone_number,imageView3,user_reviews_btn,imageView4,view,imageView5,logout_btn,imageView,guideline2" />
+            app:constraint_referenced_ids="btn_address,imageView3_1,view2,settings,notification,first_name,phone_number,imageView3,user_reviews_btn,imageView4,imageView4_1,view,imageView5,logout_btn,imageView,guideline2," />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

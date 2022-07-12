@@ -11,6 +11,7 @@ import com.example.eshop.data.remote.model.Order
 import com.example.eshop.databinding.FragmentRegisteredOrdersBinding
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import com.example.eshop.utils.gone
+import com.example.eshop.utils.snackBar
 import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -79,8 +80,7 @@ class RegisteredOrdersFragment : Fragment(R.layout.fragment_registered_orders) {
         noOrdersTv.gone()
         loading.gone()
         loading.pauseAnimation()
-        Toast.makeText(requireContext(), "دریافت اطلاعات با مشکل مواجه شد", Toast.LENGTH_SHORT)
-            .show()
+        requireView().snackBar("دریافت اطلاعات با مشکل مواجه شد")
     }
 
     private fun isLoading() = binding.apply {

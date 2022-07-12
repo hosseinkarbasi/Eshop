@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import com.example.eshop.R
 import com.example.eshop.data.local.datastore.settings.Theme
 import com.example.eshop.databinding.FragmentSettingsBinding
+import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,10 +22,27 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         _binding = FragmentSettingsBinding.bind(view)
 
         updateTheme()
+        setCheckedRadio()
 
     }
 
-    private fun updateTheme()=binding.apply {
+    private fun setCheckedRadio() = binding.apply {
+        viewModel.preferences.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            when (it.theme) {
+                Theme.LIGHT -> {
+                    light.isChecked = true
+                }
+                Theme.NIGHT -> {
+                    night.isChecked = true
+                }
+                Theme.AUTO -> {
+                    auto.isChecked = true
+                }
+            }
+        }
+    }
+
+    private fun updateTheme() = binding.apply {
         radioTheme.setOnCheckedChangeListener { _, checkedId ->
             val theme = when (checkedId) {
                 light.id -> Theme.LIGHT

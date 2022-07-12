@@ -33,7 +33,7 @@ class NotifyWork @AssistedInject constructor(
 
     private suspend fun getLastLocalProduct() {
         lastProductDataStore.preferences.collect {
-            if (getLastRemoteProduct() != it) {
+            if (getLastRemoteProduct() == it) {
                 lastProductDataStore.saveLastProductId(getLastRemoteProduct())
                 createNotification(getLastRemoteProduct())
             }

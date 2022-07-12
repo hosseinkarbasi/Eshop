@@ -13,6 +13,8 @@ class SettingsViewModel @Inject constructor(
     private val settingDataStore: SettingDataStore) :
     ViewModel() {
 
+    val preferences = settingDataStore.preferences
+
     fun updateTheme(theme: Theme) {
         viewModelScope.launch {
             settingDataStore.updateTheme(theme)

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,6 +22,7 @@ import com.example.eshop.data.remote.model.Product
 import com.example.eshop.data.remote.model.ProductImage
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import com.example.eshop.utils.gone
+import com.example.eshop.utils.snackBar
 import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
@@ -97,12 +97,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             retry.setOnClickListener {
                 viewModel.retry()
             }
-
-            Toast.makeText(
-                requireContext(),
-                "دریافت اطلاعات با مشکل مواجه شد",
-                Toast.LENGTH_LONG
-            ).show()
+            requireView().snackBar("دریافت اطلاعات با مشکل مواجه شد")
         }
     }
 
@@ -167,7 +162,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun seeMoreItems() = binding.apply {
-
         newestListBtn.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment(DATE)
             findNavController().navigate(action)
@@ -175,7 +169,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         mostSalesListBtn.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToProductsListFragment(RATING)
             findNavController().navigate(action)
-
         }
         mostViewedListBtn.setOnClickListener {
             val action =

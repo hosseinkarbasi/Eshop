@@ -10,5 +10,5 @@ data class LineItem(
     var quantity: Int,
     @SN("meta_data")
     val metaData: List<MetaData>,
-    val price: Long
+    val price: Double
 )

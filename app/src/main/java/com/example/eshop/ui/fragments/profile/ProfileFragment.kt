@@ -2,7 +2,6 @@ package com.example.eshop.ui.fragments.profile
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +11,7 @@ import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.databinding.FragmentProfileBinding
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import com.example.eshop.utils.gone
+import com.example.eshop.utils.snackBar
 import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -33,6 +33,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         goToNotification()
         goToUserReviews()
 
+        binding.btnAddress.setOnClickListener {
+            val action = ProfileFragmentDirections.actionProfileFragmentToAddressFragment()
+            findNavController().navigate(action)
+        }
+
     }
 
     private fun goToUserReviews() {
@@ -53,13 +58,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             when (it) {
                 is ResultWrapper.Success -> {
                     isSuccess()
-                    binding.user = it.data[0]
+                    if (it.data.isNotEmpty()) {
+                        binding.user = it.data[0]
+                    } else {
+                        binding.gpLayout.gone()
+                        requireView().snackBar("کاربر یافت نشد")
+                    }
                 }
                 is ResultWrapper.Loading -> {
                     isLoading()
                 }
                 is ResultWrapper.Error -> {
-                    it.message?.let { it1 -> isError(it1) }
+                    isError()
                 }
             }
         }
@@ -98,11 +108,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         loading.playAnimation()
     }
 
-    private fun isError(errorMessage: String) = binding.apply {
+    private fun isError() = binding.apply {
         loading.gone()
         gpLayout.gone()
         loading.pauseAnimation()
-        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        requireView().snackBar("دریافت اطلاعات با مشکل مواجه شد")
     }
 
     private fun isSuccess() = binding.apply {

@@ -3,7 +3,6 @@ package com.example.eshop.ui.fragments.signup
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,6 +11,7 @@ import com.example.eshop.data.local.model.User
 import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.databinding.FragmentSignupBinding
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
+import com.example.eshop.utils.snackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
@@ -52,16 +52,12 @@ class SignupFragment : Fragment(R.layout.fragment_signup) {
         viewModel.getCustomerInfo.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
                 is ResultWrapper.Error -> {
-                    Toast.makeText(requireContext(), "شکست خورد", Toast.LENGTH_SHORT).show()
+                    requireView().snackBar("متاسفانه مشکلی در ایجاد حساب بوجود آمد")
                 }
                 is ResultWrapper.Loading -> {}
                 is ResultWrapper.Success -> {
                     viewModel.saveUserInfo(it.data.email, it.data.id)
-                    Toast.makeText(
-                        requireContext(),
-                        "حساب شما با موفقیت ایجاد شد",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    requireView().snackBar("حساب شما با موفقیت ایجاد شد")
                     delay(1000)
                     val action = SignupFragmentDirections.actionSignupFragmentToProfileFragment()
                     findNavController().navigate(action)

@@ -2,7 +2,6 @@ package com.example.eshop.ui.fragments.product
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.text.HtmlCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -14,10 +13,7 @@ import com.example.eshop.R
 import com.example.eshop.databinding.FragmentProductBinding
 import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.data.remote.model.*
-import com.example.eshop.utils.Mapper
-import com.example.eshop.utils.collectWithRepeatOnLifecycle
-import com.example.eshop.utils.gone
-import com.example.eshop.utils.visible
+import com.example.eshop.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -102,6 +98,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
     private fun checkStatusOrder(data: Product) {
         binding.basketBtn.setOnClickListener {
             viewModel.getOrders(customerId, "pending")
+            //launchIn()
             viewModel.getOrderList.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
                 when (it) {
                     is ResultWrapper.Success -> {
@@ -118,6 +115,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
 
     private fun getOrder() {
         viewModel.getOrder.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+//            if (it.isSuccess()) { }
             when (it) {
                 is ResultWrapper.Loading -> {}
                 is ResultWrapper.Success -> {
@@ -157,7 +155,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
                         orderItem.lineItems.last().productId,
                         quantity + 1,
                         emptyList(),
-                        0
+                        0.0
                     )
                 lineItemList.add(lineItem)
                 val order = SetOrder(
@@ -192,7 +190,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
                         orderItem.lineItems.last().productId,
                         quantity - 1,
                         emptyList(),
-                        0
+                        0.0
                     )
                 lineItemList.add(lineItem)
                 val order = SetOrder(
@@ -221,7 +219,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
             orderItems.lineItems.last().productId,
             0,
             emptyList(),
-            0
+            0.0
         )
 
         lineItemList.add(lineItem)
@@ -240,7 +238,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         val metaData = mutableListOf<MetaData>()
         val metaDataItem = MetaData(0, "image", data.images[0].src)
         metaData.add(metaDataItem)
-        val lineItem = LineItem(0, data.name, data.id, 1, metaData, 0)
+        val lineItem = LineItem(0, data.name, data.id, 1, metaData, 0.0)
         lineItemList.add(lineItem)
         val order = SetOrder(
             orderId[0].id,
@@ -257,7 +255,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         val metaData = mutableListOf<MetaData>()
         val metaDataItem = MetaData(0, "image", data.images[0].src)
         metaData.add(metaDataItem)
-        val lineItem = LineItem(0, data.name, data.id, 1, metaData, 0)
+        val lineItem = LineItem(0, data.name, data.id, 1, metaData, 0.0)
         lineItemList.add(lineItem)
         val order =
             SetOrder(0, customerId, lineItemList, "pending", emptyList())
@@ -276,7 +274,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         viewModel.getProduct.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
                 is ResultWrapper.Error -> {
-                    isError(it.message.toString())
+                    isError()
                 }
                 is ResultWrapper.Loading -> {
                     isLoading()
@@ -297,11 +295,11 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         loading.playAnimation()
     }
 
-    private fun isError(errorMessage: String) = binding.apply {
+    private fun isError() = binding.apply {
         loading.visible()
         productGp.gone()
         loading.playAnimation()
-        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        requireView().snackBar("دریافت اطلاعات با مشکل مواجه شد")
     }
 
     private fun isSuccess(data: Product) = binding.apply {

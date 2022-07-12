@@ -3,7 +3,6 @@ package com.example.eshop.ui.fragments.userreviews
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.eshop.R
@@ -12,6 +11,7 @@ import com.example.eshop.data.remote.model.Review
 import com.example.eshop.databinding.FragmentUserReviewsBinding
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import com.example.eshop.utils.gone
+import com.example.eshop.utils.snackBar
 import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,19 +43,11 @@ class UserReviewsFragment : Fragment(R.layout.fragment_user_reviews) {
             when (it) {
                 is ResultWrapper.Loading -> {}
                 is ResultWrapper.Error -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "عملیات حذف با مشکل مواجه شد",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    requireView().snackBar("عملیات حذف با مشکل مواجه شد")
                 }
                 is ResultWrapper.Success -> {
                     getUserReviews()
-                    Toast.makeText(
-                        requireContext(),
-                        " دیدگاه موردنظر با موفقیت حذف شد",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    requireView().snackBar("دیدگاه موردنظر با موفقیت حذف شد")
                 }
             }
         }
@@ -65,7 +57,7 @@ class UserReviewsFragment : Fragment(R.layout.fragment_user_reviews) {
         adapter.itemEdit { review, _ ->
             val dialog = EditReviewDialog(review) {
                 viewModel.editReview(review.id, it)
-                Log.d("hossein",review.id.toString())
+                Log.d("hossein", review.id.toString())
             }
             dialog.show(childFragmentManager, "edit_review")
         }
@@ -74,19 +66,11 @@ class UserReviewsFragment : Fragment(R.layout.fragment_user_reviews) {
             when (it) {
                 is ResultWrapper.Loading -> {}
                 is ResultWrapper.Error -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "عملیات ویرایش با مشکل مواجه شد",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    requireView().snackBar("عملیات ویرایش با مشکل مواجه شد")
                 }
                 is ResultWrapper.Success -> {
                     getUserReviews()
-                    Toast.makeText(
-                        requireContext(),
-                        " دیدگاه موردنظر با موفقیت ویرایش شد",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    requireView().snackBar("دیدگاه موردنظر با موفقیت ویرایش شد")
                 }
             }
         }
@@ -128,8 +112,7 @@ class UserReviewsFragment : Fragment(R.layout.fragment_user_reviews) {
         userReviewsRv.gone()
         loading.gone()
         loading.pauseAnimation()
-        Toast.makeText(requireContext(), "دریافت اطلاعات با مشکل مواجه شد", Toast.LENGTH_LONG)
-            .show()
+        requireView().snackBar("دریافت اطلاعات با مشکل مواجه شد")
     }
 
     private fun isLoading() = binding.apply {

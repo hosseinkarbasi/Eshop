@@ -2,7 +2,6 @@ package com.example.eshop.ui.fragments.cart.basket
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +12,7 @@ import com.example.eshop.databinding.FragmentBasketBinding
 import com.example.eshop.ui.fragments.cart.HomeCartFragmentDirections
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import com.example.eshop.utils.gone
+import com.example.eshop.utils.snackBar
 import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -63,7 +63,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
                 item.productId,
                 x + 1,
                 emptyList(),
-                0
+                0.0
             )
 
             lineItemList.add(lineItem)
@@ -89,7 +89,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
                 item.productId,
                 x - 1,
                 emptyList(),
-                0
+                0.0
             )
 
             lineItemList.add(lineItem)
@@ -118,7 +118,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
             Item.productId,
             0,
             emptyList(),
-            0
+            0.0
         )
 
         lineItemList.add(lineItem)
@@ -143,7 +143,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
                     isLoading()
                 }
                 is ResultWrapper.Error -> {
-                    isError(it.message.toString())
+                    isError()
                 }
                 is ResultWrapper.Success -> {
                     isSuccess()
@@ -216,12 +216,12 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         loading.playAnimation()
     }
 
-    private fun isError(errorMessage: String) = binding.apply {
+    private fun isError() = binding.apply {
         loading.gone()
         gpEmpty.visible()
         gpBasket.gone()
         loading.pauseAnimation()
-        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        requireView().snackBar("دریافت اطلاعات با مشکل مواجه شد")
     }
 
     private fun isSuccess() = binding.apply {

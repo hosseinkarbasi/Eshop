@@ -45,6 +45,9 @@ class RemoteDataSource @Inject constructor(private val service: WooCommerceApi) 
     override suspend fun editReview(reviewId: Int, review: Review): Response<Review> =
         service.editReview(reviewId, review)
 
+    override suspend fun getAddress(lat: Double?, lng: Double?): Response<NeshanAddress> =
+        service.getAddress(lat,lng)
+
     override suspend fun getReviews(
         productId: Int,
         perPage: Int,

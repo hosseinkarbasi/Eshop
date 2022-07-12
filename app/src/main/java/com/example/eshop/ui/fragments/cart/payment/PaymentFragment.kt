@@ -1,7 +1,8 @@
 package com.example.eshop.ui.fragments.cart.payment
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -11,13 +12,11 @@ import com.example.eshop.R
 import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.data.remote.model.*
 import com.example.eshop.databinding.FragmentPaymentBinding
-import com.example.eshop.utils.Mapper
-import com.example.eshop.utils.collectWithRepeatOnLifecycle
-import com.example.eshop.utils.gone
-import com.example.eshop.utils.visible
+import com.example.eshop.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
+
 
 @AndroidEntryPoint
 class PaymentFragment : Fragment(R.layout.fragment_payment) {
@@ -86,6 +85,7 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         }
     }
 
+
     private fun isSuccessCoupon(data: List<Coupon>) = binding.apply {
         if (data.isEmpty()) {
             couponEdLayout.helperText = "کد تخفیف وارد شده درست نیست"
@@ -96,6 +96,7 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                 val percent = convertPercent.format(data[0].amount.toDouble())
                 val dec = DecimalFormat("###,###")
                 val price = dec.format(totalPrice)
+                couponEdLayout.setHelperTextColor(colorStateList())
                 couponEdLayout.helperText = "$percent درصد از مبلغ کل کسر شد "
                 couponPercent.text = "$percent درصد "
                 totalPricePayment.text = "$price تومان "
@@ -137,7 +138,7 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                     isLoading()
                 }
                 is ResultWrapper.Error -> {
-                    isError(it.message.toString())
+                    isError()
                 }
                 is ResultWrapper.Success -> {
                     isSuccess()
@@ -198,13 +199,13 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         loading.playAnimation()
     }
 
-    private fun isError(errorMessage: String) = binding.apply {
+    private fun isError() = binding.apply {
         loading.gone()
         cardView.gone()
         scrollView.gone()
         cardViewSubmit.gone()
         loading.pauseAnimation()
-        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        requireView().snackBar("دریافت اطلاعات با مشکل مواجه شد")
     }
 
     private fun isSuccess() = binding.apply {
@@ -213,6 +214,24 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         cardView.visible()
         cardViewSubmit.visible()
         loading.pauseAnimation()
+    }
+
+    private fun colorStateList(): ColorStateList {
+        val states = arrayOf(
+            intArrayOf(android.R.attr.state_enabled),
+            intArrayOf(-android.R.attr.state_enabled),
+            intArrayOf(-android.R.attr.state_checked),
+            intArrayOf(android.R.attr.state_pressed)
+        )
+
+        val colors = intArrayOf(
+            Color.BLACK,
+            Color.RED,
+            Color.GREEN,
+            Color.BLUE
+        )
+
+        return ColorStateList(states, colors)
     }
 
     override fun onDestroyView() {

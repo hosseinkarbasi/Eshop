@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.productsListFragment -> bottomNavigationView.gone()
                 R.id.searchFragment -> bottomNavigationView.gone()
                 R.id.reviewsFragment -> bottomNavigationView.gone()
+                R.id.addressFragment -> bottomNavigationView.gone()
                 else -> bottomNavigationView.visible()
             }
         }

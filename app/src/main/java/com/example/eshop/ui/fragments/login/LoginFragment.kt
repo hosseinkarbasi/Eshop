@@ -12,6 +12,7 @@ import com.example.eshop.data.local.model.User
 import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.databinding.FragmentLoginBinding
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
+import com.example.eshop.utils.snackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -76,7 +77,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val action = LoginFragmentDirections.actionLoginFragmentToProfileFragment()
             findNavController().navigate(action)
         } else {
-            Toast.makeText(requireContext(), "ایمیل وارد شده صحیح نیست", Toast.LENGTH_LONG).show()
+            requireView().snackBar("ایمیل وارد شده صحیح نیست")
         }
     }
 

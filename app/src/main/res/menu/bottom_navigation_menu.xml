@@ -2,14 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/homeFragment"
-        android:icon="@drawable/home_icon_selector"
-        android:title="@string/home" />
-
-    <item
-        android:id="@+id/homeCartFragment"
-        android:icon="@drawable/basket_icon_selector"
-        android:title="@string/basket" />
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/profile_icon_selector"
+        android:title="@string/myShop" />
 
     <item
         android:id="@+id/categoryFragment"
@@ -17,8 +12,13 @@
         android:title="@string/category" />
 
     <item
-        android:id="@+id/profileFragment"
-        android:icon="@drawable/profile_icon_selector"
-        android:title="@string/myShop" />
+        android:id="@+id/homeCartFragment"
+        android:icon="@drawable/basket_icon_selector"
+        android:title="@string/basket" />
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/home_icon_selector"
+        android:title="@string/home" />
 
 </menu>

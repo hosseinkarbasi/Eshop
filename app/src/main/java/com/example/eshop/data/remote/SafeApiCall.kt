@@ -8,6 +8,7 @@ import java.io.IOException
 import javax.net.ssl.SSLException
 
 sealed class ResultWrapper<out T> {
+//    fun isSuccess() = this is Success
     data class Success<out T>(val data: T) : ResultWrapper<T>()
     data class Error<out T>(val message: String?) : ResultWrapper<T>()
     object Loading : ResultWrapper<Nothing>()
@@ -15,31 +16,31 @@ sealed class ResultWrapper<out T> {
 
 suspend inline fun <T> requestFlow(
     dispatcher: CoroutineDispatcher,
-    crossinline apiCall: suspend () ->Response<T>
+    crossinline apiCall: suspend () -> Response<T>
 ) = flow {
     emit(ResultWrapper.Loading)
     try {
-        val response=apiCall()
-        val responseBody=response.body()
-        if (response.isSuccessful && responseBody!=null) {
+        val response = apiCall()
+        val responseBody = response.body()
+        if (response.isSuccessful && responseBody != null) {
             emit(ResultWrapper.Success(responseBody))
-        }else{
-            val errorBody=response.errorBody()
-            if (errorBody!=null){
+        } else {
+            val errorBody = response.errorBody()
+            if (errorBody != null) {
 
-            }else{
+            } else {
                 emit(ResultWrapper.Error<T>("error is here for you to smile"))
             }
         }
-    } catch (e:SSLException) {
+    } catch (e: SSLException) {
         emit(ResultWrapper.Error(e.message))
-    }catch (e:IOException){
+    } catch (e: IOException) {
         emit(ResultWrapper.Error(e.message))
-    }catch (e:HttpException){
+    } catch (e: HttpException) {
         emit(ResultWrapper.Error(e.message))
-    } catch (e:Throwable){
+    } catch (e: Throwable) {
         emit(ResultWrapper.Error(e.message))
-    }finally {
+    } finally {
 
     }
 }

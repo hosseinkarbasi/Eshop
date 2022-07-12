@@ -2,7 +2,6 @@ package com.example.eshop.ui.fragments.reviews
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.eshop.R
@@ -12,6 +11,7 @@ import com.example.eshop.databinding.FragmentReviewsBinding
 import com.example.eshop.ui.fragments.dialogs.ReviewDialog
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import com.example.eshop.utils.gone
+import com.example.eshop.utils.snackBar
 import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,16 +33,16 @@ class ReviewsFragment : Fragment(R.layout.fragment_reviews) {
         review()
     }
 
-    private fun review(){
-        viewModel.getReview.collectWithRepeatOnLifecycle(viewLifecycleOwner){
-            when(it){
+    private fun review() {
+        viewModel.getReview.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
+            when (it) {
                 is ResultWrapper.Loading -> {}
                 is ResultWrapper.Success -> {
-                    Toast.makeText(requireContext(), "نظر شما یا موفقیت ثبت شد", Toast.LENGTH_LONG).show()
+                    requireView().snackBar("نظر شما با موفقیت ثبت شد")
                     viewModel.getReviews(viewModel.productId, 1, 100)
                 }
                 is ResultWrapper.Error -> {
-                    Toast.makeText(requireContext(), "مشکلی در ثبت نظر بوجود آمد", Toast.LENGTH_LONG).show()
+                    requireView().snackBar("مشکلی در ثبت نظر بوجود آمد")
                 }
             }
         }
@@ -85,8 +85,7 @@ class ReviewsFragment : Fragment(R.layout.fragment_reviews) {
         reviewsRv.gone()
         loading.gone()
         loading.pauseAnimation()
-        Toast.makeText(requireContext(), "دریافت اطلاعات با مشکل مواجه شد", Toast.LENGTH_LONG)
-            .show()
+        requireView().snackBar("دریافت اطلاعات با مشکل مواجه شد")
     }
 
     private fun isLoading() = binding.apply {
@@ -98,7 +97,6 @@ class ReviewsFragment : Fragment(R.layout.fragment_reviews) {
     private fun initRecyclerView() {
         adapter = ReviewsAdapter()
         binding.reviewsRv.adapter = adapter
-
     }
 
     override fun onDestroyView() {

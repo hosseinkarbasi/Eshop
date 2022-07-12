@@ -2,7 +2,6 @@ package com.example.eshop.ui.fragments.productslist
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,6 +16,7 @@ import com.example.eshop.databinding.FragmentProductsListBinding
 import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import com.example.eshop.utils.gone
+import com.example.eshop.utils.snackBar
 import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -64,7 +64,7 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
         viewModel.getProductsList.collectWithRepeatOnLifecycle(viewLifecycleOwner) {
             when (it) {
                 is ResultWrapper.Error -> {
-                    it.message?.let { it1 -> isError(it1) }
+                    isError()
                 }
                 is ResultWrapper.Loading -> {
                     isLoading()
@@ -111,10 +111,10 @@ class ProductsListFragment : Fragment(R.layout.fragment_products_list) {
         loading.playAnimation()
     }
 
-    private fun isError(errorMessage: String) = binding.apply {
+    private fun isError() = binding.apply {
         loading.visible()
         loading.playAnimation()
-        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        requireView().snackBar("دریافت اطلاعات با مشکل مواجه شد")
     }
 
     private fun isSuccess(data: List<Product>) = binding.apply {

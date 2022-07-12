@@ -139,7 +139,6 @@
                 android:fontFamily="@font/titr_bold"
                 android:text="@string/basket_btn_text"
                 android:textSize="15sp"
-                android:visibility="gone"
                 app:cornerRadius="8dp" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -228,7 +227,6 @@
                             app:layout_constraintEnd_toEndOf="@+id/view_pager"
                             app:layout_constraintStart_toStartOf="@+id/view_pager"
                             app:layout_constraintTop_toBottomOf="@+id/view_pager" />
-
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/product_name"

@@ -3,6 +3,7 @@ package com.example.eshop.data.remote
 import com.example.eshop.data.local.model.User
 import com.example.eshop.data.remote.model.*
 import retrofit2.Response
+import retrofit2.http.Query
 
 interface IRemoteDataSource {
 
@@ -31,6 +32,8 @@ interface IRemoteDataSource {
     suspend fun deleteReview(reviewId: Int, force: String): Response<DeleteReview>
 
     suspend fun editReview(reviewId: Int, review: Review): Response<Review>
+
+    suspend fun getAddress(lat: Double?, lng: Double?): Response<NeshanAddress>
 
     suspend fun getReviews(
         productId: Int,

@@ -2,7 +2,6 @@ package com.example.eshop.ui.fragments.category
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,6 +11,7 @@ import com.example.eshop.data.remote.ResultWrapper
 import com.example.eshop.data.remote.model.Category
 import com.example.eshop.utils.collectWithRepeatOnLifecycle
 import com.example.eshop.utils.gone
+import com.example.eshop.utils.snackBar
 import com.example.eshop.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -81,12 +81,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
             retry.setOnClickListener {
                 viewModel.retry()
             }
-
-            Toast.makeText(
-                requireContext(),
-                "دریافت اطلاعات با مشکل مواجه شد",
-                Toast.LENGTH_LONG
-            ).show()
+            requireView().snackBar("دریافت اطلاعات با مشکل مواجه شد")
         }
     }
 
