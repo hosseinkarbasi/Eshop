@@ -1,4 +1,6 @@
 # Eshop!
-![Eshop screenShot_home](https://user-images.githubusercontent.com/97020993/178671640-18a3dfbe-0829-4ae3-a4a1-2fe655231b0b.jpg)
 
 
+
+
+![Eshop screenShot_home](https://user-images.githubusercontent.com/97020993/178672250-757cb479-b691-4251-8d55-f207190882ef.jpg)
