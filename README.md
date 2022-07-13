@@ -8,13 +8,14 @@
 Eshop is built with latest development tools and design patterns.
 - Written in Kotlin
 - Mvvm
-- Android Architecture Components (Viewmodels, Coroutine Flow)
+- Coroutine Flow
 - View Binding , Databinding
 - Dependency injection with Hilt
 - DataStore
 - Retrofit
 - Material Design
 - Map
+- Glide
 
 ## 📱 Screenshots
 
