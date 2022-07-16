@@ -8,6 +8,7 @@
 Eshop is built with latest development tools and design patterns.
 - Written in Kotlin
 - Mvvm
+- Single Activity
 - Coroutine Flow
 - View Binding , Databinding
 - Dependency injection with Hilt
